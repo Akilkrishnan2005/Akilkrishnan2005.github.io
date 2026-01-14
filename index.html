@@ -36,11 +36,33 @@
       color: #cbd5f5;
     }
 
-    section {
-      max-width: 1000px;
+    main {
+      max-width: 1200px;
       margin: auto;
       padding: 50px 20px;
-      animation: fadeUp 1s ease forwards;
+    }
+
+    .grid {
+      display: grid;
+      gap: 40px;
+    }
+
+    .about-skills {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    .card {
+      background: #020617;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px rgba(56,189,248,0.25);
     }
 
     .section-title {
@@ -49,20 +71,6 @@
       color: #38bdf8;
       border-left: 4px solid #38bdf8;
       padding-left: 10px;
-    }
-
-    .card {
-      background: #020617;
-      padding: 25px;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 35px rgba(56,189,248,0.25);
     }
 
     .skills span {
@@ -74,6 +82,12 @@
       margin: 6px;
       border-radius: 20px;
       font-size: 0.9rem;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
     }
 
     a {
@@ -92,22 +106,16 @@
       padding: 20px;
       font-size: 0.9rem;
       color: #94a3b8;
+      margin-top: 50px;
     }
 
-    /* Animation */
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
+    @media(max-width: 900px){
+      .about-skills {
+        grid-template-columns: 1fr;
       }
     }
   </style>
 </head>
-
 <body>
 
 <header>
@@ -115,87 +123,76 @@
   <p>Data Scientist | Python | Machine Learning | Power BI</p>
 </header>
 
-<section>
-  <div class="section-title">About Me</div>
-  <div class="card">
-    Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.
-    Experienced with Big Data, MongoDB, and large-scale dataset management.
-    Proficient in creating interactive dashboards and visualizations using Power BI.
-    Passionate about turning complex data into actionable business insights.
-    Continuously learning and applying advanced data science techniques to solve real-world problems.
-  </div>
-</section>
+<main>
+  <!-- About & Skills Side by Side -->
+  <div class="grid about-skills">
+    <div class="card">
+      <div class="section-title">About Me</div>
+      <p>Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.</p>
+      <p>Experienced with Big Data, MongoDB, and large-scale dataset management.</p>
+      <p>Proficient in creating interactive dashboards and visualizations using Power BI.</p>
+      <p>Passionate about turning complex data into actionable business insights.</p>
+      <p>Continuously learning and applying advanced data science techniques to solve real-world problems.</p>
+    </div>
 
-<section>
-  <div class="section-title">Skills</div>
-  <div class="card skills">
-    <span>Python</span>
-    <span>Machine Learning</span>
-    <span>SQL</span>
-    <span>MySQL</span>
-    <span>MongoDB</span>
-    <span>Power BI</span>
-    <span>Pandas</span>
-    <span>NumPy</span>
-    <span>Scikit-learn</span>
-    <span>Tkinter</span>
-    <span>R Programming</span>
-  </div>
-</section>
-
-<section>
-  <div class="section-title">Projects</div>
-
-  <div class="card">
-    <h3>Data Science Model Deployment with Tkinter</h3>
-    <p>GUI-based ML application for regression, classification, and clustering.</p>
-    <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">
-      View on GitHub →
-    </a>
+    <div class="card">
+      <div class="section-title">Skills</div>
+      <div class="skills">
+        <span>Python</span>
+        <span>R Programming</span>
+        <span>MySQL</span>
+        <span>SQL</span>
+        <span>Machine Learning</span>
+        <span>Power BI</span>
+        <span>MongoDB</span>
+        <span>Pandas</span>
+        <span>NumPy</span>
+        <span>Scikit-learn</span>
+        <span>Tkinter</span>
+        <span>Big Data</span>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>Smart Vehicle Service Booking System</h3>
-    <p>Python & MySQL application with full CRUD functionality.</p>
-    <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">
-      View on GitHub →
-    </a>
+  <!-- Projects Section -->
+  <div style="margin-top: 60px;">
+    <div class="section-title">Projects</div>
+    <div class="projects">
+      <div class="card">
+        <h3>Data Science Model Deployment with Tkinter</h3>
+        <p>GUI-based ML application for regression, classification, and clustering.</p>
+        <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">View on GitHub →</a>
+      </div>
+
+      <div class="card">
+        <h3>Smart Vehicle Service Booking System</h3>
+        <p>Python & MySQL application with full CRUD functionality.</p>
+        <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">View on GitHub →</a>
+      </div>
+
+      <div class="card">
+        <h3>Power BI – Netflix OTT Analytics</h3>
+        <p>Interactive dashboard analyzing Netflix content trends.</p>
+        <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">View on GitHub →</a>
+      </div>
+    </div>
   </div>
 
-  <div class="card">
-    <h3>Power BI – Netflix OTT Analytics</h3>
-    <p>Interactive dashboard analyzing Netflix content trends.</p>
-    <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">
-      View on GitHub →
-    </a>
+  <!-- Contact Section -->
+  <div style="margin-top: 60px;">
+    <div class="section-title">Contact</div>
+    <div class="card">
+      <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
+      <p>📞 8248702184</p>
+      <p>🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
+         🔗 <a href="#" target="_blank">LinkedIn</a></p>
+    </div>
   </div>
-</section>
-
-<section>
-  <div class="section-title">Contact</div>
-  <div class="card">
-    <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
-    <p>📞 8248702184</p>
-    <p>
-      🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a>
-      |
-      🔗 <a href="#" target="_blank">LinkedIn</a>
-    </p>
-  </div>
-</section>
+</main>
 
 <footer>
   © 2026 Akil Krishnan | Data Science Portfolio
 </footer>
-
-<!-- Page Fade-in Script -->
-<script>
-  document.body.style.opacity = 0;
-  window.onload = function () {
-    document.body.style.transition = "opacity 1s ease";
-    document.body.style.opacity = 1;
-  };
-</script>
 
 </body>
 </html>
