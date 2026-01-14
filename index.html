@@ -233,23 +233,30 @@
   text-align:center;
 }
 
-/* Project bullet points */
 .project-points {
-  padding-left: 18px;
+  list-style: none;       /* remove default bullets */
+  padding-left: 0;
   margin: 6px 0;
   text-align: left;
 }
 
 .project-points li {
+  position: relative;
+  padding-left: 20px;
   font-size: 0.85rem;
   color: #cbd5f5;
   margin-bottom: 6px;
-  list-style-type: disc;
 }
 
-.project-points li::marker {
-  color: #38bdf8;
+/* Arrow symbol */
+.project-points li::before {
+  content: "➤";
+  position: absolute;
+  left: 0;
+  color: #38bdf8;        /* blue arrow */
+  font-weight: bold;
 }
+
 
   
 /* Optional blue bullet */
