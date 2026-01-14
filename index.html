@@ -6,12 +6,45 @@
 <title>Akil Krishnan | Data Scientist</title>
 
 <style>
+/* Animations */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+section {
+  animation: fadeUp 1s ease forwards;
+}
+
+.card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 35px rgba(56,189,248,0.25);
+}
+
+  
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Segoe UI', sans-serif;
 }
+<script>
+  document.body.style.opacity = 0;
+  window.onload = () => {
+    document.body.style.transition = "opacity 1s ease";
+    document.body.style.opacity = 1;
+  };
+</script>
 
 body {
   background: #0f172a;
@@ -144,6 +177,11 @@ footer {
       Regression, Classification, and Clustering using multiple ML algorithms
       with detailed performance metrics.
     </p>
+    <p>
+      🔗 <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">
+        View on GitHub
+      </a>
+    </p>
   </div>
 
   <div class="card project">
@@ -151,6 +189,11 @@ footer {
     <p>
       Python & MySQL based application to manage vehicle service bookings with
       full CRUD functionality and database integration.
+    </p>
+    <p>
+      🔗 <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">
+        View on GitHub
+      </a>
     </p>
   </div>
 
@@ -160,8 +203,14 @@ footer {
       Interactive Power BI dashboard analyzing Netflix movies and TV shows by
       genre, rating, and release year to identify content trends.
     </p>
+    <p>
+      🔗 <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">
+        View on GitHub
+      </a>
+    </p>
   </div>
 </section>
+
 
 <section>
   <div class="section-title">Contact</div>
