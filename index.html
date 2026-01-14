@@ -1,131 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Akil Krishnan | Data Scientist</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akil Krishnan | Data Scientist</title>
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', sans-serif;
-    }
+<style>
+  /* Reset */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+  body { background:#0f172a; color:#e5e7eb; line-height:1.6; }
 
-    body {
-      background: #0f172a;
-      color: #e5e7eb;
-      line-height: 1.6;
-    }
+  /* Hero Section */
+  header {
+    height: 100vh;
+    background: linear-gradient(135deg,#020617,#0f172a);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 20px;
+  }
 
-    header {
-      background: #020617;
-      padding: 60px 20px;
-      text-align: center;
-    }
+  header h1 { font-size:3rem; color:#38bdf8; margin-bottom:10px; }
+  header p { font-size:1.2rem; color:#cbd5f5; max-width:600px; }
 
-    header h1 {
-      font-size: 2.8rem;
-      color: #38bdf8;
-    }
+  /* Main Sections */
+  main { max-width:1200px; margin:auto; padding:50px 20px; }
 
-    header p {
-      margin-top: 10px;
-      font-size: 1.1rem;
-      color: #cbd5f5;
-    }
+  .section-title { font-size:2rem; margin-bottom:20px; color:#38bdf8; border-left:4px solid #38bdf8; padding-left:10px; }
 
-    main {
-      max-width: 1200px;
-      margin: auto;
-      padding: 50px 20px;
-    }
+  /* About & Skills */
+  .about-skills { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:60px; }
+  .card { background:#020617; padding:25px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.3); transition:transform 0.3s ease, box-shadow 0.3s ease; }
+  .card:hover { transform:translateY(-6px); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
 
-    .grid {
-      display: grid;
-      gap: 40px;
-    }
+  .skills-bar { margin:15px 0; }
+  .skills-bar span { display:block; font-size:0.9rem; margin-bottom:5px; }
+  .bar { width:100%; background:#1e293b; border-radius:12px; overflow:hidden; height:18px; }
+  .progress { height:100%; background:#38bdf8; width:0%; border-radius:12px; transition: width 1.5s ease-in-out; }
 
-    .about-skills {
-      grid-template-columns: 1fr 1fr;
-      align-items: start;
-    }
+  /* Horizontal Projects */
+  .projects-container { display:flex; overflow-x:auto; gap:20px; padding-bottom:10px; }
+  .projects-container::-webkit-scrollbar { height:10px; }
+  .projects-container::-webkit-scrollbar-thumb { background:#38bdf8; border-radius:5px; }
+  .projects-container::-webkit-scrollbar-track { background:#0f172a; }
 
-    .card {
-      background: #020617;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+  .project-card { min-width:300px; flex:0 0 auto; background:#020617; padding:20px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
+  .project-card:hover { transform:translateY(-6px); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
 
-    .card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 20px 35px rgba(56,189,248,0.25);
-    }
+  /* Contact */
+  .contact-card { text-align:center; }
+  .contact-card p, .contact-card a { margin:10px 0; color:#cbd5f5; font-weight:500; }
+  .contact-card a { text-decoration:none; }
+  .contact-card a:hover { text-decoration:underline; }
 
-    .section-title {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      color: #38bdf8;
-      border-left: 4px solid #38bdf8;
-      padding-left: 10px;
-    }
+  /* Footer */
+  footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; color:#94a3b8; margin-top:50px; }
 
-    .skills span {
-      display: inline-block;
-      background: #020617;
-      border: 1px solid #38bdf8;
-      color: #38bdf8;
-      padding: 8px 14px;
-      margin: 6px;
-      border-radius: 20px;
-      font-size: 0.9rem;
-    }
+  /* Responsive */
+  @media(max-width:900px) { .about-skills { grid-template-columns:1fr; } }
 
-    .projects {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
-    }
-
-    a {
-      color: #38bdf8;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    footer {
-      background: #020617;
-      text-align: center;
-      padding: 20px;
-      font-size: 0.9rem;
-      color: #94a3b8;
-      margin-top: 50px;
-    }
-
-    @media(max-width: 900px){
-      .about-skills {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+</style>
 </head>
 <body>
 
+<!-- Hero -->
 <header>
   <h1>Akil Krishnan</h1>
-  <p>Data Scientist | Python | Machine Learning | Power BI</p>
+  <p>Data Science Professional | Python, R, MySQL, Power BI | Turning Complex Data into Actionable Insights</p>
 </header>
 
 <main>
-  <!-- About & Skills Side by Side -->
-  <div class="grid about-skills">
+  <!-- About & Skills -->
+  <div class="about-skills">
     <div class="card">
       <div class="section-title">About Me</div>
       <p>Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.</p>
@@ -137,40 +85,43 @@
 
     <div class="card">
       <div class="section-title">Skills</div>
-      <div class="skills">
+      <div class="skills-bar">
         <span>Python</span>
+        <div class="bar"><div class="progress" style="width:90%"></div></div>
+
         <span>R Programming</span>
-        <span>MySQL</span>
-        <span>SQL</span>
-        <span>Machine Learning</span>
+        <div class="bar"><div class="progress" style="width:80%"></div></div>
+
+        <span>MySQL / SQL</span>
+        <div class="bar"><div class="progress" style="width:85%"></div></div>
+
         <span>Power BI</span>
+        <div class="bar"><div class="progress" style="width:75%"></div></div>
+
         <span>MongoDB</span>
-        <span>Pandas</span>
-        <span>NumPy</span>
-        <span>Scikit-learn</span>
-        <span>Tkinter</span>
+        <div class="bar"><div class="progress" style="width:70%"></div></div>
+
         <span>Big Data</span>
+        <div class="bar"><div class="progress" style="width:65%"></div></div>
       </div>
     </div>
   </div>
 
-  <!-- Projects Section -->
-  <div style="margin-top: 60px;">
+  <!-- Projects -->
+  <div>
     <div class="section-title">Projects</div>
-    <div class="projects">
-      <div class="card">
+    <div class="projects-container">
+      <div class="project-card">
         <h3>Data Science Model Deployment with Tkinter</h3>
         <p>GUI-based ML application for regression, classification, and clustering.</p>
         <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">View on GitHub →</a>
       </div>
-
-      <div class="card">
+      <div class="project-card">
         <h3>Smart Vehicle Service Booking System</h3>
         <p>Python & MySQL application with full CRUD functionality.</p>
         <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">View on GitHub →</a>
       </div>
-
-      <div class="card">
+      <div class="project-card">
         <h3>Power BI – Netflix OTT Analytics</h3>
         <p>Interactive dashboard analyzing Netflix content trends.</p>
         <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">View on GitHub →</a>
@@ -178,10 +129,10 @@
     </div>
   </div>
 
-  <!-- Contact Section -->
-  <div style="margin-top: 60px;">
+  <!-- Contact -->
+  <div style="margin-top:60px;">
     <div class="section-title">Contact</div>
-    <div class="card">
+    <div class="card contact-card">
       <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
       <p>📞 8248702184</p>
       <p>🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
@@ -193,6 +144,18 @@
 <footer>
   © 2026 Akil Krishnan | Data Science Portfolio
 </footer>
+
+<!-- Animation Script for Skills -->
+<script>
+  window.addEventListener('load', () => {
+    const progresses = document.querySelectorAll('.progress');
+    progresses.forEach(bar => {
+      const width = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => { bar.style.width = width; }, 300);
+    });
+  });
+</script>
 
 </body>
 </html>
