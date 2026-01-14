@@ -54,10 +54,21 @@
   .card { background:#020617; padding:25px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.3); transition:transform 0.3s ease, box-shadow 0.3s ease; }
   .card:hover { transform:translateY(-6px); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
 
-  .skills-bar { margin:15px 0; }
-  .skills-bar span { display:block; font-size:0.9rem; margin-bottom:5px; }
-  .bar { width:100%; background:#1e293b; border-radius:12px; overflow:hidden; height:18px; }
-  .progress { height:100%; background:#38bdf8; width:0%; border-radius:12px; transition: width 1.5s ease-in-out; }
+  /* Skills list (NO meters) */
+.skills-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.skills-list li {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background: #020617;
+  border-left: 4px solid #38bdf8;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: #cbd5f5;
+}
 
   /* Horizontal Projects */
   .projects-container { display:flex; overflow-x:auto; gap:20px; padding-bottom:10px; }
@@ -110,25 +121,19 @@
 
     <div id="skills" class="card">
       <div class="section-title">Skills</div>
-      <div class="skills-bar">
-        <span>Python</span>
-        <div class="bar"><div class="progress" style="width:90%"></div></div>
+      <div id="skills" class="card">
+  <div class="section-title">Skills</div>
 
-        <span>R Programming</span>
-        <div class="bar"><div class="progress" style="width:80%"></div></div>
+  <ul class="skills-list">
+    <li>Python for Data Analysis & Machine Learning</li>
+    <li>R Programming for Statistical Computing</li>
+    <li>MySQL & SQL for Data Management</li>
+    <li>Power BI for Data Visualization & Dashboards</li>
+    <li>MongoDB (NoSQL Database)</li>
+    <li>Big Data Concepts & Large-scale Datasets</li>
+  </ul>
+</div>
 
-        <span>MySQL / SQL</span>
-        <div class="bar"><div class="progress" style="width:85%"></div></div>
-
-        <span>Power BI</span>
-        <div class="bar"><div class="progress" style="width:75%"></div></div>
-
-        <span>MongoDB</span>
-        <div class="bar"><div class="progress" style="width:70%"></div></div>
-
-        <span>Big Data</span>
-        <div class="bar"><div class="progress" style="width:65%"></div></div>
-      </div>
     </div>
   </div>
 
