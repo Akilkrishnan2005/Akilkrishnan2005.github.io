@@ -1,127 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Akil Krishnan | Data Scientist</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akil Krishnan | Data Scientist</title>
 
-<style>
-/* Animations */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', sans-serif;
+    }
 
-section {
-  animation: fadeUp 1s ease forwards;
-}
+    body {
+      background: #0f172a;
+      color: #e5e7eb;
+      line-height: 1.6;
+    }
 
-.card {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+    header {
+      background: #020617;
+      padding: 60px 20px;
+      text-align: center;
+    }
 
-.card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 35px rgba(56,189,248,0.25);
-}
+    header h1 {
+      font-size: 2.8rem;
+      color: #38bdf8;
+    }
 
-  
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', sans-serif;
-}
+    header p {
+      margin-top: 10px;
+      font-size: 1.1rem;
+      color: #cbd5f5;
+    }
 
-body {
-  background: #0f172a;
-  color: #e5e7eb;
-  line-height: 1.6;
-}
+    section {
+      max-width: 1000px;
+      margin: auto;
+      padding: 50px 20px;
+      animation: fadeUp 1s ease forwards;
+    }
 
-header {
-  background: linear-gradient(135deg, #020617, #020617);
-  padding: 60px 20px;
-  text-align: center;
-}
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #38bdf8;
+      border-left: 4px solid #38bdf8;
+      padding-left: 10px;
+    }
 
-header h1 {
-  font-size: 2.8rem;
-  color: #38bdf8;
-}
+    .card {
+      background: #020617;
+      padding: 25px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
 
-header p {
-  margin-top: 10px;
-  font-size: 1.1rem;
-  color: #cbd5f5;
-}
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 35px rgba(56,189,248,0.25);
+    }
 
-section {
-  max-width: 1000px;
-  margin: auto;
-  padding: 50px 20px;
-}
+    .skills span {
+      display: inline-block;
+      background: #020617;
+      border: 1px solid #38bdf8;
+      color: #38bdf8;
+      padding: 8px 14px;
+      margin: 6px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+    }
 
-.section-title {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #38bdf8;
-  border-left: 4px solid #38bdf8;
-  padding-left: 10px;
-}
+    a {
+      color: #38bdf8;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
-.card {
-  background: #020617;
-  padding: 25px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-}
+    a:hover {
+      text-decoration: underline;
+    }
 
-.skills span {
-  display: inline-block;
-  background: #020617;
-  border: 1px solid #38bdf8;
-  color: #38bdf8;
-  padding: 8px 14px;
-  margin: 6px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-}
+    footer {
+      background: #020617;
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
 
-.project h3 {
-  color: #e5e7eb;
-  margin-bottom: 10px;
-}
-
-.project p {
-  color: #cbd5f5;
-}
-
-a {
-  color: #38bdf8;
-  text-decoration: none;
-  font-weight: 500;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-footer {
-  background: #020617;
-  text-align: center;
-  padding: 20px;
-  font-size: 0.9rem;
-  color: #94a3b8;
-}
-</style>
+    /* Animation */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(40px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -134,12 +118,9 @@ footer {
 <section>
   <div class="section-title">About Me</div>
   <div class="card">
-    <p>
-      Aspiring Data Scientist with strong expertise in Python, SQL, Power BI,
-      and Machine Learning. B.Sc. Mathematics graduate from Periyar University
-      with a solid analytical and problem-solving foundation. Passionate about
-      transforming raw data into actionable insights.
-    </p>
+    Aspiring Data Scientist with expertise in Python, SQL, Power BI, and
+    Machine Learning. B.Sc. Mathematics graduate from Periyar University
+    with strong analytical and problem-solving skills.
   </div>
 </section>
 
@@ -163,62 +144,40 @@ footer {
 <section>
   <div class="section-title">Projects</div>
 
-  <div class="card project">
+  <div class="card">
     <h3>Data Science Model Deployment with Tkinter</h3>
-    <p>
-      GUI-based application enabling users to upload datasets and perform
-      Regression, Classification, and Clustering using multiple ML algorithms
-      with detailed performance metrics.
-    </p>
-    <p>
-      🔗 <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">
-        View on GitHub
-      </a>
-    </p>
+    <p>GUI-based ML application for regression, classification, and clustering.</p>
+    <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">
+      View on GitHub →
+    </a>
   </div>
 
-  <div class="card project">
+  <div class="card">
     <h3>Smart Vehicle Service Booking System</h3>
-    <p>
-      Python & MySQL based application to manage vehicle service bookings with
-      full CRUD functionality and database integration.
-    </p>
-    <p>
-      🔗 <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">
-        View on GitHub
-      </a>
-    </p>
+    <p>Python & MySQL application with full CRUD functionality.</p>
+    <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">
+      View on GitHub →
+    </a>
   </div>
 
-  <div class="card project">
+  <div class="card">
     <h3>Power BI – Netflix OTT Analytics</h3>
-    <p>
-      Interactive Power BI dashboard analyzing Netflix movies and TV shows by
-      genre, rating, and release year to identify content trends.
-    </p>
-    <p>
-      🔗 <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">
-        View on GitHub
-      </a>
-    </p>
+    <p>Interactive dashboard analyzing Netflix content trends.</p>
+    <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">
+      View on GitHub →
+    </a>
   </div>
 </section>
-
 
 <section>
   <div class="section-title">Contact</div>
   <div class="card">
-    <p>📧 Email: akilkrishnanakilkrishnan88@gmail.com</p>
-    <p>📞 Phone: 8248702184</p>
+    <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
+    <p>📞 8248702184</p>
     <p>
-      🔗 GitHub:
-      <a href="https://github.com/Akilkrishnan2005" target="_blank">
-        github.com/Akilkrishnan2005
-      </a>
-    </p>
-    <p>
-      🔗 LinkedIn:
-      <a href="#" target="_blank">Add your LinkedIn</a>
+      🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a>
+      |
+      🔗 <a href="#" target="_blank">LinkedIn</a>
     </p>
   </div>
 </section>
@@ -226,7 +185,8 @@ footer {
 <footer>
   © 2026 Akil Krishnan | Data Science Portfolio
 </footer>
-  
+
+<!-- Page Fade-in Script -->
 <script>
   document.body.style.opacity = 0;
   window.onload = function () {
@@ -234,6 +194,6 @@ footer {
     document.body.style.opacity = 1;
   };
 </script>
-  
+
 </body>
 </html>
