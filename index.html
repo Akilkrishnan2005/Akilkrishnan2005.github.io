@@ -5,7 +5,44 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Akil Krishnan | Data Scientist</title>
 
+
 <style>
+
+  /* About section layout */
+.about-section {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-bottom: 60px;
+}
+
+/* Skills grid */
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Individual skill box */
+.skill-box {
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #38bdf8;
+  border: 1px solid #38bdf8;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+/* Hover animation */
+.skill-box:hover {
+  background: #38bdf8;
+  color: #020617;
+  transform: translateY(-4px);
+}
+
   /* Reset */
   * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
   body { background:#0f172a; color:#e5e7eb; line-height:1.6; scroll-behavior:smooth; }
@@ -109,33 +146,34 @@
 
 <main>
   <!-- About & Skills -->
-  <div id="about" class="about-skills">
-    <div class="card">
-      <div class="section-title">About Me</div>
-      <p>Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.</p>
-      <p>Experienced with Big Data, MongoDB, and large-scale dataset management.</p>
-      <p>Proficient in creating interactive dashboards and visualizations using Power BI.</p>
-      <p>Passionate about turning complex data into actionable business insights.</p>
-      <p>Continuously learning and applying advanced data science techniques to solve real-world problems.</p>
-    </div>
+  <div id="about" class="about-section">
 
-    <div id="skills" class="card">
-      <div class="section-title">Skills</div>
-      <div id="skills" class="card">
-  <div class="section-title">Skills</div>
+  <!-- About Me -->
+  <div class="card">
+    <div class="section-title">About Me</div>
+    <p>Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.</p>
+    <p>Experienced with Big Data, MongoDB, and large-scale dataset management.</p>
+    <p>Proficient in creating interactive dashboards and visualizations using Power BI.</p>
+    <p>Passionate about turning complex data into actionable business insights.</p>
+  </div>
 
-  <ul class="skills-list">
-    <li>Python for Data Analysis & Machine Learning</li>
-    <li>R Programming for Statistical Computing</li>
-    <li>MySQL & SQL for Data Management</li>
-    <li>Power BI for Data Visualization & Dashboards</li>
-    <li>MongoDB (NoSQL Database)</li>
-    <li>Big Data Concepts & Large-scale Datasets</li>
-  </ul>
-</div>
+  <!-- Skills -->
+  <div class="skills-wrapper">
+    <div class="section-title">Skills</div>
 
+    <div class="skills-grid">
+      <div class="skill-box">Python</div>
+      <div class="skill-box">R Programming</div>
+      <div class="skill-box">MySQL / SQL</div>
+      <div class="skill-box">Power BI</div>
+      <div class="skill-box">MongoDB</div>
+      <div class="skill-box">Big Data</div>
+      <div class="skill-box">Data Analysis</div>
+      <div class="skill-box">Machine Learning</div>
     </div>
   </div>
+
+</div>
 
  
   <section id="projects" style="margin-top:60px;">
