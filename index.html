@@ -8,6 +8,25 @@
 
 <style>
 
+/* Skills under name */
+.name-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 20px;
+}
+
+.name-skills span {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 999px;
+  background: rgba(56,189,248,0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56,189,248,0.45);
+}
+
+
 /* ===== HERO LEFT TEXT DESIGN ===== */
 
 /* ===== MOBILE FIX ===== */
@@ -36,6 +55,11 @@
   .hero-img {
     width: 220px;
     height: 220px;
+  }
+}
+@media (max-width: 900px) {
+  .name-skills {
+    justify-content: center;
   }
 }
 
@@ -125,27 +149,26 @@
 <div class="hero-left">
   <h1 class="hero-name">Akil Krishnan</h1>
 
-  <h2 class="hero-role">Data Scientist</h2>
+  <!-- SKILLS UNDER NAME -->
+  <div class="name-skills">
+    <span>Data Scientist</span>
+    <span>Python</span>
+    <span>Machine Learning</span>
+    <span>SQL</span>
+    <span>Power BI</span>
+  </div>
 
   <p class="hero-desc">
     Data Science professional specializing in transforming complex data into
     actionable insights using Machine Learning, analytics, and visualization.
   </p>
 
-  <div class="hero-tags">
-    <span>Python</span>
-    <span>Data Science</span>
-    <span>Machine Learning</span>
-    <span>SQL</span>
-    <span>Power BI</span>
-  </div>
-
   <div class="hero-buttons">
     <a href="#projects" class="btn-primary">View My Work</a>
     <a href="#contact" class="btn-secondary">Let’s Connect</a>
   </div>
 </div>
-}
+
 
 /* Right image */
 .hero-right {
