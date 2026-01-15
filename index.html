@@ -448,6 +448,27 @@ a:hover {
   box-shadow: 0 22px 40px rgba(56,189,248,0.35);
 }
 
+/* ================= PROJECT HOVER (FIXED 100%) ================= */
+
+.project-card {
+  position: relative;
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+  will-change: transform;
+}
+
+.project-card:hover {
+  transform: translateY(-10px) scale(1.015);
+  box-shadow: 0 26px 50px rgba(56,189,248,0.45);
+}
+
+.project-img {
+  transition: transform 0.18s ease-out;
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.06);
+}
+
 
 /* Fade-up animation */
 .fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -531,9 +552,9 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   
   <div class="projects-grid fade-up">
     <!-- Project 1 -->
-    <div class="project-card ">
-      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img fade-up">
-      <div class="project-details fade-up">
+    <div class="project-card fade-up">
+      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img ">
+      <div class="project-details">
         <h3>Data Science Model Deployment with Tkinter</h3>
         <ul class="project-points">
           <li>Technologies used: Python, Tkinter, Pandas, NumPy, Scikit-learn, Matplotlib,Seaborn. </li>
@@ -547,8 +568,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <!-- Project 2 -->
     <div class="project-card fade-up">
-      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img fade-up">
-      <div class="project-details fade-up">
+      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img ">
+      <div class="project-details ">
         <h3>Vehicle Service Management System</h3>
         <ul class="project-points">
           <li>Developed a database-driven application to manage vehicle service bookings with a user-friendly Tkinter-based GUI.</li>
@@ -562,8 +583,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <!-- Project 3 -->
     <div class="project-card fade-up">
-      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img fade-up">
-      <div class="project-details fade-up">
+      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img ">
+      <div class="project-details ">
         <h3>Power BI – Netflix OTT Analytics</h3>
         <ul class="project-points">
           <li>Created a Power BI dashboard on the Netflix dataset to analyze movies and TV shows by genre, rating, and release year. Performed data cleaning and data modeling using Power Query. </li>
