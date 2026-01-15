@@ -8,6 +8,23 @@
 
 <style>
 
+/* Profile Image */
+.profile-img {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin: 15px 0;
+  border: 3px solid #38bdf8;
+  box-shadow: 0 8px 25px rgba(56,189,248,0.35);
+  transition: transform 0.3s ease;
+}
+
+.profile-img:hover {
+  transform: scale(1.05);
+}
+
+
   /* About section layout */
 .about-section {
   display: flex;
@@ -141,6 +158,7 @@
 <!-- Hero -->
 <header>
   <h1>Akil Krishnan</h1>
+  <img src="profile.jpg" alt="Akil Krishnan" class="profile-img">
   <p>Data Science Professional | Python, R, MySQL, Power BI | Turning Complex Data into Actionable Insights</p>
 </header>
 
