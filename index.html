@@ -454,22 +454,25 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
 
+      // Add show to the section itself
       entry.target.classList.add('show');
 
-      // Optional: stagger children inside this element
+      // Add stagger effect to children with fade-up
       const children = entry.target.querySelectorAll('.fade-up');
       children.forEach((child, index) => {
-        child.style.transitionDelay = `${index * 0.15}s`;
-        child.classList.add('show');
+        // Only if child is not the same as the parent
+        if (child !== entry.target) {
+          child.style.transitionDelay = `${index * 0.15}s`;
+          child.classList.add('show');
+        }
       });
 
-      obs.unobserve(entry.target);
+      obs.unobserve(entry.target); // animate once
     });
   }, { threshold: 0.25 });
 
   faders.forEach(fader => observer.observe(fader));
 });
-
 </script>
 
 <script>
