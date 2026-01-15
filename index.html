@@ -8,6 +8,72 @@
 
 <style>
 
+/* Hero Split Layout */
+.hero {
+  min-height: 60vh;
+  background: linear-gradient(135deg,#020617,#0f172a);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 60px 80px;
+  gap: 40px;
+}
+
+/* Left text */
+.hero-left {
+  max-width: 600px;
+}
+
+.hero-left h1 {
+  font-size: 3rem;
+  color: #38bdf8;
+  margin-bottom: 15px;
+}
+
+.hero-left p {
+  font-size: 1.2rem;
+  color: #cbd5f5;
+  line-height: 1.6;
+}
+
+/* Right image */
+.hero-right {
+  flex-shrink: 0;
+}
+
+.hero-img {
+  width: 260px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 18px;   /* square with soft edges */
+  border: 3px solid #38bdf8;
+  box-shadow: 0 15px 35px rgba(56,189,248,0.35);
+  transition: transform 0.3s ease;
+}
+
+.hero-img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .hero-left h1 {
+    font-size: 2.4rem;
+  }
+
+  .hero-img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+  
 /* Profile Image */
 .profile-img {
   width: 140px;
@@ -156,11 +222,17 @@
 </nav>
 
 <!-- Hero -->
-<header>
-  <h1>Akil Krishnan</h1>
-  <img src="profile.jpg" alt="Akil Krishnan" class="profile-img">
-  <p>Data Science Professional | Python, R, MySQL, Power BI | Turning Complex Data into Actionable Insights</p>
+<header class="hero">
+  <div class="hero-left">
+    <h1>Akil Krishnan</h1>
+    <p>Data Science Professional | Python, R, MySQL, Power BI | Turning Complex Data into Actionable Insights</p>
+  </div>
+
+  <div class="hero-right">
+    <img src="profile.jpg" alt="Akil Krishnan" class="hero-img">
+  </div>
 </header>
+
 
 <main>
   <!-- About & Skills -->
