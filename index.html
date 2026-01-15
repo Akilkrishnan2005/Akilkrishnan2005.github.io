@@ -1,4 +1,3 @@
-org duply
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -307,9 +306,6 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 /* ================= GLOBAL HOVER EFFECTS ================= */
 
 /* Smooth transition for everything */
-* {
-  transition: all 0.3s ease;
-}
 
 /* SECTION hover (About, Projects, Contact) */
 section:hover {
@@ -323,10 +319,7 @@ section:hover {
 }
 
 /* PROJECT CARD hover (FIXED) */
-.project-card:hover {
-  transform: translateY(-12px) scale(1.02) !important;
-  box-shadow: 0 30px 55px rgba(56,189,248,0.45);
-}
+
 
 /* PROJECT IMAGE zoom */
 .project-card:hover .project-img {
@@ -387,10 +380,7 @@ a:hover {
 }
 
 /* PROJECT CARD hover (FIXED) */
-.project-card:hover {
-  transform: translateY(-12px) scale(1.02) !important;
-  box-shadow: 0 30px 55px rgba(56,189,248,0.45);
-}
+
 
 
 /* PROJECT IMAGE zoom on hover */
@@ -406,12 +396,7 @@ a:hover {
 }
 
 /* Smooth transition (important) */
-#about .card,
-.project-card,
-#contact .card,
-.project-img {
-  transition: all 0.35s ease;
-}
+
 
 /* ================= FINAL PROJECT HOVER (STEP 3) ================= */
 
@@ -427,6 +412,40 @@ a:hover {
 .project-card:hover .project-img {
   transform: scale(1.08);
   transition: transform 0.35s ease;
+}
+
+/* ================= FAST & SMOOTH HOVERS (FINAL) ================= */
+
+/* Project card */
+.project-card {
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+  will-change: transform;
+}
+
+.project-card:hover {
+  transform: translateY(-10px) scale(1.015);
+  box-shadow: 0 26px 50px rgba(56,189,248,0.45);
+}
+
+/* Project image */
+.project-img {
+  transition: transform 0.18s ease-out;
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.06);
+}
+
+/* About & Contact cards */
+#about .card,
+#contact .card {
+  transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+
+#about .card:hover,
+#contact .card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 22px 40px rgba(56,189,248,0.35);
 }
 
 
