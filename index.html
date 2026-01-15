@@ -413,6 +413,22 @@ a:hover {
   transition: all 0.35s ease;
 }
 
+/* ================= FINAL PROJECT HOVER (STEP 3) ================= */
+
+.project-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 55px rgba(56,189,248,0.45);
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.08);
+  transition: transform 0.35s ease;
+}
+
 
 /* Fade-up animation */
 .fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
