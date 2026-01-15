@@ -223,6 +223,16 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   text-decoration: underline;
 }
 
+.fade-up {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
 
 /* Fade-up animation */
 .fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -367,19 +377,27 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 <footer>© 2026 Akil Krishnan | Data Science Portfolio</footer>
 
 <script>
-window.addEventListener('load', () => {
+document.addEventListener('DOMContentLoaded', () => {
 
   const faders = document.querySelectorAll('.fade-up');
 
-  faders.forEach((fader, index) => {
-    setTimeout(() => {
-      fader.classList.add('show');
-    }, index * 200); // stagger animation
-  });
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
 
+        entry.target.classList.add('show');
+        obs.unobserve(entry.target); // animate once
+      });
+    },
+    {
+      threshold: 0.25
+    }
+  );
+
+  faders.forEach(fader => observer.observe(fader));
 });
 </script>
-
 
 
 </body>
