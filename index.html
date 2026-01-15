@@ -289,16 +289,12 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 }
 
 /* Smooth blinking cursor */
-/* Perfect straight blinking cursor */
-.typing-text::after {
-  content: "|";                   /* ← TEXT cursor (most reliable) */
-  position: absolute;
-  right: -8px;
-  bottom: 0;
-
-  color: #38bdf8;
+.cursor {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 1.4rem;
   font-weight: 400;
-
+  color: #38bdf8;
   animation: blink 1s steps(1) infinite;
 }
 
@@ -345,7 +341,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
 <div class="typing-container">
   <span class="static-text">Data Scientist | </span>
-  <span class="typing-text"></span>
+  <span class="typing-text"></span><span class="cursor">|</span>
+
 </div>
 
     <p class="hero-desc">Data Science professional specializing in transforming complex data into actionable insights using Machine Learning, analytics, and visualization.</p>
