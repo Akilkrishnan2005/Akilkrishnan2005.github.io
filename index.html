@@ -37,7 +37,9 @@ nav a:hover { color:#0ea5e9; }
   padding: 60px 80px;
   gap: 40px;
 }
-.hero-left { max-width: 600px; }
+.hero-left {
+  max-width: 600px;
+}
 .hero-name {
   font-size: 3.5rem;
   font-weight: 800;
@@ -47,12 +49,33 @@ nav a:hover { color:#0ea5e9; }
   -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
 }
+.hero-role {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 15px;
+}
 .hero-desc {
   max-width: 520px;
   font-size: 1.05rem;
   color: #cbd5f5;
   line-height: 1.7;
   margin-bottom: 22px;
+}
+.name-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 20px;
+}
+.name-skills span {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 999px;
+  background: rgba(56,189,248,0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56,189,248,0.45);
 }
 .hero-buttons { display:flex; gap:15px; flex-wrap:wrap; margin-top:10px; }
 .btn-primary {
@@ -121,40 +144,59 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 .card:hover { transform:translateY(-6px); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
 
 /* ===== Projects Section ===== */
+/* Projects Grid: 2 per row on desktop, 1 per row on mobile */
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 30px;
+  grid-template-columns: repeat(2, 1fr); /* 2 projects per row */
+  gap: 30px; /* spacing between cards */
   margin-top: 20px;
 }
-@media (max-width: 900px) { .projects-grid { grid-template-columns: 1fr; } }
 
+@media (max-width: 900px) {
+  .projects-grid {
+    grid-template-columns: 1fr; /* 1 project per row on mobile */
+  }
+}
+
+/* Project Card */
 .project-card {
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   background: #020617;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+/* Hover effect */
 .project-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 35px rgba(56,189,248,0.25);
 }
+
+/* Image on top */
 .project-img {
   width: 100%;
   height: 180px;
   object-fit: cover;
   border-bottom: 2px solid #38bdf8;
 }
+
+/* Project Details */
 .project-details {
   padding: 15px;
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.project-details h3 { color: #38bdf8; font-size: 1.2rem; line-height: 1.3; }
+
+.project-details h3 {
+  color: #38bdf8;
+  font-size: 1.2rem;
+  line-height: 1.3;
+}
+
 .project-points li {
   font-size: 0.95rem;
   color: #cbd5f5;
@@ -162,6 +204,7 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   padding-left: 18px;
   position: relative;
 }
+
 .project-points li::before {
   content: "➤";
   position: absolute;
@@ -169,18 +212,26 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   color: #38bdf8;
   font-weight: bold;
 }
-.project-details a { color:#38bdf8; font-weight:500; margin-top:5px; }
-.project-details a:hover { text-decoration: underline; }
 
-/* ===== Fade-up Animation ===== */
+.project-details a {
+  color: #38bdf8;
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+.project-details a:hover {
+  text-decoration: underline;
+}
+
 .fade-up {
-  opacity:0;
-  transform:translateY(40px);
+  opacity: 0;
+  transform: translateY(60px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
+
 .fade-up.show {
-  opacity:1;
-  transform:translateY(0);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Auto Typing Skills */
@@ -190,22 +241,55 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   margin: 12px 0 20px;
   color: #cbd5f5;
 }
+
+/* Gradient auto-typing text */
+/* Gradient + Glow typing text */
 .typing-text {
-  position: relative;
-  display: inline-block;
+  position: relative;              /* 🔑 REQUIRED */
+  display: inline-block;           /* 🔑 REQUIRED */
+
   background: linear-gradient(90deg, #6366f1, #38bdf8, #0ea5e9);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  font-weight:700;
+
+  font-weight: 700;
   white-space: nowrap;
   padding-right: 8px;
-  filter: drop-shadow(0 0 6px rgba(56,189,248,0.6)) drop-shadow(0 0 12px rgba(99,102,241,0.4));
+
+  filter: drop-shadow(0 0 6px rgba(56,189,248,0.6))
+          drop-shadow(0 0 12px rgba(99,102,241,0.4));
+
   animation: gradientMove 3s linear infinite;
 }
-@keyframes gradientMove { 0% { background-position: 0% center; } 100% { background-position: 200% center; } }
-.cursor { display:inline-block; margin-left:3px; font-size:1.4rem; font-weight:400; color:#38bdf8; animation: blink 1s steps(1) infinite; }
-@keyframes blink { 50% { opacity:0; } }
+
+
+
+/* Gradient animation */
+@keyframes gradientMove {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+/* Smooth blinking cursor */
+.cursor {
+  display: inline-block;
+  margin-left: 3px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: #38bdf8;
+  animation: blink 1s steps(1) infinite;
+}
+
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+
+/* Fade-up animation */
+.fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+.fade-up.show { opacity:1; transform:translateY(0); }
 
 /* ===== Contact & Footer ===== */
 .contact-card { text-align:center; }
@@ -234,112 +318,120 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 </nav>
 
 <!-- Hero -->
-<header class="hero fade-up">
-  <div class="hero-left fade-up">
-    <h1 class="hero-name fade-up">Akil Krishnan</h1>
-    <div class="typing-container fade-up">
-      <span class="static-text">Data Scientist | </span>
-      <span class="typing-text"></span><span class="cursor">|</span>
-    </div>
-    <p class="hero-desc fade-up">Data Science professional specializing in transforming complex data into actionable insights using Machine Learning, analytics, and visualization.</p>
-    <div class="hero-buttons fade-up">
-      <a href="#projects" class="btn-primary fade-up">View My Work</a>
-      <a href="#contact" class="btn-secondary fade-up">Let’s Connect</a>
+<header class="hero">
+  <div class="hero-left">
+    <h1 class="hero-name">Akil Krishnan</h1>
+
+<div class="typing-container">
+  <span class="static-text">Data Scientist | </span>
+  <span class="typing-text"></span><span class="cursor">|</span>
+
+</div>
+
+    <p class="hero-desc">Data Science professional specializing in transforming complex data into actionable insights using Machine Learning, analytics, and visualization.</p>
+    <div class="hero-buttons">
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Let’s Connect</a>
     </div>
   </div>
-  <div class="hero-right fade-up">
-    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img fade-up">
+  <div class="hero-right">
+    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img">
   </div>
 </header>
 
 <main>
   <!-- About & Skills -->
-  <section id="about" class="about-section fade-up">
-    <div class="card fade-up">
-      <div class="section-title fade-up">About Me</div>
-      <p class="fade-up">Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.</p>
-      <p class="fade-up">Experienced with Big Data, MongoDB, and large-scale dataset management.</p>
-      <p class="fade-up">Proficient in creating interactive dashboards and visualizations using Power BI.</p>
-      <p class="fade-up">Passionate about turning complex data into actionable business insights.</p>
+<section id="about" class="about-section fade-up">
+  <div class="card fade-up">
+    <div class="section-title">About Me</div>
+    <p>Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.</p>
+    <p>Experienced with Big Data, MongoDB, and large-scale dataset management.</p>
+    <p>Proficient in creating interactive dashboards and visualizations using Power BI.</p>
+    <p>Passionate about turning complex data into actionable business insights.</p>
+  </div>
+  <div class="skills-wrapper fade-up">
+    <div class="section-title">Skills</div>
+    <div class="skills-grid">
+      <div class="skill-box fade-up">Data Science</div>
+      <div class="skill-box fade-up">Python</div>
+      <div class="skill-box fade-up">MySQL</div>
+      <div class="skill-box fade-up">Power BI</div>
+      <div class="skill-box fade-up">R Programming</div>
+      <div class="skill-box fade-up">Big Data</div>
+      <div class="skill-box fade-up">Data Analysis</div>
+      <div class="skill-box fade-up">MongoDB</div>
     </div>
-    <div class="skills-wrapper fade-up">
-      <div class="section-title fade-up">Skills</div>
-      <div class="skills-grid">
-        <div class="skill-box fade-up">Data Science</div>
-        <div class="skill-box fade-up">Python</div>
-        <div class="skill-box fade-up">MySQL</div>
-        <div class="skill-box fade-up">Power BI</div>
-        <div class="skill-box fade-up">R Programming</div>
-        <div class="skill-box fade-up">Big Data</div>
-        <div class="skill-box fade-up">Data Analysis</div>
-        <div class="skill-box fade-up">MongoDB</div>
-      </div>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Projects -->
-  <section id="projects" class="fade-up">
-    <div class="section-title fade-up">Projects</div>
-    <div class="projects-grid">
-      <!-- Project 1 -->
-      <div class="project-card fade-up">
-        <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img fade-up">
-        <div class="project-details fade-up">
-          <h3>Data Science Model Deployment with Tkinter</h3>
-          <ul class="project-points fade-up">
-            <li>Technologies used: Python, Tkinter, Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn.</li>
-            <li>GUI app to upload datasets (CSV/Excel) and perform Regression, Classification, and clustering tasks.</li>
-            <li>Implemented multiple ML algorithms: Linear/Polynomial Regression, Logistic Regression, Decision Tree, Random Forest, KNN, Naïve Bayes, SVM, K-Means, Hierarchical Clustering.</li>
-            <li>Displayed detailed metrics: Accuracy, Precision, Recall, F1-score, RMSE, clustering scores.</li>
-          </ul>
-          <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">View on GitHub →</a>
-        </div>
-      </div>
-      <!-- Project 2 -->
-      <div class="project-card fade-up">
-        <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img fade-up">
-        <div class="project-details fade-up">
-          <h3>Vehicle Service Management System</h3>
-          <ul class="project-points fade-up">
-            <li>Database-driven app for vehicle service bookings with Tkinter GUI.</li>
-            <li>Add, View, Update, Delete operations for customers and bookings.</li>
-            <li>MySQL integration for efficient data management.</li>
-            <li>Frontend-backend interaction handled using Python.</li>
-          </ul>
-          <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">View on GitHub →</a>
-        </div>
-      </div>
-      <!-- Project 3 -->
-      <div class="project-card fade-up">
-        <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img fade-up">
-        <div class="project-details fade-up">
-          <h3>Power BI – Netflix OTT Analytics</h3>
-          <ul class="project-points fade-up">
-            <li>Power BI dashboard analyzing Netflix movies and TV shows by genre, rating, and release year.</li>
-            <li>Interactive KPIs and visuals to highlight trends and audience preferences.</li>
-          </ul>
-          <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">View on GitHub →</a>
-        </div>
+
+  <section id="projects" class="fade-up" style="margin-top:60px;">
+  <div class="section-title">Projects</div>
+  
+  <div class="projects-grid">
+    <!-- Project 1 -->
+    <div class="project-card fade-up">
+      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img fade-up">
+      <div class="project-details fade-up">
+        <h3>Data Science Model Deployment with Tkinter</h3>
+        <ul class="project-points">
+          <li>Technologies used: Python, Tkinter, Pandas, NumPy, Scikit-learn, Matplotlib,Seaborn. </li>
+          <li>Designed and developed a GUI-based data science application enabling users to upload datasets (CSV/Excel) and perform Regression,Classification, and clustering tasks.</li>
+          <li>Implemented multiple ML algorithms including Linear/Polynomial Regression, Logistic Regression, Decision Tree, Random Forest, KNN,Naïve Bayes, SVM, K-Means,and Hierarchical Clustering. </li>
+          <li>Displayed detailed performance metrics such as Accuracy, Precision,Recall, F1-score, RMSE, and clustering scores.</li>
+        </ul>
+        <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">View on GitHub →</a>
       </div>
     </div>
-  </section>
+
+    <!-- Project 2 -->
+    <div class="project-card fade-up">
+      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img fade-up">
+      <div class="project-details fade-up">
+        <h3>Vehicle Service Management System</h3>
+        <ul class="project-points">
+          <li>Developed a database-driven application to manage vehicle service bookings with a user-friendly Tkinter-based GUI.</li>
+          <li>Implemented core functionalities such as Add, View, Update, and Delete operations for customers and bookings.</li>
+          <li>Integrated MySQL for efficient data storage, retrieval, and management of service records.</li>
+          <li>Ensured smooth interaction between the frontend (Tkinter) and backend (MySQL) using Python database connectivity. </li>
+        </ul>
+        <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">View on GitHub →</a>
+      </div>
+    </div>
+
+    <!-- Project 3 -->
+    <div class="project-card fade-up">
+      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img fade-up">
+      <div class="project-details fade-up">
+        <h3>Power BI – Netflix OTT Analytics</h3>
+        <ul class="project-points">
+          <li>Created a Power BI dashboard on the Netflix dataset to analyze movies and TV shows by genre, rating, and release year. Performed data cleaning and data modeling using Power Query. </li>
+          <li>Developed interactive KPIs and visuals to highlight content trends and audience preferences. The project demonstrates strong analytical and visualization skills.</li>
+        </ul>
+        <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">View on GitHub →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
 
   <!-- Contact -->
-  <section id="contact" class="fade-up">
-    <div class="section-title fade-up">Contact</div>
-    <div class="card contact-card fade-up">
-      <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
-      <p>📞 8248702184</p>
-      <p>🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
-         🔗 <a href="#" target="_blank">LinkedIn</a></p>
-    </div>
-  </section>
+<section id="contact" class="fade-up">
+  <div class="section-title">Contact</div>
+  <div class="card contact-card fade-up">
+    <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
+    <p>📞 8248702184</p>
+    <p>🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
+       🔗 <a href="#" target="_blank">LinkedIn</a></p>
+  </div>
+</section>
+
 </main>
 
 <footer>© 2026 Akil Krishnan | Data Science Portfolio</footer>
 
 <script>
-// ===== Fade-up with stagger for all sections =====
 document.addEventListener('DOMContentLoaded', () => {
   const faders = document.querySelectorAll('.fade-up');
 
@@ -347,48 +439,65 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
 
-      // Animate parent
+      // Add show to the section itself
       entry.target.classList.add('show');
 
-      // Animate children with stagger
+      // Add stagger effect to children with fade-up
       const children = entry.target.querySelectorAll('.fade-up');
       children.forEach((child, index) => {
+        // Only if child is not the same as the parent
         if (child !== entry.target) {
           child.style.transitionDelay = `${index * 0.15}s`;
           child.classList.add('show');
         }
       });
 
-      obs.unobserve(entry.target);
+      obs.unobserve(entry.target); // animate once
     });
   }, { threshold: 0.25 });
 
   faders.forEach(fader => observer.observe(fader));
 });
 
-// ===== Typing effect =====
-const skills = ["Python","Machine Learning","SQL","Power BI","Data Analysis"];
-let skillIndex=0,charIndex=0,isDeleting=false;
+</script>
+
+<script>
+const skills = [
+  "Python",
+  "Machine Learning",
+  "SQL",
+  "Power BI",
+  "Data Analysis"
+];
+
+let skillIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
 const typingText = document.querySelector(".typing-text");
 
 function typeEffect() {
   const currentSkill = skills[skillIndex];
-  if(isDeleting){
-    typingText.textContent=currentSkill.substring(0,charIndex--);
-  }else{
-    typingText.textContent=currentSkill.substring(0,charIndex++);
+
+  if (isDeleting) {
+    typingText.textContent = currentSkill.substring(0, charIndex--);
+  } else {
+    typingText.textContent = currentSkill.substring(0, charIndex++);
   }
-  if(!isDeleting && charIndex===currentSkill.length){
-    setTimeout(()=>isDeleting=true,1200);
-  }else if(isDeleting && charIndex===0){
-    isDeleting=false;
-    skillIndex=(skillIndex+1)%skills.length;
+
+  if (!isDeleting && charIndex === currentSkill.length) {
+    setTimeout(() => isDeleting = true, 1200);
+  } 
+  else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    skillIndex = (skillIndex + 1) % skills.length;
   }
-  setTimeout(typeEffect,isDeleting?50:90);
+
+  setTimeout(typeEffect, isDeleting ? 50 : 90);
 }
+
 typeEffect();
 </script>
 
+
 </body>
 </html>
-
