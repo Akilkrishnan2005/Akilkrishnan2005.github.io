@@ -262,6 +262,9 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 /* Gradient auto-typing text */
 /* Gradient + Glow typing text */
 .typing-text {
+  position: relative;              /* 🔑 REQUIRED */
+  display: inline-block;           /* 🔑 REQUIRED */
+
   background: linear-gradient(90deg, #6366f1, #38bdf8, #0ea5e9);
   background-size: 200% auto;
   -webkit-background-clip: text;
@@ -269,14 +272,14 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 
   font-weight: 700;
   white-space: nowrap;
-  padding-right: 6px;
+  padding-right: 8px;
 
-  /* 🔥 Glow effect */
   filter: drop-shadow(0 0 6px rgba(56,189,248,0.6))
           drop-shadow(0 0 12px rgba(99,102,241,0.4));
 
   animation: gradientMove 3s linear infinite;
 }
+
 
 
 /* Gradient animation */
@@ -288,15 +291,17 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 /* Smooth blinking cursor */
 /* Perfect straight blinking cursor */
 .typing-text::after {
-  content: "";
-  display: inline-block;
-  width: 2px;
-  height: 1em;              /* EXACT text height */
-  background-color: #38bdf8;
-  margin-left: 3px;
-  vertical-align: bottom;  /* FIXES crooked cursor */
+  content: "|";                   /* ← TEXT cursor (most reliable) */
+  position: absolute;
+  right: -8px;
+  bottom: 0;
+
+  color: #38bdf8;
+  font-weight: 400;
+
   animation: blink 1s steps(1) infinite;
 }
+
 
 @keyframes blink {
   0%, 50%, 100% { opacity: 0; }
