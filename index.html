@@ -223,20 +223,6 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   text-decoration: underline;
 }
 
-/* Fade-up scroll animation */
-.fade-up {
-  opacity: 0;
-  transform: translateY(40px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-up.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-
-
 
 /* Fade-up animation */
 .fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -381,19 +367,28 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 <footer>© 2026 Akil Krishnan | Data Science Portfolio</footer>
 
 <script>
-// Scroll fade-up animation
-const faders = document.querySelectorAll('.fade-up');
-const appearOptions = { threshold: 0.1, rootMargin:"0px 0px -50px 0px" };
-const appearOnScroll = new IntersectionObserver((entries, observer) => {
-  entries.forEach(entry => {
-    if (!entry.isIntersecting) return;
-    entry.target.classList.add('show');
-    observer.unobserve(entry.target);
-  });
-}, appearOptions);
+window.addEventListener('load', () => {
 
-faders.forEach(fader => appearOnScroll.observe(fader));
+  const faders = document.querySelectorAll('.fade-up');
+
+  const appearOptions = {
+    threshold: 0.1,
+    rootMargin: "0px 0px -50px 0px"
+  };
+
+  const appearOnScroll = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      entry.target.classList.add('show');
+      observer.unobserve(entry.target);
+    });
+  }, appearOptions);
+
+  faders.forEach(fader => appearOnScroll.observe(fader));
+
+});
 </script>
+
 
 </body>
 </html>
