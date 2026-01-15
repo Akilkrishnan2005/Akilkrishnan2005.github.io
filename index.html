@@ -5,323 +5,127 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Akil Krishnan | Data Scientist</title>
 
+
 <style>
-/* ===== Reset & Base Styles ===== */
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
-body { background:#0f172a; color:#e5e7eb; line-height:1.6; scroll-behavior:smooth; }
-a { text-decoration:none; }
-ul { list-style:none; padding-left:0; }
 
-/* ===== Navigation ===== */
-nav {
-  position: sticky;
-  top:0;
-  background:#020617;
-  display:flex;
-  justify-content:center;
-  gap:30px;
-  padding:15px 0;
-  z-index:1000;
-  box-shadow:0 2px 10px rgba(0,0,0,0.5);
-}
-nav a { color:#38bdf8; font-weight:500; transition: color 0.3s; }
-nav a:hover { color:#0ea5e9; }
-
-/* ===== Hero Section ===== */
-.hero {
-  min-height: 60vh;
-  background: linear-gradient(135deg,#020617,#0f172a);
+  /* About section layout */
+.about-section {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 60px 80px;
+  flex-direction: column;
   gap: 40px;
-}
-.hero-left {
-  max-width: 600px;
-}
-.hero-name {
-  font-size: 3.5rem;
-  font-weight: 800;
-  letter-spacing: 1px;
-  background: linear-gradient(90deg, #6366f1, #38bdf8);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 8px;
-}
-.hero-role {
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #64748b;
-  margin-bottom: 15px;
-}
-.hero-desc {
-  max-width: 520px;
-  font-size: 1.05rem;
-  color: #cbd5f5;
-  line-height: 1.7;
-  margin-bottom: 22px;
-}
-.name-skills {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 12px 0 20px;
-}
-.name-skills span {
-  padding: 6px 14px;
-  font-size: 0.85rem;
-  font-weight: 500;
-  border-radius: 999px;
-  background: rgba(56,189,248,0.12);
-  color: #38bdf8;
-  border: 1px solid rgba(56,189,248,0.45);
-}
-.hero-buttons { display:flex; gap:15px; flex-wrap:wrap; margin-top:10px; }
-.btn-primary {
-  padding:12px 22px;
-  background: linear-gradient(90deg,#6366f1,#38bdf8);
-  color:#020617;
-  border-radius:10px;
-  font-weight:600;
-}
-.btn-primary:hover { filter: brightness(1.1); }
-.btn-secondary {
-  padding:12px 22px;
-  border:1px solid #38bdf8;
-  color:#38bdf8;
-  border-radius:10px;
-  font-weight:600;
-}
-.btn-secondary:hover { background:#38bdf8; color:#020617; }
-
-/* Hero Image */
-.hero-right { flex-shrink:0; }
-.hero-img {
-  width:340px;
-  height:340px;
-  object-fit:cover;
-  border-radius:20px;
-  border:4px solid #38bdf8;
-  box-shadow:0 20px 45px rgba(56,189,248,0.4);
-  transition: transform 0.3s ease;
-}
-.hero-img:hover { transform: scale(1.05); }
-
-/* ===== Main Sections ===== */
-main { max-width:1200px; margin:auto; padding:50px 20px; }
-
-/* Section Titles */
-.section-title {
-  font-size:2rem;
-  margin-bottom:20px;
-  color:#38bdf8;
-  border-left:4px solid #38bdf8;
-  padding-left:10px;
+  margin-bottom: 60px;
 }
 
-/* About & Skills */
-.about-section { display:flex; flex-direction:column; gap:40px; margin-bottom:60px; }
-.skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:15px; margin-top:20px; }
-.skill-box {
-  padding:12px 10px;
-  text-align:center;
-  font-size:0.95rem;
-  font-weight:500;
-  color:#38bdf8;
-  border:1px solid #38bdf8;
-  border-radius:10px;
-  transition: all 0.3s ease;
-}
-.skill-box:hover { background:#38bdf8; color:#020617; transform:translateY(-4px); }
-.card {
-  background:#020617;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 10px 25px rgba(0,0,0,0.3);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-.card:hover { transform:translateY(-6px); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
-
-/* ===== Projects Section ===== */
-/* Projects Grid: 2 per row on desktop, 1 per row on mobile */
-.projects-grid {
+/* Skills grid */
+.skills-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 2 projects per row */
-  gap: 30px; /* spacing between cards */
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
   margin-top: 20px;
 }
 
-@media (max-width: 900px) {
-  .projects-grid {
-    grid-template-columns: 1fr; /* 1 project per row on mobile */
-  }
-}
-
-/* Project Card */
-.project-card {
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  background: #020617;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Hover effect */
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 20px 35px rgba(56,189,248,0.25);
-}
-
-/* Image on top */
-.project-img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-bottom: 2px solid #38bdf8;
-}
-
-/* Project Details */
-.project-details {
-  padding: 15px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.project-details h3 {
+/* Individual skill box */
+.skill-box {
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 500;
   color: #38bdf8;
-  font-size: 1.2rem;
-  line-height: 1.3;
+  border: 1px solid #38bdf8;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
 
-.project-points li {
+/* Hover animation */
+.skill-box:hover {
+  background: #38bdf8;
+  color: #020617;
+  transform: translateY(-4px);
+}
+
+  /* Reset */
+  * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
+  body { background:#0f172a; color:#e5e7eb; line-height:1.6; scroll-behavior:smooth; }
+
+  /* Navigation */
+  nav {
+    position: sticky;
+    top:0;
+    background:#020617;
+    display:flex;
+    justify-content:center;
+    gap:30px;
+    padding:15px 0;
+    z-index:1000;
+    box-shadow:0 2px 10px rgba(0,0,0,0.5);
+  }
+  nav a {
+    color:#38bdf8;
+    text-decoration:none;
+    font-weight:500;
+    transition: color 0.3s;
+  }
+  nav a:hover { color:#0ea5e9; }
+
+  /* Hero Section */
+  header {
+  min-height: 55vh;   /* smaller height */
+  background: linear-gradient(135deg,#020617,#0f172a);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 40px 20px; /* controls top & bottom space */
+}
+
+  header h1 { font-size:3rem; color:#38bdf8; margin-bottom:10px; }
+  header p { font-size:1.2rem; color:#cbd5f5; max-width:600px; }
+
+  main { max-width:1200px; margin:auto; padding:50px 20px; }
+
+  .section-title { font-size:2rem; margin-bottom:20px; color:#38bdf8; border-left:4px solid #38bdf8; padding-left:10px; }
+
+  /* About & Skills */
+  .about-skills { display:grid; grid-template-columns:1fr 1fr; gap:40px; margin-bottom:60px; }
+  .card { background:#020617; padding:25px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.3); transition:transform 0.3s ease, box-shadow 0.3s ease; }
+  .card:hover { transform:translateY(-6px); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
+
+  /* Skills list (NO meters) */
+.skills-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.skills-list li {
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background: #020617;
+  border-left: 4px solid #38bdf8;
+  border-radius: 8px;
   font-size: 0.95rem;
   color: #cbd5f5;
-  margin-bottom: 6px;
-  padding-left: 18px;
-  position: relative;
 }
 
-.project-points li::before {
-  content: "➤";
-  position: absolute;
-  left: 0;
-  color: #38bdf8;
-  font-weight: bold;
-}
+  /* Horizontal Projects */
+  .projects-container { display:flex; overflow-x:auto; gap:20px; padding-bottom:10px; }
+  .projects-container::-webkit-scrollbar { height:10px; }
+  .projects-container::-webkit-scrollbar-thumb { background:#38bdf8; border-radius:5px; }
+  .projects-container::-webkit-scrollbar-track { background:#0f172a; }
+  .project-card { min-width:300px; flex:0 0 auto; background:#020617; padding:20px; border-radius:12px; box-shadow:0 10px 25px rgba(0,0,0,0.3); transition: transform 0.3s ease; }
+  .project-card:hover { transform:translateY(-6px); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
 
-.project-details a {
-  color: #38bdf8;
-  font-weight: 500;
-  margin-top: 5px;
-}
+  /* Contact */
+  .contact-card { text-align:center; }
+  .contact-card p, .contact-card a { margin:10px 0; color:#cbd5f5; font-weight:500; }
+  .contact-card a { text-decoration:none; }
+  .contact-card a:hover { text-decoration:underline; }
 
-.project-details a:hover {
-  text-decoration: underline;
-}
+  /* Footer */
+  footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; color:#94a3b8; margin-top:50px; }
 
-.fade-up {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-up.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Stagger animation for project cards */
-.projects-grid .project-card:nth-child(1) {
-  transition-delay: 0.1s;
-}
-
-.projects-grid .project-card:nth-child(2) {
-  transition-delay: 0.25s;
-}
-
-.projects-grid .project-card:nth-child(3) {
-  transition-delay: 0.4s;
-}
-
-.projects-grid .project-card:nth-child(4) {
-  transition-delay: 0.55s;
-}
-
-/* Auto Typing Skills */
-.typing-container {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin: 12px 0 20px;
-  color: #cbd5f5;
-}
-
-/* Gradient auto-typing text */
-/* Gradient + Glow typing text */
-.typing-text {
-  position: relative;              /* 🔑 REQUIRED */
-  display: inline-block;           /* 🔑 REQUIRED */
-
-  background: linear-gradient(90deg, #6366f1, #38bdf8, #0ea5e9);
-  background-size: 200% auto;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  font-weight: 700;
-  white-space: nowrap;
-  padding-right: 8px;
-
-  filter: drop-shadow(0 0 6px rgba(56,189,248,0.6))
-          drop-shadow(0 0 12px rgba(99,102,241,0.4));
-
-  animation: gradientMove 3s linear infinite;
-}
-
-
-
-/* Gradient animation */
-@keyframes gradientMove {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
-}
-
-/* Smooth blinking cursor */
-.cursor {
-  display: inline-block;
-  margin-left: 3px;
-  font-size: 1.4rem;
-  font-weight: 400;
-  color: #38bdf8;
-  animation: blink 1s steps(1) infinite;
-}
-
-
-@keyframes blink {
-  50% { opacity: 0; }
-}
-
-
-/* Fade-up animation */
-.fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.fade-up.show { opacity:1; transform:translateY(0); }
-
-/* ===== Contact & Footer ===== */
-.contact-card { text-align:center; }
-.contact-card p, .contact-card a { margin:10px 0; color:#cbd5f5; font-weight:500; }
-.contact-card a:hover { text-decoration:underline; }
-footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; color:#94a3b8; margin-top:50px; }
-
-/* ===== Responsive ===== */
-@media(max-width:900px) {
-  .hero { flex-direction: column-reverse; text-align:center; padding:40px 20px; }
-  .hero-left h1 { font-size:2.4rem; }
-  .hero-img { width:220px; height:220px; }
-  .name-skills { justify-content:center; }
-  .skills-grid { grid-template-columns:1fr; }
-}
+  /* Responsive */
+  @media(max-width:900px) { .about-skills { grid-template-columns:1fr; } }
 </style>
 </head>
 <body>
@@ -335,183 +139,301 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 </nav>
 
 <!-- Hero -->
-<header class="hero">
-  <div class="hero-left">
-    <h1 class="hero-name">Akil Krishnan</h1>
-
-<div class="typing-container">
-  <span class="static-text">Data Scientist | </span>
-  <span class="typing-text"></span><span class="cursor">|</span>
-
-</div>
-
-    <p class="hero-desc">Data Science professional specializing in transforming complex data into actionable insights using Machine Learning, analytics, and visualization.</p>
-    <div class="hero-buttons">
-      <a href="#projects" class="btn-primary">View My Work</a>
-      <a href="#contact" class="btn-secondary">Let’s Connect</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img">
-  </div>
+<header>
+  <h1>Akil Krishnan</h1>
+  <p>Data Science Professional | Python, R, MySQL, Power BI | Turning Complex Data into Actionable Insights</p>
 </header>
 
 <main>
   <!-- About & Skills -->
-  <section id="about" class="about-section fade-up">
-    <div class="card fade-up">
-      <div class="section-title">About Me</div>
-      <p>Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.</p>
-      <p>Experienced with Big Data, MongoDB, and large-scale dataset management.</p>
-      <p>Proficient in creating interactive dashboards and visualizations using Power BI.</p>
-      <p>Passionate about turning complex data into actionable business insights.</p>
-    </div>
-    <div class="skills-wrapper fade-up">
-      <div class="section-title">Skills</div>
-      <div class="skills-grid">
-        <div class="skill-box">Data Science</div>
-        <div class="skill-box">Python</div>
-        <div class="skill-box">MySQL</div>
-        <div class="skill-box">Power BI</div>
-        <div class="skill-box">R Programming</div>
-        <div class="skill-box">Big Data</div>
-        <div class="skill-box">Data Analysis</div>
-        <div class="skill-box">MongoDB</div>
-      </div>
-    </div>
-  </section>
+  <div id="about" class="about-section">
 
-  <section id="projects" class="fade-up" style="margin-top:60px;">
+  <!-- About Me -->
+  <div class="card">
+    <div class="section-title">About Me</div>
+    <p>Data Science professional skilled in Python, R, and MySQL for data analysis and modeling.</p>
+    <p>Experienced with Big Data, MongoDB, and large-scale dataset management.</p>
+    <p>Proficient in creating interactive dashboards and visualizations using Power BI.</p>
+    <p>Passionate about turning complex data into actionable business insights.</p>
+  </div>
+
+  <!-- Skills -->
+  <div class="skills-wrapper">
+    <div class="section-title">Skills</div>
+
+    <div class="skills-grid">
+      <div class="skill-box">Data Science</div>
+      <div class="skill-box">Python</div>
+      <div class="skill-box">MySQL</div>
+      <div class="skill-box">Power BI</div>
+      <div class="skill-box">R Programming</div>
+      <div class="skill-box">Big Data</div>
+      <div class="skill-box">Data Analysis</div>
+      <div class="skill-box">MongoDB</div>
+    </div>
+  </div>
+
+</div>
+
+ 
+  <section id="projects" style="margin-top:60px;">
   <div class="section-title">Projects</div>
-  
-  <div class="projects-grid fade-up">
+  <div class="projects-grid" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:30px;">
+
     <!-- Project 1 -->
-    <div class="project-card ">
-      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img fade-up">
-      <div class="project-details fade-up">
+    <div class="project-card square-card fade-up">
+      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img">
+      <div class="project-details">
         <h3>Data Science Model Deployment with Tkinter</h3>
-        <ul class="project-points">
-          <li>Technologies used: Python, Tkinter, Pandas, NumPy, Scikit-learn, Matplotlib,Seaborn. </li>
-          <li>Designed and developed a GUI-based data science application enabling users to upload datasets (CSV/Excel) and perform Regression,Classification, and clustering tasks.</li>
-          <li>Implemented multiple ML algorithms including Linear/Polynomial Regression, Logistic Regression, Decision Tree, Random Forest, KNN,Naïve Bayes, SVM, K-Means,and Hierarchical Clustering. </li>
-          <li>Displayed detailed performance metrics such as Accuracy, Precision,Recall, F1-score, RMSE, and clustering scores.</li>
-        </ul>
+        <li> Technologies used: Python, Tkinter, Pandas, NumPy, Scikit-learn, Matplotlib,Seaborn. </p>
+        <li> Designed and developed a GUI-based data science application enabling users to upload datasets (CSV/Excel) and perform Regression,Classification, and clustering tasks.</p>
+        <li> Implemented multiple ML algorithms including Linear/Polynomial Regression, Logistic Regression, Decision Tree, Random Forest, KNN,Naïve Bayes, SVM, K-Means,and Hierarchical Clustering.  </p>
+        <li> Displayed detailed performance metrics such as Accuracy, Precision,Recall, F1-score, RMSE, and clustering scores. </p>
         <a href="https://github.com/Akilkrishnan2005/data-science-tkinter-app" target="_blank">View on GitHub →</a>
       </div>
     </div>
 
     <!-- Project 2 -->
-    <div class="project-card fade-up">
-      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img fade-up">
-      <div class="project-details fade-up">
-        <h3>Vehicle Service Management System</h3>
-        <ul class="project-points">
-          <li>Developed a database-driven application to manage vehicle service bookings with a user-friendly Tkinter-based GUI.</li>
-          <li>Implemented core functionalities such as Add, View, Update, and Delete operations for customers and bookings.</li>
-          <li>Integrated MySQL for efficient data storage, retrieval, and management of service records.</li>
-          <li>Ensured smooth interaction between the frontend (Tkinter) and backend (MySQL) using Python database connectivity. </li>
-        </ul>
+    <div class="project-card square-card fade-up">
+      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img">
+      <div class="project-details">
+        <h3>VEHICLE SERVICE MANGEMENT SYSTEM</h3>
+        <li> Developed a database-driven application to manage vehicle service bookings with a user-friendly Tkinter-based GUI</p>
+        <li> Implemented core functionalities such as Add, View, Update, and Delete operations for customers and bookings. </p>
+        <li> Integrated MySQL for efficient data storage, retrieval, and management of service records. </p>
+        <li> Ensured smooth interaction between the frontend (Tkinter) and backend (MySQL) using Python database connectivity. </p>
         <a href="https://github.com/Akilkrishnan2005/vehicle-service-booking-system" target="_blank">View on GitHub →</a>
       </div>
     </div>
 
     <!-- Project 3 -->
-    <div class="project-card fade-up">
-      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img fade-up">
-      <div class="project-details fade-up">
+    <div class="project-card square-card fade-up">
+      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img">
+      <div class="project-details">
         <h3>Power BI – Netflix OTT Analytics</h3>
-        <ul class="project-points">
-          <li>Created a Power BI dashboard on the Netflix dataset to analyze movies and TV shows by genre, rating, and release year. Performed data cleaning and data modeling using Power Query. </li>
-          <li>Developed interactive KPIs and visuals to highlight content trends and audience preferences. The project demonstrates strong analytical and visualization skills.</li>
-        </ul>
+        <li> Created a Power BI dashboard on the Netflix dataset to analyze movies and TV shows by genre, rating, and release year. Performed data cleaning and data modeling using Power Query. </p>
+        <li> Created a Power BI dashboard on the Netflix dataset to analyze movies and TV shows by genre, rating, and release year. Performed data cleaning and data modeling using Power Query. </p>
         <a href="https://github.com/Akilkrishnan2005/powerbi-netflix-analytics" target="_blank">View on GitHub →</a>
       </div>
     </div>
+
   </div>
 </section>
 
-
-
- <!-- Contact -->
-<section id="contact" class="fade-up">
-  <div class="section-title">Contact</div>
-  <div class="card contact-card fade-up">
-    <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
-    <p>📞 8248702184</p>
-    <p>🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
-       🔗 <a href="#" target="_blank">LinkedIn</a></p>
-  </div>
-  </section>
-</main>
-
-<footer>© 2026 Akil Krishnan | Data Science Portfolio</footer>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const faders = document.querySelectorAll('.fade-up');
-
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
-
-      // Add show to the section itself
-      entry.target.classList.add('show');
-
-      // Add stagger effect to children with fade-up
-      const children = entry.target.querySelectorAll('.fade-up');
-      children.forEach((child, index) => {
-        // Only if child is not the same as the parent
-        if (child !== entry.target) {
-          child.style.transitionDelay = `${index * 0.15}s`;
-          child.classList.add('show');
-        }
-      });
-
-      obs.unobserve(entry.target); // animate once
-    });
-  }, { threshold: 0.25 });
-
-  faders.forEach(fader => observer.observe(fader));
-});
-</script>
-
-<script>
-const skills = [
-  "Python",
-  "Machine Learning",
-  "SQL",
-  "Power BI",
-  "Data Analysis"
-];
-
-let skillIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-const typingText = document.querySelector(".typing-text");
-
-function typeEffect() {
-  const currentSkill = skills[skillIndex];
-
-  if (isDeleting) {
-    typingText.textContent = currentSkill.substring(0, charIndex--);
-  } else {
-    typingText.textContent = currentSkill.substring(0, charIndex++);
-  }
-
-  if (!isDeleting && charIndex === currentSkill.length) {
-    setTimeout(() => isDeleting = true, 1200);
-  } 
-  else if (isDeleting && charIndex === 0) {
-    isDeleting = false;
-    skillIndex = (skillIndex + 1) % skills.length;
-  }
-
-  setTimeout(typeEffect, isDeleting ? 50 : 90);
+<style>
+/* Square project cards */
+.square-card {
+  background:#020617;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display:flex;
+  flex-direction:column;
+  text-align:center;
 }
 
-typeEffect();
+.project-points {
+  list-style: none;       /* remove default bullets */
+  padding-left: 0;
+  margin: 6px 0;
+  text-align: left;
+}
+
+.project-points li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 0.85rem;
+  color: #cbd5f5;
+  margin-bottom: 6px;
+}
+
+/* Arrow symbol */
+.project-points li::before {
+  content: "➤";
+  position: absolute;
+  left: 0;
+  color: #38bdf8;        /* blue arrow */
+  font-weight: bold;
+}
+
+
+  
+/* Optional blue bullet */
+.project-points li::marker {
+  color: #38bdf8;
+}
+
+
+.square-card:hover {
+  transform: translateY(-6px);
+  box-shadow:0 20px 35px rgba(56,189,248,0.25);
+}
+
+.project-img {
+  width:100%;
+  aspect-ratio:1/1; /* Makes the image square */
+  object-fit:cover;
+}
+
+.project-details {
+  padding:15px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  text-align: left;
+  align-items: flex-start;
+}
+
+
+.project-details h3 {
+  color:#020617;          /* text color */
+  background:#38bdf8;     /* blue background */
+  display:inline-block;   /* background fits text */
+  font-size:1rem;         /* smaller title */
+  line-height:1.2;        /* reduces height */
+  margin:6px auto;        /* small space */
+  padding:3px 10px;       /* background size */
+  border-radius:6px;      /* rounded corners */
+}
+
+
+.project-details p {
+  font-size:0.9rem;
+  color:#cbd5f5;
+}
+
+.project-details a {
+  color:#38bdf8;
+  text-decoration:none;
+  font-weight:500;
+  margin-top:5px;
+}
+
+.project-details a:hover {
+  text-decoration:underline;
+}
+
+/* Fade-up scroll animation */
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+</style>
+
+<script>
+// Scroll fade-up animation
+const projectFaders = document.querySelectorAll('.fade-up');
+const appearOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
+const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('show');
+    observer.unobserve(entry.target);
+  });
+}, appearOptions);
+
+projectFaders.forEach(fader => appearOnScroll.observe(fader));
 </script>
 
 
+<style>
+/* Updated Projects Styling */
+.projects-container {
+  display:flex;
+  overflow-x:auto;
+  gap:20px;
+  padding-bottom:10px;
+  scroll-behavior: smooth;
+}
+
+.projects-container::-webkit-scrollbar { height:10px; }
+.projects-container::-webkit-scrollbar-thumb { background:#38bdf8; border-radius:5px; }
+.projects-container::-webkit-scrollbar-track { background:#0f172a; }
+
+.project-card {
+  min-width:300px;
+  flex:0 0 auto;
+  position:relative;
+  border-radius:12px;
+  overflow:hidden;
+  cursor:pointer;
+  box-shadow:0 10px 25px rgba(0,0,0,0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover { transform: scale(1.05); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
+
+.project-img {
+  width:100%;
+  height:180px;
+  background-size:cover;
+  background-position:center;
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-img { transform: scale(1.1); }
+
+.project-overlay {
+  position:absolute;
+  bottom:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,0.7);
+  color:#fff;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:15px;
+  opacity:0;
+  transition: opacity 0.3s ease;
+}
+
+.project-card:hover .project-overlay { opacity:1; }
+
+.project-overlay h3 { margin-bottom:10px; color:#38bdf8; }
+.project-overlay p { font-size:0.9rem; margin-bottom:15px; }
+.project-overlay a { color:#38bdf8; text-decoration:none; font-weight:500; }
+.project-overlay a:hover { text-decoration:underline; }
+</style>
+
+
+  <!-- Contact -->
+  <div id="contact" style="margin-top:60px;">
+    <div class="section-title">Contact</div>
+    <div class="card contact-card">
+      <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
+      <p>📞 8248702184</p>
+      <p>🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
+         🔗 <a href="#" target="_blank">LinkedIn</a></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2026 Akil Krishnan | Data Science Portfolio
+</footer>
+
+<script>
+  // Animate skill bars
+  window.addEventListener('load', () => {
+    const progresses = document.querySelectorAll('.progress');
+    progresses.forEach(bar => {
+      const width = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => { bar.style.width = width; }, 300);
+    });
+  });
+</script>
+
 </body>
-</html>                                                                                                                   i want animation like in project with all about me and skill and all 
+</html>
