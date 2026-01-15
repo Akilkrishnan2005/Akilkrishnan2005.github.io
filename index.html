@@ -251,6 +251,21 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   transition-delay: 0.55s;
 }
 
+/* Auto Typing Skills */
+.typing-container {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin: 12px 0 20px;
+  color: #cbd5f5;
+}
+
+.typing-text {
+  color: #38bdf8;
+  border-right: 2px solid #38bdf8;
+  padding-right: 4px;
+  white-space: nowrap;
+}
+
 
 /* Fade-up animation */
 .fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
@@ -286,13 +301,12 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 <header class="hero">
   <div class="hero-left">
     <h1 class="hero-name">Akil Krishnan</h1>
-    <div class="name-skills">
-      <span>Data Scientist</span>
-      <span>Python</span>
-      <span>Machine Learning</span>
-      <span>SQL</span>
-      <span>Power BI</span>
-    </div>
+
+<div class="typing-container">
+  <span class="static-text">Data Scientist | </span>
+  <span class="typing-text"></span>
+</div>
+
     <p class="hero-desc">Data Science professional specializing in transforming complex data into actionable insights using Machine Learning, analytics, and visualization.</p>
     <div class="hero-buttons">
       <a href="#projects" class="btn-primary">View My Work</a>
@@ -415,6 +429,43 @@ document.addEventListener('DOMContentLoaded', () => {
 
   faders.forEach(fader => observer.observe(fader));
 });
+</script>
+
+<script>
+const skills = [
+  "Python",
+  "Machine Learning",
+  "SQL",
+  "Power BI",
+  "Data Analysis"
+];
+
+let skillIndex = 0;
+let charIndex = 0;
+let isDeleting = false;
+const typingText = document.querySelector(".typing-text");
+
+function typeEffect() {
+  const currentSkill = skills[skillIndex];
+
+  if (isDeleting) {
+    typingText.textContent = currentSkill.substring(0, charIndex--);
+  } else {
+    typingText.textContent = currentSkill.substring(0, charIndex++);
+  }
+
+  if (!isDeleting && charIndex === currentSkill.length) {
+    setTimeout(() => isDeleting = true, 1200);
+  } 
+  else if (isDeleting && charIndex === 0) {
+    isDeleting = false;
+    skillIndex = (skillIndex + 1) % skills.length;
+  }
+
+  setTimeout(typeEffect, isDeleting ? 60 : 100);
+}
+
+typeEffect();
 </script>
 
 
