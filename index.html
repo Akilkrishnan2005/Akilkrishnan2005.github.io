@@ -8,6 +8,108 @@
 
 <style>
 
+/* ===== HERO LEFT TEXT DESIGN ===== */
+
+/* ===== MOBILE FIX ===== */
+@media (max-width: 900px) {
+
+  .hero {
+    flex-direction: column-reverse;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .hero-name {
+    font-size: 2.6rem;
+  }
+
+  .hero-desc {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-buttons {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-img {
+    width: 220px;
+    height: 220px;
+  }
+}
+
+
+/* Name */
+.hero-name {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  background: linear-gradient(90deg, #6366f1, #38bdf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 8px;
+}
+
+/* Role */
+.hero-role {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 15px;
+}
+
+/* Description */
+.hero-desc {
+  max-width: 520px;
+  font-size: 1.05rem;
+  color: #cbd5f5;
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+/* Skill pills */
+.hero-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+
+.hero-tags span {
+  padding: 6px 14px;
+  font-size: 0.85rem;
+  border-radius: 999px;
+  background: rgba(56,189,248,0.12);
+  color: #38bdf8;
+  border: 1px solid rgba(56,189,248,0.4);
+}
+
+/* Buttons */
+.hero-buttons {
+  display: flex;
+  gap: 15px;
+}
+
+.btn-primary {
+  padding: 12px 22px;
+  background: linear-gradient(90deg, #6366f1, #38bdf8);
+  color: #020617;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.btn-secondary {
+  padding: 12px 22px;
+  border: 1px solid #38bdf8;
+  color: #38bdf8;
+  border-radius: 10px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+
 /* Hero Split Layout */
 .hero {
   min-height: 60vh;
@@ -20,20 +122,29 @@
 }
 
 /* Left text */
-.hero-left {
-  max-width: 600px;
-}
+<div class="hero-left">
+  <h1 class="hero-name">Akil Krishnan</h1>
 
-.hero-left h1 {
-  font-size: 3rem;
-  color: #38bdf8;
-  margin-bottom: 15px;
-}
+  <h2 class="hero-role">Data Scientist</h2>
 
-.hero-left p {
-  font-size: 1.2rem;
-  color: #cbd5f5;
-  line-height: 1.6;
+  <p class="hero-desc">
+    Data Science professional specializing in transforming complex data into
+    actionable insights using Machine Learning, analytics, and visualization.
+  </p>
+
+  <div class="hero-tags">
+    <span>Python</span>
+    <span>Data Science</span>
+    <span>Machine Learning</span>
+    <span>SQL</span>
+    <span>Power BI</span>
+  </div>
+
+  <div class="hero-buttons">
+    <a href="#projects" class="btn-primary">View My Work</a>
+    <a href="#contact" class="btn-secondary">Let’s Connect</a>
+  </div>
+</div>
 }
 
 /* Right image */
