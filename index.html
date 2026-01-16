@@ -437,6 +437,80 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   .name-skills { justify-content:center; }
   .skills-grid { grid-template-columns:1fr; }
 }
+
+/* ================= CONTACT SECTION ================= */
+
+.contact-section {
+  display: flex;
+  justify-content: center;
+  padding: 80px 20px;
+}
+
+.contact-card {
+  width: 100%;
+  max-width: 480px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(14px);
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+}
+
+.contact-card h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #e5e7eb;
+  font-size: 1.6rem;
+}
+
+/* Inputs */
+.contact-card input,
+.contact-card textarea {
+  width: 100%;
+  padding: 14px 16px;
+  margin-bottom: 16px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.08);
+  color: #e5e7eb;
+  font-size: 0.95rem;
+  outline: none;
+}
+
+.contact-card textarea {
+  min-height: 120px;
+  resize: none;
+}
+
+/* Focus */
+.contact-card input:focus,
+.contact-card textarea:focus {
+  border-color: #38bdf8;
+  box-shadow: 0 0 0 2px rgba(56,189,248,0.25);
+}
+
+/* Button */
+.contact-card button {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: none;
+  background: linear-gradient(135deg, #7c3aed, #2563eb);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact-card button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(99,102,241,0.45);
+}
+
+
+
+  
 </style>
 </head>
 <body>
@@ -557,6 +631,23 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
                        🔗 <a href="#" target="_blank">LinkedIn</a></p>
   </div>
   </section>
+<section id="contact" class="contact-section">
+  <div class="contact-card">
+    <h2>Send a Message</h2>
+
+    <form>
+      <input type="text" placeholder="Your Name" required>
+      <input type="email" placeholder="Your Email" required>
+      <textarea placeholder="Your Message" required></textarea>
+
+      <button type="submit">
+        Send Message ✈️
+      </button>
+    </form>
+  </div>
+</section>
+
+  
 </main>
 
 <footer>© 2026 Akil Krishnan | Data Science Portfolio</footer>
