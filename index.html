@@ -97,7 +97,16 @@ nav a:hover { color:#0ea5e9; }
 
 /* Hero Image */
 .hero-right { flex-shrink:0; }
-
+.hero-img {
+  width:340px;
+  height:340px;
+  object-fit:cover;
+  border-radius:20px;
+  border:4px solid #38bdf8;
+  box-shadow:0 20px 45px rgba(56,189,248,0.4);
+  transition: transform 0.3s ease;
+}
+.hero-img:hover { transform: scale(1.05); }
 
 /* ===== Main Sections ===== */
 main { max-width:1200px; margin:auto; padding:50px 20px; }
@@ -124,7 +133,7 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   border-radius:10px;
   transition: all 0.3s ease;
 }
-
+.skill-box:hover { background:#38bdf8; color:#020617; transform:translateY(-4px); }
 .card {
   background:#020617;
   padding:25px;
@@ -222,6 +231,7 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   color: #cbd5f5;
 }
 
+/* Gradient auto-typing text */
 /* Gradient + Glow typing text */
 .typing-text {
   position: relative;              /* 🔑 REQUIRED */
@@ -241,6 +251,8 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 
   animation: gradientMove 3s linear infinite;
 }
+
+
 
 /* Gradient animation */
 @keyframes gradientMove {
@@ -264,11 +276,20 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 }
 
 /* ================= GLOBAL HOVER EFFECTS ================= */
+
+
+/* SECTION hover (About, Projects, Contact) */
+section:hover {
+  transform: translateY(-4px);
+}
+
 /* CARD hover (About card, Contact card, etc.) */
 .card:hover {
   transform: translateY(-8px) scale(1.01);
   box-shadow: 0 25px 45px rgba(56,189,248,0.35);
 }
+
+/* PROJECT CARD hover (FIXED) */
 
 
 /* PROJECT IMAGE zoom */
@@ -315,24 +336,10 @@ a:hover {
 }
 
 /* HERO IMAGE hover (already exists, enhanced) */
-.hero-right {
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-  will-change: transform;
+.hero-img:hover {
+  transform: scale(1.08) rotate(1deg);
+  box-shadow: 0 30px 60px rgba(56,189,248,0.6);
 }
-
-.hero-right:hover {
-  transform: scale(1.06);
-}
-
-.hero-img {
-  width: 340px;
-  height: 340px;
-  object-fit: cover;
-  border-radius: 20px;
-  border: 4px solid #38bdf8;
-  box-shadow: 0 20px 45px rgba(56,189,248,0.4);
-}
-
 
 /* ================= SECTION HOVER EFFECTS ================= */
 
@@ -343,12 +350,58 @@ a:hover {
   border: 1px solid rgba(56,189,248,0.4);
 }
 
-/* PROJECT CARD hover (FIXED) */
+
+/* PROJECT IMAGE zoom on hover */
+.project-card:hover .project-img {
+  transform: scale(1.08);
+}
+
 /* CONTACT hover */
 #contact .card:hover {
   transform: translateY(-10px);
   box-shadow: 0 25px 50px rgba(56,189,248,0.35);
   border: 1px solid rgba(56,189,248,0.4);
+}
+
+/* Smooth transition (important) */
+
+
+/* ================= FINAL PROJECT HOVER (STEP 3) ================= */
+
+.project-card {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-12px) scale(1.02);
+  box-shadow: 0 30px 55px rgba(56,189,248,0.45);
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.08);
+  transition: transform 0.35s ease;
+}
+
+/* ================= FAST & SMOOTH HOVERS (FINAL) ================= */
+
+/* Project card */
+.project-card {
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
+  will-change: transform;
+}
+
+.project-card:hover {
+  transform: translateY(-10px) scale(1.015);
+  box-shadow: 0 26px 50px rgba(56,189,248,0.45);
+}
+
+/* Project image */
+.project-img {
+  transition: transform 0.18s ease-out;
+}
+
+.project-card:hover .project-img {
+  transform: scale(1.06);
 }
 
 /* About & Contact cards */
@@ -367,7 +420,7 @@ a:hover {
 
 .project-card {
   position: relative;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
   will-change: transform;
 }
 
@@ -377,13 +430,12 @@ a:hover {
 }
 
 .project-img {
-  transition: transform 0.2s ease;
+  transition: transform 0.18s ease-out;
 }
 
 .project-card:hover .project-img {
   transform: scale(1.06);
 }
-
 
 /* ================= PROJECT DETAILS HOVER FIX ================= */
 
@@ -459,12 +511,12 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <p class="hero-desc fade-up">Data Science professional specializing in transforming complex data into actionable insights using Machine Learning, analytics, and visualization.</p>
     <div class="hero-buttons fade-up">
-      <a href="#projects" class="btn-primary">View My Work</a>
-      <a href="#contact" class="btn-secondary">Let’s Connect</a>
+      <a href="#projects" class="btn-primary fade-up">View My Work</a>
+      <a href="#contact" class="btn-secondary fade-up">Let’s Connect</a>
     </div>
   </div>
   <div class="hero-right fade-up">
-    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img ">
+    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img fade-up">
   </div>
 </header>
 
@@ -480,7 +532,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
     </div>
     <div class="skills-wrapper fade-up">
       <div class="section-title">Skills</div>
-      <div class="skills-grid fade-up">
+      <div class="skills-grid">
         <div class="skill-box fade-up">Data Science</div>
         <div class="skill-box fade-up">Python</div>
         <div class="skill-box fade-up">MySQL</div>
@@ -499,7 +551,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   <div class="projects-grid fade-up">
     <!-- Project 1 -->
     <div class="project-card fade-up">
-      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img ">
+      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img fade-up">
       <div class="project-details fade-up">
         <h3>Data Science Model Deployment with Tkinter</h3>
         <ul class="project-points">
@@ -514,7 +566,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <!-- Project 2 -->
     <div class="project-card fade-up">
-      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img ">
+      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img fade-up">
       <div class="project-details fade-up">
         <h3>Vehicle Service Management System</h3>
         <ul class="project-points">
@@ -529,7 +581,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <!-- Project 3 -->
     <div class="project-card fade-up">
-      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img ">
+      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img fade-up">
       <div class="project-details fade-up">
         <h3>Power BI – Netflix OTT Analytics</h3>
         <ul class="project-points">
@@ -546,12 +598,12 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
  <!-- Contact -->
 <section id="contact" class="fade-up">
-  <div class="section-title">Contact</div>
+  <div class="section-title fade-up">Contact</div>
   <div class="card contact-card fade-up">
-    <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
-    <p>📞 8248702184</p>
-    <p>🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
-       🔗 <a href="#" target="_blank">LinkedIn</a></p>
+    <p class="fade-up">📧 akilkrishnanakilkrishnan88@gmail.com</p>
+    <p class="fade-up">📞 8248702184</p>
+    <p class="fade-up">🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
+                       🔗 <a href="#" target="_blank">LinkedIn</a></p>
   </div>
   </section>
 </main>
@@ -566,25 +618,23 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
 
-      // Add show to the section itself
       entry.target.classList.add('show');
 
-      // Add stagger effect to children with fade-up
       const children = entry.target.querySelectorAll('.fade-up');
       children.forEach((child, index) => {
-        // Only if child is not the same as the parent
         if (child !== entry.target) {
           child.style.transitionDelay = `${index * 0.15}s`;
           child.classList.add('show');
         }
       });
 
-      obs.unobserve(entry.target); // animate once
+      obs.unobserve(entry.target);
     });
   }, { threshold: 0.25 });
 
-  faders.forEach(fader => observer.observe(fader));
+  faders.forEach(el => observer.observe(el));
 });
+
 </script>
 
 <script>
@@ -626,4 +676,4 @@ typeEffect();
 
 
 </body>
-</html>
+</html>                                                                                                                                 
