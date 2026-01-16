@@ -508,6 +508,83 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   box-shadow: 0 12px 30px rgba(99,102,241,0.45);
 }
 
+/* ================= CONTACT INFO CARD ================= */
+
+.contact-info-section {
+  display: flex;
+  justify-content: center;
+  padding: 80px 20px;
+}
+
+.contact-info-card {
+  width: 100%;
+  max-width: 520px;
+  background: #f9fafb;
+  border-radius: 18px;
+  padding: 30px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.contact-info-card h2 {
+  margin-bottom: 25px;
+  font-size: 1.6rem;
+  color: #111827;
+}
+
+/* Item */
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: #ffffff;
+  padding: 14px 16px;
+  border-radius: 14px;
+  margin-bottom: 14px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.contact-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+}
+
+/* Icon */
+.contact-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: white;
+  font-weight: bold;
+}
+
+.contact-icon.email { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+.contact-icon.linkedin { background: linear-gradient(135deg, #6366f1, #ec4899); }
+.contact-icon.github { background: linear-gradient(135deg, #111827, #374151); }
+.contact-icon.whatsapp { background: linear-gradient(135deg, #22c55e, #16a34a); }
+
+/* Text */
+.contact-text span {
+  display: block;
+  font-size: 0.75rem;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.contact-text a {
+  color: #111827;
+  font-size: 0.95rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.contact-text a:hover {
+  text-decoration: underline;
+}
 
 
   
@@ -622,15 +699,50 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
 
  <!-- Contact -->
-<section id="contact" class="fade-up">
-  <div class="section-title fade-up">Contact</div>
-  <div class="card contact-card fade-up">
-    <p class="fade-up">📧 akilkrishnanakilkrishnan88@gmail.com</p>
-    <p class="fade-up">📞 8248702184</p>
-    <p class="fade-up">🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
-                       🔗 <a href="#" target="_blank">LinkedIn</a></p>
+<section id="contact-info" class="contact-info-section">
+  <div class="contact-info-card">
+    <h2>Contact Information</h2>
+
+    <div class="contact-item">
+      <div class="contact-icon email">✉️</div>
+      <div class="contact-text">
+        <span>Email</span>
+        <a href="mailto:akilkrishnan@email.com">akilkrishnan@email.com</a>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon linkedin">in</div>
+      <div class="contact-text">
+        <span>LinkedIn</span>
+        <a href="https://linkedin.com/in/yourprofile" target="_blank">
+          linkedin.com/in/yourprofile
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon github">🐙</div>
+      <div class="contact-text">
+        <span>GitHub</span>
+        <a href="https://github.com/Akilkrishnan2005" target="_blank">
+          github.com/Akilkrishnan2005
+        </a>
+      </div>
+    </div>
+
+    <div class="contact-item">
+      <div class="contact-icon whatsapp">📞</div>
+      <div class="contact-text">
+        <span>WhatsApp</span>
+        <a href="https://wa.me/918072996621" target="_blank">
+          +91 8072996621
+        </a>
+      </div>
+    </div>
   </div>
-  </section>
+</section>
+
 <section id="contact" class="contact-section">
   <div class="contact-card">
     <h2>Send a Message</h2>
