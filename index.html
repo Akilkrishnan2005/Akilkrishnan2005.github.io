@@ -348,10 +348,24 @@ a:hover {
 }
 
 /* HERO IMAGE hover (already exists, enhanced) */
-.hero-img:hover {
-  transform: scale(1.08) rotate(1deg);
-  box-shadow: 0 30px 60px rgba(56,189,248,0.6);
+.hero-right {
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  will-change: transform;
 }
+
+.hero-right:hover {
+  transform: scale(1.06);
+}
+
+.hero-img {
+  width: 340px;
+  height: 340px;
+  object-fit: cover;
+  border-radius: 20px;
+  border: 4px solid #38bdf8;
+  box-shadow: 0 20px 45px rgba(56,189,248,0.4);
+}
+
 
 /* ================= SECTION HOVER EFFECTS ================= */
 
@@ -518,7 +532,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   <div class="hero-left fade-up">
     <h1 class="hero-name fade-up">Akil Krishnan</h1>
 
-<div class="typing-container">
+<div class="typing-container fade-up">
   <span class="static-text">Data Scientist | </span>
   <span class="typing-text"></span><span class="cursor">|</span>
 
@@ -531,7 +545,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
     </div>
   </div>
   <div class="hero-right fade-up">
-    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img fade-up">
+    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img ">
   </div>
 </header>
 
