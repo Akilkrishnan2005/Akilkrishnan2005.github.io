@@ -141,8 +141,10 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   box-shadow:0 10px 25px rgba(0,0,0,0.3);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.card:hover { transform:translateY(-6px); box-shadow:0 20px 35px rgba(56,189,248,0.25); }
-
+.card:hover {
+  transform: translateY(-8px) scale(1.01);
+  box-shadow: 0 25px 45px rgba(56,189,248,0.35);
+}
 /* ===== Projects Section ===== */
 /* Projects Grid: 2 per row on desktop, 1 per row on mobile */
 .projects-grid {
@@ -223,16 +225,6 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   text-decoration: underline;
 }
 
-.fade-up {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-up.show {
-  opacity: 1;
-  transform: translateY(0);
-}
 
 /* Auto Typing Skills */
 .typing-container {
@@ -295,14 +287,6 @@ section:hover {
   transform: translateY(-4px);
 }
 
-/* CARD hover (About card, Contact card, etc.) */
-.card:hover {
-  transform: translateY(-8px) scale(1.01);
-  box-shadow: 0 25px 45px rgba(56,189,248,0.35);
-}
-
-/* PROJECT CARD hover (FIXED) */
-
 
 /* PROJECT IMAGE zoom */
 .project-card:hover .project-img {
@@ -362,9 +346,6 @@ a:hover {
   border: 1px solid rgba(56,189,248,0.4);
 }
 
-/* PROJECT CARD hover (FIXED) */
-
-
 
 /* PROJECT IMAGE zoom on hover */
 .project-card:hover .project-img {
@@ -378,47 +359,6 @@ a:hover {
   border: 1px solid rgba(56,189,248,0.4);
 }
 
-/* Smooth transition (important) */
-
-
-/* ================= FINAL PROJECT HOVER (STEP 3) ================= */
-
-.project-card {
-  transition: transform 0.35s ease, box-shadow 0.35s ease;
-}
-
-.project-card:hover {
-  transform: translateY(-12px) scale(1.02);
-  box-shadow: 0 30px 55px rgba(56,189,248,0.45);
-}
-
-.project-card:hover .project-img {
-  transform: scale(1.08);
-  transition: transform 0.35s ease;
-}
-
-/* ================= FAST & SMOOTH HOVERS (FINAL) ================= */
-
-/* Project card */
-.project-card {
-  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
-  will-change: transform;
-}
-
-.project-card:hover {
-  transform: translateY(-10px) scale(1.015);
-  box-shadow: 0 26px 50px rgba(56,189,248,0.45);
-}
-
-/* Project image */
-.project-img {
-  transition: transform 0.18s ease-out;
-}
-
-.project-card:hover .project-img {
-  transform: scale(1.06);
-}
-
 /* About & Contact cards */
 #about .card,
 #contact .card {
@@ -429,57 +369,6 @@ a:hover {
 #contact .card:hover {
   transform: translateY(-8px);
   box-shadow: 0 22px 40px rgba(56,189,248,0.35);
-}
-
-/* ================= PROJECT HOVER (FIXED 100%) ================= */
-
-.project-card {
-  position: relative;
-  transition: transform 0.18s ease-out, box-shadow 0.18s ease-out;
-  will-change: transform;
-}
-
-.project-card:hover {
-  transform: translateY(-10px) scale(1.015);
-  box-shadow: 0 26px 50px rgba(56,189,248,0.45);
-}
-
-.project-img {
-  transition: transform 0.18s ease-out;
-}
-
-.project-card:hover .project-img {
-  transform: scale(1.06);
-}
-
-/* ================= PROJECT DETAILS HOVER FIX ================= */
-
-/* Ensure entire card responds to hover */
-.project-card {
-  position: relative;
-}
-
-/* Allow hover to pass correctly */
-.project-details {
-  pointer-events: auto;
-}
-
-/* Trigger hover when details are hovered */
-.project-details:hover {
-  cursor: pointer;
-}
-
-/* Force hover effect even when hovering details */
-.project-card:hover,
-.project-card:has(.project-details:hover) {
-  transform: translateY(-10px) scale(1.015);
-  box-shadow: 0 26px 50px rgba(56,189,248,0.45);
-}
-
-/* Image zoom works everywhere */
-.project-card:hover .project-img,
-.project-card:has(.project-details:hover) .project-img {
-  transform: scale(1.06);
 }
 
 /* ================= FAST PROJECT HOVER OVERRIDE ================= */
@@ -505,7 +394,30 @@ a:hover {
   transform: scale(1.06);
 }
 
-  
+
+/* Allow hover to pass correctly */
+.project-details {
+  pointer-events: auto;
+}
+
+/* Trigger hover when details are hovered */
+.project-details:hover {
+  cursor: pointer;
+}
+
+/* Force hover effect even when hovering details */
+.project-card:hover,
+.project-card:has(.project-details:hover) {
+  transform: translateY(-10px) scale(1.015);
+  box-shadow: 0 26px 50px rgba(56,189,248,0.45);
+}
+
+/* Image zoom works everywhere */
+.project-card:hover .project-img,
+.project-card:has(.project-details:hover) .project-img {
+  transform: scale(1.06);
+}
+ 
   
 /* Fade-up animation */
 .fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
