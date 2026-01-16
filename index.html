@@ -223,6 +223,17 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   text-decoration: underline;
 }
 
+.fade-up {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 /* Auto Typing Skills */
 .typing-container {
   font-size: 1.4rem;
@@ -277,6 +288,7 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 
 /* ================= GLOBAL HOVER EFFECTS ================= */
 
+/* Smooth transition for everything */
 
 /* SECTION hover (About, Projects, Contact) */
 section:hover {
@@ -349,6 +361,9 @@ a:hover {
   box-shadow: 0 25px 50px rgba(56,189,248,0.35);
   border: 1px solid rgba(56,189,248,0.4);
 }
+
+/* PROJECT CARD hover (FIXED) */
+
 
 
 /* PROJECT IMAGE zoom on hover */
@@ -511,12 +526,12 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <p class="hero-desc fade-up">Data Science professional specializing in transforming complex data into actionable insights using Machine Learning, analytics, and visualization.</p>
     <div class="hero-buttons fade-up">
-      <a href="#projects" class="btn-primary fade-up">View My Work</a>
-      <a href="#contact" class="btn-secondary fade-up">Let’s Connect</a>
+      <a href="#projects" class="btn-primary">View My Work</a>
+      <a href="#contact" class="btn-secondary">Let’s Connect</a>
     </div>
   </div>
   <div class="hero-right fade-up">
-    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img fade-up">
+    <img src="profile.jpeg" alt="Akil Krishnan" class="hero-img ">
   </div>
 </header>
 
@@ -533,14 +548,14 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
     <div class="skills-wrapper fade-up">
       <div class="section-title">Skills</div>
       <div class="skills-grid">
-        <div class="skill-box fade-up">Data Science</div>
-        <div class="skill-box fade-up">Python</div>
-        <div class="skill-box fade-up">MySQL</div>
-        <div class="skill-box fade-up">Power BI</div>
-        <div class="skill-box fade-up">R Programming</div>
-        <div class="skill-box fade-up">Big Data</div>
-        <div class="skill-box fade-up">Data Analysis</div>
-        <div class="skill-box fade-up">MongoDB</div>
+        <div class="skill-box ">Data Science</div>
+        <div class="skill-box ">Python</div>
+        <div class="skill-box ">MySQL</div>
+        <div class="skill-box ">Power BI</div>
+        <div class="skill-box ">R Programming</div>
+        <div class="skill-box ">Big Data</div>
+        <div class="skill-box ">Data Analysis</div>
+        <div class="skill-box ">MongoDB</div>
       </div>
     </div>
   </section>
@@ -551,8 +566,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   <div class="projects-grid fade-up">
     <!-- Project 1 -->
     <div class="project-card fade-up">
-      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img fade-up">
-      <div class="project-details fade-up">
+      <img src="tkinter_ml.png" alt="Tkinter ML Project" class="project-img ">
+      <div class="project-details">
         <h3>Data Science Model Deployment with Tkinter</h3>
         <ul class="project-points">
           <li>Technologies used: Python, Tkinter, Pandas, NumPy, Scikit-learn, Matplotlib,Seaborn. </li>
@@ -566,8 +581,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <!-- Project 2 -->
     <div class="project-card fade-up">
-      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img fade-up">
-      <div class="project-details fade-up">
+      <img src="vehicle_booking.png" alt="Vehicle Booking Project" class="project-img ">
+      <div class="project-details ">
         <h3>Vehicle Service Management System</h3>
         <ul class="project-points">
           <li>Developed a database-driven application to manage vehicle service bookings with a user-friendly Tkinter-based GUI.</li>
@@ -581,8 +596,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <!-- Project 3 -->
     <div class="project-card fade-up">
-      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img fade-up">
-      <div class="project-details fade-up">
+      <img src="powerbi_netflix.png" alt="Power BI Netflix Project" class="project-img ">
+      <div class="project-details ">
         <h3>Power BI – Netflix OTT Analytics</h3>
         <ul class="project-points">
           <li>Created a Power BI dashboard on the Netflix dataset to analyze movies and TV shows by genre, rating, and release year. Performed data cleaning and data modeling using Power Query. </li>
@@ -598,12 +613,12 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
  <!-- Contact -->
 <section id="contact" class="fade-up">
-  <div class="section-title fade-up">Contact</div>
+  <div class="section-title">Contact</div>
   <div class="card contact-card fade-up">
-    <p class="fade-up">📧 akilkrishnanakilkrishnan88@gmail.com</p>
-    <p class="fade-up">📞 8248702184</p>
-    <p class="fade-up">🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
-                       🔗 <a href="#" target="_blank">LinkedIn</a></p>
+    <p>📧 akilkrishnanakilkrishnan88@gmail.com</p>
+    <p>📞 8248702184</p>
+    <p>🔗 <a href="https://github.com/Akilkrishnan2005" target="_blank">GitHub</a> | 
+       🔗 <a href="#" target="_blank">LinkedIn</a></p>
   </div>
   </section>
 </main>
@@ -618,23 +633,25 @@ document.addEventListener('DOMContentLoaded', () => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
 
+      // Add show to the section itself
       entry.target.classList.add('show');
 
+      // Add stagger effect to children with fade-up
       const children = entry.target.querySelectorAll('.fade-up');
       children.forEach((child, index) => {
+        // Only if child is not the same as the parent
         if (child !== entry.target) {
           child.style.transitionDelay = `${index * 0.15}s`;
           child.classList.add('show');
         }
       });
 
-      obs.unobserve(entry.target);
+      obs.unobserve(entry.target); // animate once
     });
   }, { threshold: 0.25 });
 
-  faders.forEach(el => observer.observe(el));
+  faders.forEach(fader => observer.observe(fader));
 });
-
 </script>
 
 <script>
@@ -676,4 +693,4 @@ typeEffect();
 
 
 </body>
-</html>                                                                                                                                 
+</html>                                                                                                                                     where is step 2
