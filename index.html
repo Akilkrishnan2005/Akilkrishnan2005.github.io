@@ -97,15 +97,6 @@ nav a:hover { color:#0ea5e9; }
 
 /* Hero Image */
 .hero-right { flex-shrink:0; }
-.hero-img {
-  width:340px;
-  height:340px;
-  object-fit:cover;
-  border-radius:20px;
-  border:4px solid #38bdf8;
-  box-shadow:0 20px 45px rgba(56,189,248,0.4);
-  transition: transform 0.3s ease;
-}
 
 
 /* ===== Main Sections ===== */
@@ -133,7 +124,7 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   border-radius:10px;
   transition: all 0.3s ease;
 }
-.skill-box:hover { background:#38bdf8; color:#020617; transform:translateY(-4px); }
+
 .card {
   background:#020617;
   padding:25px;
@@ -223,17 +214,6 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   text-decoration: underline;
 }
 
-.fade-up {
-  opacity: 0;
-  transform: translateY(60px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
-}
-
-.fade-up.show {
-  opacity: 1;
-  transform: translateY(0);
-}
-
 /* Auto Typing Skills */
 .typing-container {
   font-size: 1.4rem;
@@ -242,7 +222,6 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   color: #cbd5f5;
 }
 
-/* Gradient auto-typing text */
 /* Gradient + Glow typing text */
 .typing-text {
   position: relative;              /* 🔑 REQUIRED */
@@ -262,8 +241,6 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 
   animation: gradientMove 3s linear infinite;
 }
-
-
 
 /* Gradient animation */
 @keyframes gradientMove {
@@ -287,18 +264,11 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 }
 
 /* ================= GLOBAL HOVER EFFECTS ================= */
-
-/* Smooth transition for everything */
-
-/* SECTION hover (About, Projects, Contact) */
-
 /* CARD hover (About card, Contact card, etc.) */
 .card:hover {
   transform: translateY(-8px) scale(1.01);
   box-shadow: 0 25px 45px rgba(56,189,248,0.35);
 }
-
-/* PROJECT CARD hover (FIXED) */
 
 
 /* PROJECT IMAGE zoom */
@@ -380,16 +350,6 @@ a:hover {
   box-shadow: 0 25px 50px rgba(56,189,248,0.35);
   border: 1px solid rgba(56,189,248,0.4);
 }
-
-/* Smooth transition (important) */
-
-
-/* ================= FINAL PROJECT HOVER (STEP 3) ================= */
-
-/* ================= FAST & SMOOTH HOVERS (FINAL) ================= */
-
-/* Project card */
-
 
 /* About & Contact cards */
 #about .card,
