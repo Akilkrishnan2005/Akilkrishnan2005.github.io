@@ -508,7 +508,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   box-shadow: 0 12px 30px rgba(99,102,241,0.45);
 }
 
-/* ================= CONTACT INFO CARD ================= */
+/* ================= CONTACT INFO (DARK THEME MATCH) ================= */
 
 .contact-info-section {
   display: flex;
@@ -519,37 +519,45 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 .contact-info-card {
   width: 100%;
   max-width: 520px;
-  background: #f9fafb;
+  background: #020617; /* same as cards */
   border-radius: 18px;
   padding: 30px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.35);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contact-info-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 28px 55px rgba(56,189,248,0.35);
 }
 
 .contact-info-card h2 {
   margin-bottom: 25px;
   font-size: 1.6rem;
-  color: #111827;
+  color: #38bdf8;
+  border-left: 4px solid #38bdf8;
+  padding-left: 10px;
 }
 
-/* Item */
+/* Individual contact row */
 .contact-item {
   display: flex;
   align-items: center;
   gap: 16px;
-  background: #ffffff;
+  background: rgba(255,255,255,0.05);
   padding: 14px 16px;
   border-radius: 14px;
   margin-bottom: 14px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .contact-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.12);
+  transform: translateY(-6px);
+  box-shadow: 0 18px 35px rgba(56,189,248,0.35);
 }
 
-/* Icon */
+/* Icon box */
 .contact-icon {
   width: 46px;
   height: 46px;
@@ -562,30 +570,42 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   font-weight: bold;
 }
 
-.contact-icon.email { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
-.contact-icon.linkedin { background: linear-gradient(135deg, #6366f1, #ec4899); }
-.contact-icon.github { background: linear-gradient(135deg, #111827, #374151); }
-.contact-icon.whatsapp { background: linear-gradient(135deg, #22c55e, #16a34a); }
+/* Icon gradients */
+.contact-icon.email {
+  background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+}
+
+.contact-icon.linkedin {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+}
+
+.contact-icon.github {
+  background: linear-gradient(135deg, #111827, #374151);
+}
+
+.contact-icon.whatsapp {
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+}
 
 /* Text */
 .contact-text span {
   display: block;
   font-size: 0.75rem;
-  color: #6b7280;
+  color: #94a3b8;
   margin-bottom: 2px;
 }
 
 .contact-text a {
-  color: #111827;
+  color: #e5e7eb;
   font-size: 0.95rem;
   font-weight: 500;
   text-decoration: none;
 }
 
 .contact-text a:hover {
+  color: #38bdf8;
   text-decoration: underline;
 }
-
 
   
 </style>
@@ -707,7 +727,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
       <div class="contact-icon email">✉️</div>
       <div class="contact-text">
         <span>Email</span>
-        <a href="mailto:akilkrishnan@email.com">akilkrishnan@email.com</a>
+        <a href="mailto:akilkrishnanakilkrishnan88@gmail.com">akilkrishnanakilkrishnan88@gmail.com</a>
       </div>
     </div>
 
@@ -715,8 +735,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
       <div class="contact-icon linkedin">in</div>
       <div class="contact-text">
         <span>LinkedIn</span>
-        <a href="https://linkedin.com/in/yourprofile" target="_blank">
-          linkedin.com/in/yourprofile
+        <a href="https://www.linkedin.com/in/akil-krishnan-212168271" target="_blank">
+         linkedin.com/in/akil-krishnan-212168271
         </a>
       </div>
     </div>
@@ -735,8 +755,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
       <div class="contact-icon whatsapp">📞</div>
       <div class="contact-text">
         <span>WhatsApp</span>
-        <a href="https://wa.me/918072996621" target="_blank">
-          +91 8072996621
+        <a href="https://wa.me/918248702184" target="_blank">
+          +91 8248702184
         </a>
       </div>
     </div>
