@@ -632,6 +632,66 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   }
 }
 
+/* SEND MESSAGE – same animation & hover as contact info */
+.contact-card {
+  background: #020617;
+  padding: 35px;
+  border-radius: 14px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Hover lift */
+.contact-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 25px 45px rgba(56,189,248,0.25);
+}
+
+/* Inputs */
+.contact-card input,
+.contact-card textarea {
+  width: 100%;
+  background: #020617;
+  border: 1px solid var(--accent);
+  color: #e5e7eb;
+  padding: 12px 14px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus animation */
+.contact-card input:focus,
+.contact-card textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 12px rgba(56,189,248,0.45);
+}
+
+/* Button */
+.contact-card button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(
+    90deg,
+    var(--accent-secondary),
+    var(--accent)
+  );
+  border: none;
+  color: #020617;
+  font-weight: 700;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+/* Button hover */
+.contact-card button:hover {
+  transform: translateY(-3px);
+  filter: brightness(1.15);
+}
+
   
 </style>
 </head>
@@ -792,16 +852,17 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   </div>
 
   <!-- RIGHT: Contact Form -->
-  <div class="contact-card">
-    <h2>Send a Message</h2>
+<div class="contact-card fade-up">
+  <h2>Send a Message</h2>
 
-    <form action="https://formspree.io/f/xeeqppvd" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required>
-      <input type="email" name="email" placeholder="Your Email" required>
-      <textarea name="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message ✈️</button>
-    </form>
-  </div>
+  <form action="https://formspree.io/f/xeeqppvd" method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email" required>
+    <textarea name="message" placeholder="Your Message" required></textarea>
+    <button type="submit">Send Message ✈️</button>
+  </form>
+</div>
+
 
 </section>
 
