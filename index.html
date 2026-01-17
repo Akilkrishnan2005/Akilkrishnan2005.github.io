@@ -726,6 +726,31 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   }
 }
 
+/* Allow contact text to wrap properly on mobile */
+.contact-item > div:last-child {
+  min-width: 0;                /* 🔑 MOST IMPORTANT */
+  overflow-wrap: anywhere;
+}
+
+/* Break long email & links */
+.contact-item a {
+  word-break: break-word;
+}
+
+@media (max-width: 600px) {
+  .contact-item {
+    width: 100%;
+  }
+
+  .contact-item a {
+    font-size: 0.85rem;
+  }
+
+  .contact-item span {
+    font-size: 0.7rem;
+  }
+}
+
   
 </style>
 </head>
