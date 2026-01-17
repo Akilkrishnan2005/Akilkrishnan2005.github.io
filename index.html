@@ -694,6 +694,38 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   filter: brightness(1.15);
 }
 
+/* CONTACT GRID */
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px;
+  margin-top: 30px;
+}
+
+/* Tablet */
+@media (max-width: 900px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile fine-tuning */
+@media (max-width: 600px) {
+  .contact-card {
+    padding: 22px;
+  }
+
+  .contact-card input,
+  .contact-card textarea {
+    font-size: 0.9rem;
+  }
+
+  .contact-card button {
+    padding: 10px;
+    font-size: 0.95rem;
+  }
+}
+
   
 </style>
 </head>
