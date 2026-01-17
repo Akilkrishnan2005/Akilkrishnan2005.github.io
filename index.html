@@ -614,6 +614,24 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   text-decoration: underline;
 }
 
+/* CONTACT SIDE-BY-SIDE LAYOUT */
+.contact-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  padding: 80px 20px;
+  max-width: 1200px;
+  margin: auto;
+  align-items: stretch;
+}
+
+/* Mobile responsive */
+@media (max-width: 900px) {
+  .contact-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
   
 </style>
 </head>
@@ -726,7 +744,9 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
 
  <!-- Contact -->
-<section id="contact-info" class="contact-info-section">
+<section id="contact" class="contact-wrapper">
+
+  <!-- LEFT: Contact Info -->
   <div class="contact-info-card">
     <h2>Contact Information</h2>
 
@@ -734,7 +754,9 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
       <div class="contact-icon email">✉️</div>
       <div class="contact-text">
         <span>Email</span>
-        <a href="mailto:akilkrishnanakilkrishnan88@gmail.com">akilkrishnanakilkrishnan88@gmail.com</a>
+        <a href="mailto:akilkrishnanakilkrishnan88@gmail.com">
+          akilkrishnanakilkrishnan88@gmail.com
+        </a>
       </div>
     </div>
 
@@ -743,7 +765,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
       <div class="contact-text">
         <span>LinkedIn</span>
         <a href="https://www.linkedin.com/in/akil-krishnan-212168271" target="_blank">
-         linkedin.com/in/akil-krishnan-212168271
+          linkedin.com/in/akil-krishnan-212168271
         </a>
       </div>
     </div>
@@ -768,23 +790,19 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
       </div>
     </div>
   </div>
-</section>
 
-<section id="contact" class="contact-section">
+  <!-- RIGHT: Contact Form -->
   <div class="contact-card">
     <h2>Send a Message</h2>
 
-<form action="https://formspree.io/f/xeeqppvd" method="POST">
-  <input type="text" name="name" placeholder="Your Name" required>
-  <input type="email" name="email" placeholder="Your Email" required>
-  <textarea name="message" placeholder="Your Message" required></textarea>
-
-  <button type="submit">
-    Send Message ✈️
-  </button>
-</form>
-
+    <form action="https://formspree.io/f/xeeqppvd" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message ✈️</button>
+    </form>
   </div>
+
 </section>
 
   
