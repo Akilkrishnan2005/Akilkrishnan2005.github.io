@@ -6,6 +6,12 @@
 <title>Akil Krishnan | Data Scientist</title>
 
 <style>
+:root {
+  --accent:#22c55e; 
+  --accent-secondary: #16a34a;
+}
+
+
 /* ===== Reset & Base Styles ===== */
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', sans-serif; }
 body { background:#0f172a; color:#e5e7eb; line-height:1.6; scroll-behavior:smooth; }
@@ -24,8 +30,8 @@ nav {
   z-index:1000;
   box-shadow:0 2px 10px rgba(0,0,0,0.5);
 }
-nav a { color:#38bdf8; font-weight:500; transition: color 0.3s; }
-nav a:hover { color:#0ea5e9; }
+nav a { color:var(--accent); font-weight:500; transition: color 0.3s; }
+nav a:hover { color:var(--accent); }
 
 /* ===== Hero Section ===== */
 .hero {
@@ -44,7 +50,7 @@ nav a:hover { color:#0ea5e9; }
   font-size: 3.5rem;
   font-weight: 800;
   letter-spacing: 1px;
-  background: linear-gradient(90deg, #6366f1, #38bdf8);
+  background: linear-gradient(90deg, var(--accent-secondary), var(--accent));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin-bottom: 8px;
@@ -74,13 +80,13 @@ nav a:hover { color:#0ea5e9; }
   font-weight: 500;
   border-radius: 999px;
   background: rgba(56,189,248,0.12);
-  color: #38bdf8;
+  color:var(--accent)
   border: 1px solid rgba(56,189,248,0.45);
 }
 .hero-buttons { display:flex; gap:15px; flex-wrap:wrap; margin-top:10px; }
 .btn-primary {
   padding:12px 22px;
-  background: linear-gradient(90deg,#6366f1,#38bdf8);
+  background: linear-gradient(90deg, var(--accent-secondary), var(--accent));
   color:#020617;
   border-radius:10px;
   font-weight:600;
@@ -89,11 +95,11 @@ nav a:hover { color:#0ea5e9; }
 .btn-secondary {
   padding:12px 22px;
   border:1px solid #38bdf8;
-  color:#38bdf8;
+  color: var(--accent);
   border-radius:10px;
   font-weight:600;
 }
-.btn-secondary:hover { background:#38bdf8; color:#020617; }
+.btn-secondary:hover { background:#38bdf8; color: var(--accent); }
 
 /* Hero Image */
 .hero-right { flex-shrink:0; }
@@ -102,7 +108,7 @@ nav a:hover { color:#0ea5e9; }
   height:340px;
   object-fit:cover;
   border-radius:20px;
-  border:4px solid #38bdf8;
+  border:4px solid var(--accent);
   box-shadow:0 20px 45px rgba(56,189,248,0.4);
   transition: transform 0.3s ease;
 }
@@ -115,8 +121,8 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 .section-title {
   font-size:2rem;
   margin-bottom:20px;
-  color:#38bdf8;
-  border-left:4px solid #38bdf8;
+  color:var(--accent);
+  border-left:4px solid var(--accent);
   padding-left:10px;
 }
 
@@ -128,8 +134,8 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   text-align:center;
   font-size:0.95rem;
   font-weight:500;
-  color:#38bdf8;
-  border:1px solid #38bdf8;
+  color:var(--accent);
+  border:1px solid var(--accent);
   border-radius:10px;
   transition: all 0.3s ease;
 }
@@ -182,7 +188,7 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   width: 100%;
   height: 280px;
   object-fit: cover;
-  border-bottom: 2px solid #38bdf8;
+  border-bottom: 2px solid var(--accent);
 }
 
 /* Project Details */
@@ -194,7 +200,7 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 }
 
 .project-details h3 {
-  color: #38bdf8;
+  color: var(--accent);
   font-size: 1.2rem;
   line-height: 1.3;
 }
@@ -211,12 +217,12 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   content: "➤";
   position: absolute;
   left: 0;
-  color: #38bdf8;
+  color: var(--accent);
   font-weight: bold;
 }
 
 .project-details a {
-  color: #38bdf8;
+  color: var(--accent);
   font-weight: 500;
   margin-top: 5px;
 }
@@ -269,7 +275,7 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
   margin-left: 3px;
   font-size: 1.4rem;
   font-weight: 400;
-  color: #38bdf8;
+  color: var(--accent);
   animation: blink 1s steps(1) infinite;
 }
 
@@ -295,7 +301,7 @@ section:hover {
 
 /* SKILL BOX hover (already present, enhanced) */
 .skill-box:hover {
-  background: linear-gradient(90deg,#38bdf8,#6366f1);
+  background: linear-gradient(90deg,var(--accent), var(--accent-secondary));
   color: #020617;
   transform: translateY(-6px) scale(1.05);
   box-shadow: 0 10px 25px rgba(56,189,248,0.4);
@@ -534,8 +540,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 .contact-info-card h2 {
   margin-bottom: 25px;
   font-size: 1.6rem;
-  color: #38bdf8;
-  border-left: 4px solid #38bdf8;
+  color: var(--accent);
+  border-left: 4px solid var(--accent);
   padding-left: 10px;
 }
 
@@ -603,7 +609,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 }
 
 .contact-text a:hover {
-  color: #38bdf8;
+  color: var(--accent);
   text-decoration: underline;
 }
 
