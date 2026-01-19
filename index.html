@@ -327,11 +327,6 @@ main { max-width:1200px; margin:auto; padding:50px 20px; }
 
 /* Smooth transition for everything */
 
-/* SECTION hover (About, Projects, Contact) */
-section:hover {
-  transform: translateY(-4px);
-}
-
 
 /* PROJECT IMAGE zoom */
 .project-card:hover .project-img {
@@ -802,6 +797,20 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
   .contact-wrapper {
     padding: 40px 12px;
   }
+}
+
+/* ===== FINAL HERO BUTTON HOVER FIX ===== */
+.hero-buttons a {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.35s ease !important;
+}
+
+.hero-buttons a:hover {
+  transform: translateY(-8px) scale(1.08) !important;
+  box-shadow: 0 18px 40px rgba(56,189,248,0.5) !important;
+  filter: brightness(1.15);
 }
 
   
