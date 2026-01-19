@@ -38,6 +38,40 @@ nav {
 nav a { color:chocolate; font-weight:500; transition: color 0.3s; }
 nav a:hover { color:var(--accent); }
 
+.menu-toggle {
+  display: none;
+  font-size: 1.8rem;
+  color: #f59e0b;
+  cursor: pointer;
+}
+
+/* Mobile navbar */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+
+  nav ul {
+    display: none;
+    flex-direction: column;
+    background: #020617;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+}
+  
 /* ===== Hero Section ===== */
 .hero {
   min-height: 60vh;
@@ -830,6 +864,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
 <!-- Navigation -->
 <nav>
+  <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   <a href="#about">About</a>
   <a href="#education">Education</a>
   <a href="#skills">Skills</a>
@@ -1112,6 +1147,11 @@ function typeEffect() {
 typeEffect();
 </script>
 
+<script>
+function toggleMenu() {
+  document.querySelector('nav ul').classList.toggle('show');
+}
+</script>
 
 </body>
 </html>                                                                                                                                     
