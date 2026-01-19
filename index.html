@@ -444,9 +444,7 @@ nav a:hover::after {
 .fade-up.show { opacity:1; transform:translateY(0); }
 
 /* ===== Contact & Footer ===== */
-.contact-card { text-align:center; }
-.contact-card p, .contact-card a { margin:10px 0; color:#cbd5f5; font-weight:500; }
-.contact-card a:hover { text-decoration:underline; }
+
 footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; color:#94a3b8; margin-top:50px; }
 
 /* ===== Responsive ===== */
@@ -476,18 +474,6 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 }
 
 /* Inputs */
-.contact-card input,
-.contact-card textarea {
-  width: 100%;
-  padding: 14px 16px;
-  margin-bottom: 16px;
-  border-radius: 10px;
-  border: 1px solid rgba(255,255,255,0.15);
-  background: rgba(255,255,255,0.08);
-  color: gold;
-  font-size: 0.95rem;
-  outline: none;
-}
 
 .contact-card textarea {
   min-height: 120px;
@@ -502,23 +488,6 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 }
 
 /* Button */
-.contact-card button {
-  width: 100%;
-  padding: 14px;
-  border-radius: 12px;
-  border: none;
-  background: linear-gradient(135deg, #7c3aed, #2563eb);
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
-}
-
-.contact-card button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px rgba(99,102,241,0.45);
-}
 
 /* ================= CONTACT INFO (DARK THEME MATCH) ================= */
 
@@ -715,12 +684,6 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
     grid-template-columns: 1fr;
   }
 }
-
-/* Mobile fine-tuning */
-@media (max-width: 600px) {
-  .contact-card {
-    padding: 22px;
-  }
 
   .contact-card input,
   .contact-card textarea {
