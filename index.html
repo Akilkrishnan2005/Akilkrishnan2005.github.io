@@ -89,22 +89,55 @@ nav a:hover { color:var(--accent); }
   border: 1px solid rgba(56,189,248,0.45);
 }
 .hero-buttons { display:flex; gap:15px; flex-wrap:wrap; margin-top:10px; }
-.btn-primary {
-  padding:12px 22px;
-  background: linear-gradient(90deg, var(--accent-secondary), var(--accent));
-  color:#020617;
-  border-radius:10px;
-  font-weight:600;
-}
-.btn-primary:hover { filter: brightness(1.1); }
+/* ===== HERO BUTTONS – SMOOTH LIKE SKILLS ===== */
+.btn-primary,
 .btn-secondary {
-  padding:12px 22px;
-  border:1px solid #38bdf8;
-  color: var(--accent);
-  border-radius:10px;
-  font-weight:600;
+  position: relative;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.35s ease,
+    background 0.35s ease;
 }
-.btn-secondary:hover { background:#38bdf8; color: var(--accent); }
+
+/* Primary button */
+.btn-primary {
+  background: linear-gradient(
+    90deg,
+    var(--accent-secondary),
+    var(--accent)
+  );
+  color: #020617;
+}
+
+/* Secondary button */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+/* Hover = same feel as skill-box */
+.btn-primary:hover,
+.btn-secondary:hover {
+  transform: translateY(-6px) scale(1.06);
+  box-shadow: 0 14px 30px rgba(56,189,248,0.45);
+  filter: brightness(1.12);
+}
+
+/* Click */
+.btn-primary:active,
+.btn-secondary:active {
+  transform: translateY(-2px) scale(0.98);
+}
 
 /* Hero Image */
 .hero-right { flex-shrink:0; }
@@ -797,8 +830,8 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
     <p class="hero-desc fade-up">Data Science professional specializing in transforming complex data into actionable insights using Machine Learning, analytics, and visualization.</p>
     <div class="hero-buttons fade-up">
-      <a href="#projects" class="btn-primary">View My Work</a>
-      <a href="#contact" class="btn-secondary">Let’s Connect</a>
+      <a href="#projects" class="btn-primary fade-up">View My Work</a>
+      <a href="#contact" class="btn-secondary fade-up">Let’s Connect</a>
     </div>
   </div>
   <div class="hero-right fade-up">
