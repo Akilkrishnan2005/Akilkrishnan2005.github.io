@@ -116,6 +116,35 @@ ul { list-style:none; padding-left:0; }
   }
 }
 
+
+
+  
+.navbar {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  padding: 0 60px;
+  background: #020617;
+}
+.nav-links {
+  display: flex;
+  gap: 32px;
+
+  /* THIS LINE CONTROLS POSITION */
+  margin-left: auto;
+  margin-right: 180px;
+}
+.nav-links a {
+  color: chocolate;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+.nav-links a:hover {
+  color: gold;
+}
+
   
 /* ===== Hero Section ===== */
 .hero {
@@ -921,6 +950,19 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
     <a href="#contact" onclick="closeMenu()">Contact</a>
   </div>
 </nav>
+
+<nav class="navbar">
+  <div class="nav-left">MENU</div>
+
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
 
 
 <!-- Hero -->
