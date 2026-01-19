@@ -25,10 +25,11 @@ ul { list-style:none; padding-left:0; }
 
 /* ===== Navigation ===== */
 /* ===== NAVBAR ===== */
+/* NAVBAR */
 .navbar {
   position: sticky;
   top: 0;
-  z-index: 2000;
+  z-index: 1000;
   background: #020617;
   height: 64px;
   padding: 0 20px;
@@ -38,68 +39,79 @@ ul { list-style:none; padding-left:0; }
 }
 
 .nav-brand {
-  font-size: 1.2rem;
-  font-weight: 700;
   color: gold;
+  font-weight: 700;
+  font-size: 1.2rem;
 }
 
 /* Hamburger */
 .menu-toggle {
-  font-size: 1.9rem;
+  font-size: 1.8rem;
   color: gold;
   cursor: pointer;
-  z-index: 2100;
 }
 
-/* ===== FULLSCREEN MOBILE MENU ===== */
-.mobile-menu {
-  position: fixed;
-  inset: 0;
-  background: linear-gradient(135deg, #020617, #0f172a);
+/* DROPDOWN MENU */
+.dropdown-menu {
+  position: absolute;
+  top: 64px;
+  right: 16px;
+  width: 220px;
+
+  background: #020617;
+  border-radius: 14px;
+  padding: 16px;
+
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 28px;
+  gap: 14px;
 
-  transform: translateY(-100%);
-  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  opacity: 0;
+  transform: translateY(-12px) scale(0.95);
+  pointer-events: none;
+
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-.mobile-menu a {
-  font-size: 1.4rem;
-  font-weight: 600;
+.dropdown-menu a {
   color: chocolate;
   text-decoration: none;
-  transition: color 0.3s ease, transform 0.3s ease;
+  font-weight: 500;
+  transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.mobile-menu a:hover {
+.dropdown-menu a:hover {
   color: gold;
-  transform: scale(1.1);
+  transform: translateX(6px);
 }
 
-/* Show menu */
-.mobile-menu.show {
-  transform: translateY(0);
+/* SHOW MENU */
+.dropdown-menu.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
-/* Desktop */
+/* DESKTOP */
 @media (min-width: 769px) {
   .menu-toggle {
     display: none;
   }
 
-  .mobile-menu {
+  .dropdown-menu {
     position: static;
+    opacity: 1;
     transform: none;
+    pointer-events: auto;
     flex-direction: row;
-    height: auto;
     background: none;
-    gap: 30px;
+    width: auto;
+    padding: 0;
   }
 
-  .mobile-menu a {
+  .dropdown-menu a {
     font-size: 1rem;
   }
 }
@@ -897,11 +909,11 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
 <!-- Navigation -->
 <nav class="navbar">
-  <div class="nav-brand">MENU</div>
+  <div class="nav-brand">Akil</div>
 
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
 
-  <div class="mobile-menu" id="mobileMenu">
+  <div class="dropdown-menu" id="dropdownMenu">
     <a href="#about" onclick="closeMenu()">About</a>
     <a href="#education" onclick="closeMenu()">Education</a>
     <a href="#skills" onclick="closeMenu()">Skills</a>
@@ -909,7 +921,6 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
     <a href="#contact" onclick="closeMenu()">Contact</a>
   </div>
 </nav>
-
 
 
 <!-- Hero -->
@@ -1202,11 +1213,11 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 
 <script>
 function toggleMenu() {
-  document.getElementById("mobileMenu").classList.toggle("show");
+  document.getElementById("dropdownMenu").classList.toggle("show");
 }
 
 function closeMenu() {
-  document.getElementById("mobileMenu").classList.remove("show");
+  document.getElementById("dropdownMenu").classList.remove("show");
 }
 </script>
 
