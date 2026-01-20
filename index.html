@@ -921,10 +921,9 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 <!-- Navigation -->
 <nav class="navbar">
   <div class="nav-brand">MENU</div>
-
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-
   <div class="dropdown-menu" id="dropdownMenu">
+    <a href="#home" onclick="closeMenu()">Home</a>
     <a href="#about" onclick="closeMenu()">About</a>
     <a href="#education" onclick="closeMenu()">Education</a>
     <a href="#skills" onclick="closeMenu()">Skills</a>
@@ -935,7 +934,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
 
 <!-- Hero -->
-<header class="hero fade-up">
+<header id="home" class="hero fade-up">
   <div class="hero-left fade-up">
     <h1 class="hero-name fade-up">Akil Krishnan</h1>
 
@@ -991,7 +990,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 
   <!-- RIGHT: Courses Completed -->
   <div class="card fade-up">
-    <div class="section-title">Courses Completed</div>
+    <div class="section-title">Course Completed</div>
 
     <p class="fade-up">
     Completed structured training in <strong>Data Science</strong> at
