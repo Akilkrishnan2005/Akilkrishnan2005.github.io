@@ -27,12 +27,16 @@ ul { list-style:none; padding-left:0; }
 /* ===== NAVBAR ===== */
 /* NAVBAR */
 .navbar {
-  position: sticky;
+  position: fixed;        /* 🔑 FIX */
   top: 0;
+  left: 0;
+  width: 100%;
+
   z-index: 1000;
   background: #020617;
   height: 64px;
   padding: 0 20px;
+
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -124,6 +128,7 @@ ul { list-style:none; padding-left:0; }
 /* ===== Hero Section ===== */
 .hero {
   min-height: 60vh;
+  margin-top: 64px;
   background: linear-gradient(135deg,#020617,#0f172a);
   display: flex;
   align-items: center;
