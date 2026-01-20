@@ -98,23 +98,18 @@ ul { list-style:none; padding-left:0; }
     display: none;
   }
 
-  /* CENTER NAV LINKS */
   .dropdown-menu {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-
-    display: flex;
-    flex-direction: row;
-    gap: 32px;
-
+    position: static;
     opacity: 1;
+    transform: none;
     pointer-events: auto;
+    flex-direction: row;
     background: none;
+    width: auto;
     padding: 0;
   }
 }
+
   .dropdown-menu a {
     font-size: 1rem;
   }
