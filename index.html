@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -943,7 +944,7 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 <nav class="navbar">
   <div class="nav-brand">MENU</div>
   <div class="menu-toggle" onclick="toggleMenu()">☰</div>
-  <div class="dropdown-menu fade-up" id="dropdownMenu">
+  <div class="dropdown-menu" id="dropdownMenu">
     <a href="#home" onclick="closeMenu()">Home</a>
     <a href="#about" onclick="closeMenu()">About</a>
     <a href="#education" onclick="closeMenu()">Education</a>
@@ -1193,18 +1194,6 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-window.addEventListener("load", () => {
-  const menu = document.getElementById("dropdownMenu");
-
-  // Trigger fade-up on page refresh
-  requestAnimationFrame(() => {
-    menu.classList.add("show");
-  });
-});
-</script>
-
-
-<script>
 const skills = [
   "Python",
   "Machine Learning",
@@ -1265,4 +1254,4 @@ function closeMenu() {
 </script>
 
 </body>
-</html>                                                                                                                       
+</html>                                                                                                                           
