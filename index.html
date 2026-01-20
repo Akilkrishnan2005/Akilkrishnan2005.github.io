@@ -581,9 +581,16 @@ nav a:hover::after {
  
   
 /* Fade-up animation */
-.fade-up { opacity:0; transform:translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
-.fade-up.show { opacity:1; transform:translateY(0); }
+.fade-up {
+  opacity: 0;
+  transform: translateY(40px);
+}
 
+.fade-up.show {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
 
 /* ===== Contact & Footer ===== */
 
@@ -1144,31 +1151,29 @@ footer { background:#020617; text-align:center; padding:20px; font-size:0.9rem; 
 <footer>© 2026 Akil Krishnan | Data Science Portfolio</footer>
 
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const faders = document.querySelectorAll('.fade-up');
+document.addEventListener("DOMContentLoaded", () => {
+  const sections = document.querySelectorAll(".fade-up");
 
-  const observer = new IntersectionObserver((entries, obs) => {
-    entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
 
-      // Add show to the section itself
-      entry.target.classList.add('show');
+        entry.target.classList.add("show");
 
-      // Add stagger effect to children with fade-up
-      const children = entry.target.querySelectorAll('.fade-up');
-      children.forEach((child, index) => {
-        // Only if child is not the same as the parent
-        if (child !== entry.target) {
-          child.style.transitionDelay = `${index * 0.15}s`;
-          child.classList.add('show');
-        }
+        // stagger children smoothly
+        const children = entry.target.children;
+        [...children].forEach((child, i) => {
+          child.style.transitionDelay = `${i * 0.15}s`;
+        });
+
+        obs.unobserve(entry.target);
       });
+    },
+    { threshold: 0.2 }
+  );
 
-      obs.unobserve(entry.target); // animate once
-    });
-  }, { threshold: 0.25 });
-
-  faders.forEach(fader => observer.observe(fader));
+  sections.forEach(section => observer.observe(section));
 });
 </script>
 
