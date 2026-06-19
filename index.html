@@ -6,7 +6,7 @@
 <title>Akil Krishnan | Data Scientist</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 *{margin:0;padding:0;box-sizing:border-box;}
 html{scroll-behavior:smooth;}
@@ -37,8 +37,8 @@ section{position:relative;z-index:1;}
 
 #hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 40px 60px;overflow:hidden;}
 .hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border:1px solid rgba(249,115,22,0.4);border-radius:999px;font-size:0.7rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(249,115,22,1);background:rgba(249,115,22,0.08);margin-bottom:32px;animation:fadeUp 1s ease 0.2s both;}
-.hero-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:#f97316;animation:pulse 2s infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.4);}}
+.hero-badge::before{content:'';width:7px;height:7px;border-radius:50%;background:#f97316;animation:bpulse 2s infinite;}
+@keyframes bpulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.4);}}
 .hero-name{font-size:clamp(3.2rem,9.5vw,8.5rem);font-weight:900;line-height:0.93;letter-spacing:-3px;background:linear-gradient(135deg,#fff 0%,rgba(255,255,255,0.85) 40%,#facc15 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;animation:fadeUp 1s ease 0.4s both;}
 .hero-role{font-size:clamp(1rem,2.5vw,1.5rem);font-weight:300;color:rgba(255,255,255,0.5);letter-spacing:3px;text-transform:uppercase;margin-bottom:32px;animation:fadeUp 1s ease 0.6s both;}
 .hero-desc{max-width:540px;font-size:1.02rem;color:rgba(255,255,255,0.55);line-height:1.85;margin:0 auto 44px;animation:fadeUp 1s ease 0.8s both;}
@@ -51,10 +51,14 @@ section{position:relative;z-index:1;}
 .scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,255,255,0.4),transparent);animation:scrollAnim 2s ease-in-out infinite;}
 @keyframes scrollAnim{0%,100%{transform:scaleY(1);opacity:1;}50%{transform:scaleY(0.5);opacity:0.3;}}
 
-.stats-strip{border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);display:grid;grid-template-columns:repeat(4,1fr);background:rgba(255,255,255,0.03);backdrop-filter:blur(20px);position:relative;z-index:1;}
-.stat{padding:44px 20px;text-align:center;border-right:1px solid rgba(255,255,255,0.08);}
+/* ── STATS STRIP — Vinoth dark bar style ── */
+.stats-strip{border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);display:grid;grid-template-columns:repeat(4,1fr);background:linear-gradient(135deg,#080810,#10101c,#181020);position:relative;z-index:1;}
+.stat{padding:44px 20px;text-align:center;border-right:1px solid rgba(255,255,255,0.07);cursor:default;position:relative;overflow:hidden;transition:background 0.3s;}
+.stat::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(249,115,22,0.13),transparent);opacity:0;transition:opacity 0.3s;}
+.stat:hover::before{opacity:1;}
 .stat:last-child{border-right:none;}
-.stat-n{font-size:2.8rem;font-weight:900;line-height:1;margin-bottom:10px;background:linear-gradient(135deg,#f97316,#facc15);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.stat-n{font-family:'Playfair Display',serif;font-size:2.6rem;font-weight:700;line-height:1;margin-bottom:10px;color:#f97316;transition:transform 0.3s;}
+.stat:hover .stat-n{transform:scale(1.15);}
 .stat-l{font-size:0.68rem;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.4);}
 
 .sec{padding:120px 80px;}
@@ -65,15 +69,25 @@ section{position:relative;z-index:1;}
 
 .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;margin-top:60px;}
 .about-text p{color:rgba(255,255,255,0.58);font-size:0.96rem;line-height:1.85;margin-bottom:18px;}
-.about-visual{position:relative;height:440px;border:1px solid rgba(255,255,255,0.08);border-radius:24px;background:rgba(255,255,255,0.03);overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.about-glow{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(249,115,22,0.2),transparent 70%);animation:glow 4s ease-in-out infinite;}
-@keyframes glow{0%,100%{transform:scale(1);}50%{transform:scale(1.2);}}
-.about-ring{position:absolute;width:260px;height:260px;border-radius:50%;border:1px solid rgba(249,115,22,0.12);animation:spin 8s linear infinite;}
-.about-ring2{position:absolute;width:340px;height:340px;border-radius:50%;border:1px solid rgba(249,115,22,0.06);animation:spin 14s linear infinite reverse;}
-@keyframes spin{from{transform:rotate(0);}to{transform:rotate(360deg);}}
 .about-tags{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px;}
 .tag{padding:8px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:999px;font-size:0.75rem;font-weight:500;color:rgba(255,255,255,0.58);letter-spacing:0.5px;transition:all 0.25s;}
 .tag:hover{border-color:rgba(249,115,22,0.45);color:#f97316;background:rgba(249,115,22,0.07);}
+
+/* ── ABOUT VISUAL — Vinoth 3D card style ── */
+.about-visual{position:relative;height:440px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;overflow:visible;}
+.scene-wrap{width:290px;height:360px;perspective:800px;}
+.card-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;border-radius:16px;animation:autoFloat 6s ease-in-out infinite;}
+@keyframes autoFloat{0%,100%{transform:rotateX(5deg) rotateY(-7deg);}50%{transform:rotateX(-4deg) rotateY(8deg);}}
+.card-face{position:absolute;inset:0;border-radius:16px;background:linear-gradient(160deg,#1e1430,#2a1a10);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;box-shadow:0 30px 60px rgba(0,0,0,0.55);border:1px solid rgba(249,115,22,0.35);}
+.card-ring{position:absolute;border-radius:50%;animation:cardSpin 8s linear infinite;}
+.card-ring1{width:108%;height:108%;top:-4%;left:-4%;border:1.5px solid rgba(249,115,22,0.28);}
+.card-ring2{width:122%;height:122%;top:-11%;left:-11%;border:1px dashed rgba(249,115,22,0.14);animation-duration:13s;animation-direction:reverse;}
+@keyframes cardSpin{from{transform:rotateZ(0) rotateX(20deg);}to{transform:rotateZ(360deg) rotateX(20deg);}}
+.card-photo{width:170px;height:170px;border-radius:50%;object-fit:cover;border:3px solid #f97316;box-shadow:0 0 28px rgba(249,115,22,0.4);position:relative;z-index:1;}
+.card-glow-dot{width:8px;height:8px;border-radius:50%;background:#f97316;box-shadow:0 0 12px 4px rgba(249,115,22,0.55);animation:gdpulse 2s ease-in-out infinite;position:relative;z-index:1;}
+@keyframes gdpulse{0%,100%{opacity:0.6;transform:scale(1);}50%{opacity:1;transform:scale(1.5);}}
+.card-name{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:rgba(249,115,22,0.9);letter-spacing:3px;text-transform:uppercase;position:relative;z-index:1;}
+.card-role-text{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,0.38);position:relative;z-index:1;}
 
 .edu-grid{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:60px;}
 .edu-card{padding:38px;border:1px solid rgba(255,255,255,0.09);border-radius:20px;background:rgba(255,255,255,0.03);position:relative;overflow:hidden;transition:border-color 0.3s,background 0.3s,transform 0.3s;}
@@ -91,13 +105,16 @@ section{position:relative;z-index:1;}
 .course-item:hover{background:rgba(249,115,22,0.07);border-color:rgba(249,115,22,0.2);color:rgba(255,255,255,0.82);}
 .course-item::before{content:'';width:5px;height:5px;border-radius:50%;background:#f97316;flex-shrink:0;}
 
+/* ── SKILLS — Vinoth gold fill-from-bottom style ── */
 .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:60px;}
-.skill-card{padding:34px 20px;text-align:center;border:1px solid rgba(255,255,255,0.08);border-radius:18px;background:rgba(255,255,255,0.03);cursor:default;position:relative;overflow:hidden;transition:all 0.35s cubic-bezier(0.22,1,0.36,1);}
-.skill-card::after{content:'';position:absolute;inset:0;border-radius:18px;background:radial-gradient(circle at 50% 0%,rgba(249,115,22,0.14),transparent 65%);opacity:0;transition:opacity 0.3s;}
-.skill-card:hover{border-color:rgba(249,115,22,0.35);transform:translateY(-9px) scale(1.04);box-shadow:0 22px 64px rgba(0,0,0,0.5),0 0 36px rgba(249,115,22,0.12);}
-.skill-card:hover::after{opacity:1;}
-.sk-icon{font-size:2.1rem;margin-bottom:14px;display:block;}
-.sk-name{font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.68);}
+.skill-card{padding:34px 20px;text-align:center;border:1px solid rgba(255,255,255,0.09);border-radius:4px;background:rgba(255,255,255,0.03);cursor:default;position:relative;overflow:hidden;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);transform-style:preserve-3d;}
+.skill-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#f97316,#facc15);transform:scaleY(0);transform-origin:bottom;transition:transform 0.35s ease;z-index:0;}
+.skill-card:hover{transform:translateY(-8px) rotateX(6deg);box-shadow:0 18px 40px rgba(249,115,22,0.22);border-color:rgba(249,115,22,0.5);}
+.skill-card:hover::before{transform:scaleY(1);}
+.sk-icon{font-size:2.1rem;margin-bottom:14px;display:block;position:relative;z-index:1;transition:filter 0.3s;}
+.sk-name{font-size:0.75rem;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.68);position:relative;z-index:1;transition:color 0.3s;}
+.skill-card:hover .sk-name{color:#000;}
+.skill-card:hover .sk-icon{filter:grayscale(1) brightness(0);}
 
 .proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:60px;}
 .proj-card{border:1px solid rgba(255,255,255,0.09);border-radius:20px;background:rgba(255,255,255,0.03);overflow:hidden;display:flex;flex-direction:column;transition:border-color 0.3s,transform 0.3s,box-shadow 0.3s;}
@@ -116,7 +133,6 @@ section{position:relative;z-index:1;}
 .proj-link{display:inline-flex;align-items:center;gap:8px;font-size:0.75rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.12);border-radius:999px;padding:9px 20px;transition:all 0.25s;width:fit-content;}
 .proj-link:hover{color:#f97316;border-color:rgba(249,115,22,0.4);background:rgba(249,115,22,0.07);}
 
-/* ── CONTACT SECTION — Vinoth style ── */
 .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:60px;align-items:start;}
 .contact-intro h3{font-size:1.5rem;font-weight:700;color:#fff;margin-bottom:12px;}
 .contact-intro p{color:rgba(255,255,255,0.55);margin-bottom:36px;font-size:0.96rem;line-height:1.8;}
@@ -129,8 +145,6 @@ section{position:relative;z-index:1;}
 .contact-value{font-size:0.88rem;font-weight:500;color:rgba(255,255,255,0.8);}
 .contact-value a{color:inherit;transition:color .2s;}
 .contact-value a:hover{color:#f97316;}
-
-/* Contact form — Vinoth clean style */
 .contact-form{display:flex;flex-direction:column;gap:14px;}
 .form-group label{display:block;font-size:0.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px;}
 .form-group input,.form-group textarea{width:100%;padding:13px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;font-size:0.9rem;color:#fff;font-family:'Inter',sans-serif;transition:all .2s;outline:none;}
@@ -153,7 +167,6 @@ footer span{color:#f97316;}
 .reveal-r.in{opacity:1;transform:translateX(0);}
 @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
 
-/* ── CURSOR TRAIL (Vinoth style) ── */
 .particle-trail{position:fixed;pointer-events:none;z-index:9999;border-radius:50%;transform:translate(-50%,-50%);transition:opacity .5s;}
 
 @media(max-width:900px){
@@ -162,13 +175,14 @@ footer span{color:#f97316;}
   .menu-btn{display:block;}
   .sec{padding:70px 24px;}
   .about-grid{display:flex;flex-direction:column;}
-  .about-visual{order:1;}
+  .about-visual{order:1;height:auto;padding:20px 0;}
   .about-text{order:2;}
   .edu-grid,.proj-grid,.contact-grid{grid-template-columns:1fr;gap:28px;}
   .skills-grid{grid-template-columns:repeat(2,1fr);}
   .stats-strip{grid-template-columns:repeat(2,1fr);}
   .stat:nth-child(2){border-right:none;}
   .hero-name{letter-spacing:-2px;}
+  .scene-wrap{width:240px;height:300px;}
 }
 </style>
 </head>
@@ -213,11 +227,12 @@ footer span{color:#f97316;}
   <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
-<div class="stats-strip reveal">
-  <div class="stat"><div class="stat-n">5+</div><div class="stat-l">Month Experience</div></div>
-  <div class="stat"><div class="stat-n">10+</div><div class="stat-l">Projects Built</div></div>
+<!-- STATS STRIP — Vinoth dark bar + count-up -->
+<div class="stats-strip reveal" id="statsBar">
+  <div class="stat"><div class="stat-n" id="sn1">5+</div><div class="stat-l">Month Experience</div></div>
+  <div class="stat"><div class="stat-n" id="sn2">10+</div><div class="stat-l">Projects Built</div></div>
   <div class="stat"><div class="stat-n">B.Sc</div><div class="stat-l">Mathematics</div></div>
-  <div class="stat"><div class="stat-n">8+</div><div class="stat-l">Tech Skills</div></div>
+  <div class="stat"><div class="stat-n" id="sn4">8+</div><div class="stat-l">Tech Skills</div></div>
 </div>
 
 <section class="sec" id="about">
@@ -235,9 +250,21 @@ footer span{color:#f97316;}
           <span class="tag">MySQL</span><span class="tag">Visualization</span>
         </div>
       </div>
+
+      <!-- ABOUT VISUAL — Vinoth 3D card -->
       <div class="about-visual reveal-r">
-        <div class="about-ring"></div><div class="about-ring2"></div><div class="about-glow"></div>
-        <img src="profile3.png" alt="Akil Krishnan" style="width:100%;height:100%;object-fit:cover;border-radius:20px;position:relative;z-index:1;">
+        <div class="scene-wrap" id="sceneWrap">
+          <div class="card-3d" id="card3d">
+            <div class="card-face">
+              <div class="card-ring card-ring1"></div>
+              <div class="card-ring card-ring2"></div>
+              <img src="profile3.png" alt="Akil Krishnan" class="card-photo">
+              <div class="card-glow-dot"></div>
+              <div class="card-name">Akil Krishnan</div>
+              <div class="card-role-text">Data Scientist · Python Dev</div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -272,6 +299,7 @@ footer span{color:#f97316;}
   </div>
 </section>
 
+<!-- SKILLS — Vinoth gold fill style -->
 <section class="sec" id="skills">
   <div class="sec-inner">
     <div class="sec-label">Competencies</div>
@@ -344,7 +372,6 @@ footer span{color:#f97316;}
   </div>
 </section>
 
-<!-- CONTACT — Vinoth clean card style -->
 <section class="sec" id="contact">
   <div class="sec-inner">
     <div class="sec-label">Get In Touch</div>
@@ -537,12 +564,51 @@ const ro=new IntersectionObserver(entries=>{
 document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>ro.observe(el));
 
 /* TILT on cards */
-document.querySelectorAll('.skill-card,.edu-card,.proj-card').forEach(card=>{
+document.querySelectorAll('.edu-card,.proj-card').forEach(card=>{
   card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const dx=(e.clientX-r.left)/r.width-.5;const dy=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(600px) rotateY(${dx*10}deg) rotateX(${-dy*8}deg) translateY(-6px)`;});
   card.addEventListener('mouseleave',()=>card.style.transform='');
 });
 
-/* ── VINOTH CURSOR TRAIL ── */
+/* STATS COUNT-UP — Vinoth style */
+let counted=false;
+const sObs=new IntersectionObserver(es=>{
+  if(es[0].isIntersecting&&!counted){
+    counted=true;
+    [['sn1',5],['sn2',10],['sn4',8]].forEach(([id,target])=>{
+      let cur=0;
+      const el=document.getElementById(id);
+      const step=()=>{
+        cur+=Math.ceil(target/25);
+        if(cur>=target){el.textContent=target+'+';return;}
+        el.textContent=cur+'+';
+        requestAnimationFrame(step);
+      };
+      setTimeout(step,200);
+    });
+  }
+},{threshold:0.5});
+sObs.observe(document.getElementById('statsBar'));
+
+/* ABOUT CARD 3D TILT — Vinoth style */
+const sceneWrap=document.getElementById('sceneWrap');
+const card3d=document.getElementById('card3d');
+let cmx=0,cmy=0;
+sceneWrap.addEventListener('mousemove',e=>{
+  const r=sceneWrap.getBoundingClientRect();
+  const x=(e.clientX-r.left)/r.width-.5;
+  const y=(e.clientY-r.top)/r.height-.5;
+  cmx+=(x*28-cmx)*.1;
+  cmy+=(-y*18-cmy)*.1;
+  card3d.style.animation='none';
+  card3d.style.transform=`rotateY(${cmx}deg) rotateX(${cmy}deg)`;
+});
+sceneWrap.addEventListener('mouseleave',()=>{
+  card3d.style.animation='autoFloat 6s ease-in-out infinite';
+  card3d.style.transform='';
+  cmx=0;cmy=0;
+});
+
+/* CURSOR TRAIL */
 const trail=[];
 for(let i=0;i<8;i++){
   const d=document.createElement('div');
