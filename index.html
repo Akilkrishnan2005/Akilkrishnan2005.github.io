@@ -449,9 +449,9 @@ scene.add(tk);
 /* ── FLOATING DATA RINGS ── */
 const ringGroup=new THREE.Group();
 const ringData=[
-  {r:4,tube:0.02,col:0xf97316,op:0.25,pos:[−5,3,−6],rx:0.6,ry:0.3},
-  {r:5.5,tube:0.015,col:0x6366f1,op:0.18,pos:[8,−4,−8],rx:1.2,ry:0.8},
-  {r:3,tube:0.025,col:0xfacc15,op:0.22,pos:[−8,−2,−3],rx:0.4,ry:1.1},
+  {r:4,tube:0.02,col:0xf97316,op:0.25,pos:[-5,3,-6],rx:0.6,ry:0.3},
+  {r:5.5,tube:0.015,col:0x6366f1,op:0.18,pos:[8,-4,-8],rx:1.2,ry:0.8},
+  {r:3,tube:0.025,col:0xfacc15,op:0.22,pos:[-8,-2,-3],rx:0.4,ry:1.1},
 ];
 ringData.forEach(d=>{
   const g=new THREE.TorusGeometry(d.r,d.tube,4,80);
