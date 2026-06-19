@@ -154,7 +154,14 @@ footer span{color:#f97316;}
   .nav-links,.nav-cta{display:none;}
   .menu-btn{display:block;}
   .sec{padding:70px 24px;}
-  .about-grid,.edu-grid,.proj-grid,.contact-grid{grid-template-columns:1fr;gap:28px;}
+  .about-grid{
+      display:flex;
+      flex-direction:column;
+  }
+  .about-visual{order:1;}
+  .about-text{order:2;}
+
+  .edu-grid,.proj-grid,.contact-grid{grid-template-columns:1fr;gap:28px;}
   .skills-grid{grid-template-columns:repeat(2,1fr);}
   .stats-strip{grid-template-columns:repeat(2,1fr);}
   .stat:nth-child(2){border-right:none;}
