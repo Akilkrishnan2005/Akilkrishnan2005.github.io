@@ -75,15 +75,30 @@ section{position:relative;z-index:1;}
 
 /* ── ABOUT VISUAL — Vinoth 3D card style ── */
 .about-visual{position:relative;height:440px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;overflow:visible;}
-.scene-wrap{width:290px;height:360px;perspective:800px;}
+.scene-wrap{width:360px;height:450px;perspective:800px;}
 .card-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;border-radius:16px;animation:autoFloat 6s ease-in-out infinite;}
 @keyframes autoFloat{0%,100%{transform:rotateX(5deg) rotateY(-7deg);}50%{transform:rotateX(-4deg) rotateY(8deg);}}
 .card-face{position:absolute;inset:0;border-radius:16px;background:linear-gradient(160deg,#1e1430,#2a1a10);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;box-shadow:0 30px 60px rgba(0,0,0,0.55);border:1px solid rgba(249,115,22,0.35);}
 .card-ring{position:absolute;border-radius:50%;animation:cardSpin 8s linear infinite;}
-.card-ring1{width:108%;height:108%;top:-4%;left:-4%;border:1.5px solid rgba(249,115,22,0.28);}
-.card-ring2{width:122%;height:122%;top:-11%;left:-11%;border:1px dashed rgba(249,115,22,0.14);animation-duration:13s;animation-direction:reverse;}
+.card-ring1{
+    width:115%;
+    height:115%;
+    top:-7%;
+    left:-7%;border:1.5px solid rgba(249,115,22,0.28);}
+.card-ring2{
+    width:130%;
+    height:130%;
+    top:-15%;
+    left:-15%;
+}border:1px dashed rgba(249,115,22,0.14);animation-duration:13s;animation-direction:reverse;}
 @keyframes cardSpin{from{transform:rotateZ(0) rotateX(20deg);}to{transform:rotateZ(360deg) rotateX(20deg);}}
-.card-photo{width:170px;height:170px;border-radius:50%;object-fit:cover;border:3px solid #f97316;box-shadow:0 0 28px rgba(249,115,22,0.4);position:relative;z-index:1;}
+.card-photo{
+    width:230px;
+    height:230px;
+    border-radius:50%;
+    object-fit:cover;
+    border:4px solid #f97316;
+    box-shadow:0 0 35px rgba(249,115,22,0.5);position:relative;z-index:1;}
 .card-glow-dot{width:8px;height:8px;border-radius:50%;background:#f97316;box-shadow:0 0 12px 4px rgba(249,115,22,0.55);animation:gdpulse 2s ease-in-out infinite;position:relative;z-index:1;}
 @keyframes gdpulse{0%,100%{opacity:0.6;transform:scale(1);}50%{opacity:1;transform:scale(1.5);}}
 .card-name{font-family:'Playfair Display',serif;font-size:13px;font-weight:700;color:rgba(249,115,22,0.9);letter-spacing:3px;text-transform:uppercase;position:relative;z-index:1;}
