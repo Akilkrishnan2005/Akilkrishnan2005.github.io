@@ -627,13 +627,29 @@ sceneWrap.addEventListener('mouseleave',()=>{
 const trail=[];
 for(let i=0;i<8;i++){
   const d=document.createElement('div');
-  d.className='particle-trail';
-  d.style.cssText=`position:fixed;width:${8-i}px;height:${8-i}px;border-radius:50%;background:rgba(249,115,22,${0.6-i*0.07});pointer-events:none;z-index:9999;transform:translate(-50%,-50%);`;
+  d.style.cssText=`position:fixed;width:${8-i}px;height:${8-i}px;border-radius:50%;background:rgba(249,115,22,${0.6-i*0.07});pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:opacity .5s;`;
   document.body.appendChild(d);
-  trail.push({el:d,x:0,y:0});
+  trail.push({el:d,x:window.innerWidth/2,y:window.innerHeight/2});
 }
-let tmx=0,tmy=0;
+let tmx=window.innerWidth/2,tmy=window.innerHeight/2;
+
+/* mouse */
 document.addEventListener('mousemove',e=>{tmx=e.clientX;tmy=e.clientY;});
+
+/* touch — single finger follow */
+document.addEventListener('touchstart',e=>{
+  const t=e.touches[0];
+  tmx=t.clientX;tmy=t.clientY;
+},{passive:true});
+document.addEventListener('touchmove',e=>{
+  const t=e.touches[0];
+  tmx=t.clientX;tmy=t.clientY;
+},{passive:true});
+document.addEventListener('touchend',()=>{
+  /* fade out trail when finger lifts */
+  trail.forEach(t=>t.el.style.opacity='0');
+});
+
 (function moveTrail(){
   trail.forEach((t,i)=>{
     const prev=i===0?{x:tmx,y:tmy}:trail[i-1];
