@@ -474,24 +474,24 @@ function makeGlowTexture(hex){
 const glowTexWhite=makeGlowTexture('255,255,255');
 const glowTexOrange=makeGlowTexture('249,115,22');
 const glowTexGold=makeGlowTexture('250,204,21');
-const glowTexPurple=makeGlowTexture('167,85,247');
-const glowTexTeal=makeGlowTexture('45,212,191');
-const glowTexPink=makeGlowTexture('236,72,153');
-const nebulaTex=[glowTexPurple,glowTexTeal,glowTexPink,glowTexOrange];
+const glowTexCopper=makeGlowTexture('184,115,51');
+const glowTexBronze=makeGlowTexture('146,64,14');
+const glowTexAmber=makeGlowTexture('217,119,6');
+const nebulaTex=[glowTexCopper,glowTexBronze,glowTexAmber,glowTexOrange];
 
 const canvas=document.getElementById('bg-canvas');
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.setSize(innerWidth,innerHeight);
-renderer.setClearColor(0x0d0d14,1);
+renderer.setClearColor(0x120c08,1);
 const scene=new THREE.Scene();
-scene.fog=new THREE.FogExp2(0x0d0d14,0.0035);
+scene.fog=new THREE.FogExp2(0x120c08,0.003);
 const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,900);
 cam.position.set(0,0,32);
 
 scene.add(new THREE.AmbientLight(0xffffff,0.15));
-const pl1=new THREE.PointLight(0xa855f7,3,90);pl1.position.set(20,10,10);scene.add(pl1);
-const pl2=new THREE.PointLight(0x2dd4bf,2.2,80);pl2.position.set(-20,-6,12);scene.add(pl2);
+const pl1=new THREE.PointLight(0xd97706,3,90);pl1.position.set(20,10,10);scene.add(pl1);
+const pl2=new THREE.PointLight(0xb87333,2.2,80);pl2.position.set(-20,-6,12);scene.add(pl2);
 const pl3=new THREE.PointLight(0xf97316,2,70);pl3.position.set(0,-10,-10);scene.add(pl3);
 
 /* Deep-space starfield behind the aurora */
@@ -556,9 +556,9 @@ const auroraFrag=`
 const auroraGroup = new THREE.Group();
 const auroraRibbons = [];
 const auroraConfigs = [
-  {w:90,h:34,segX:120,segY:24,y:10,z:-30,rotX:-0.15,amp:3.2,freq:0.09,speed:0.5,colorA:0xa855f7,colorB:0x2dd4bf,opacity:0.35},
-  {w:100,h:30,segX:110,segY:20,y:-4,z:-42,rotX:0.1,amp:2.6,freq:0.07,speed:0.35,colorA:0xf97316,colorB:0xec4899,opacity:0.28},
-  {w:80,h:28,segX:100,segY:18,y:2,z:-55,rotX:-0.05,amp:2.2,freq:0.11,speed:0.6,colorA:0x2dd4bf,colorB:0xa855f7,opacity:0.22}
+  {w:90,h:34,segX:120,segY:24,y:10,z:-30,rotX:-0.15,amp:3.2,freq:0.09,speed:0.5,colorA:0x92400e,colorB:0xf59e0b,opacity:0.4},
+  {w:100,h:30,segX:110,segY:20,y:-4,z:-42,rotX:0.1,amp:2.6,freq:0.07,speed:0.35,colorA:0xb87333,colorB:0xea580c,opacity:0.32},
+  {w:80,h:28,segX:100,segY:18,y:2,z:-55,rotX:-0.05,amp:2.2,freq:0.11,speed:0.6,colorA:0x78350f,colorB:0xfbbf24,opacity:0.26}
 ];
 auroraConfigs.forEach(cfg=>{
   const geo = new THREE.PlaneGeometry(cfg.w, cfg.h, cfg.segX, cfg.segY);
@@ -593,7 +593,7 @@ const nebulaGroup = new THREE.Group();
 const nebulaData = [];
 for(let i=0;i<NEBULA_COUNT;i++){
   const tex = nebulaTex[i % nebulaTex.length];
-  const mat = new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.12+Math.random()*0.1,blending:THREE.AdditiveBlending,depthWrite:false});
+  const mat = new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.2+Math.random()*0.16,blending:THREE.AdditiveBlending,depthWrite:false});
   const spr = new THREE.Sprite(mat);
   const x=(Math.random()-.5)*110, y=(Math.random()-.5)*60, z=-10-Math.random()*70;
   spr.position.set(x,y,z);
@@ -613,7 +613,7 @@ scene.add(nebulaGroup);
 /* ── FLOATING LIGHT PARTICLES — small bright motes drifting upward ── */
 const MOTE_COUNT=70;
 const moteGroup = new THREE.Group();
-const moteColors=[glowTexOrange,glowTexGold,glowTexTeal,glowTexPurple];
+const moteColors=[glowTexOrange,glowTexGold,glowTexCopper,glowTexBronze];
 for(let i=0;i<MOTE_COUNT;i++){
   const mat = new THREE.SpriteMaterial({map:moteColors[i%moteColors.length],transparent:true,opacity:0.5+Math.random()*0.3,blending:THREE.AdditiveBlending,depthWrite:false});
   const spr = new THREE.Sprite(mat);
