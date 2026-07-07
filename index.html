@@ -456,187 +456,87 @@ let lp=0;
 const fill=document.getElementById('loaderFill'),ltxt=document.getElementById('loaderText');
 const li=setInterval(()=>{lp+=2;fill.style.width=lp+'%';ltxt.textContent=loaderMsgs[Math.min(Math.floor(lp/26),loaderMsgs.length-1)];if(lp>=100){clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hide'),300);}},28);
 
-/* 3D BACKGROUND — Aurora & nebula light waves, interactive parallax */
+/* 3D BACKGROUND — Matrix-style falling code rain, in 3D depth, orange brand palette */
 
-/* Soft radial-glow sprite texture, reused for stars and nebula puffs */
-function makeGlowTexture(hex){
-  const c=document.createElement('canvas');c.width=64;c.height=64;
+const RAIN_CHARS = "01{}<>/;=+-*ABCDEFXYZ$#@01アイウエ01".split("");
+
+/* Build a small set of glowing character textures (bright head + dim trail variants) */
+function makeCharTexture(ch, opts){
+  const size=64;
+  const c=document.createElement('canvas');c.width=size;c.height=size;
   const ctx=c.getContext('2d');
-  const g=ctx.createRadialGradient(32,32,0,32,32,32);
-  g.addColorStop(0,`rgba(${hex},1)`);
-  g.addColorStop(0.4,`rgba(${hex},0.55)`);
-  g.addColorStop(1,`rgba(${hex},0)`);
-  ctx.fillStyle=g;ctx.fillRect(0,0,64,64);
+  ctx.clearRect(0,0,size,size);
+  if(opts.glow){
+    const g=ctx.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
+    g.addColorStop(0,opts.glowColor);
+    g.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.fillStyle=g;
+    ctx.fillRect(0,0,size,size);
+  }
+  ctx.font='bold 40px monospace';
+  ctx.textAlign='center';
+  ctx.textBaseline='middle';
+  ctx.fillStyle=opts.textColor;
+  ctx.fillText(ch,size/2,size/2+2);
   const tex=new THREE.CanvasTexture(c);
   tex.needsUpdate=true;
   return tex;
 }
-const glowTexWhite=makeGlowTexture('255,255,255');
-const glowTexOrange=makeGlowTexture('249,115,22');
-const glowTexGold=makeGlowTexture('250,204,21');
-const glowTexCopper=makeGlowTexture('184,115,51');
-const glowTexBronze=makeGlowTexture('146,64,14');
-const glowTexAmber=makeGlowTexture('217,119,6');
-const nebulaTex=[glowTexCopper,glowTexBronze,glowTexAmber,glowTexOrange];
+const headTextures = RAIN_CHARS.map(ch=>makeCharTexture(ch,{glow:true,glowColor:'rgba(255,241,214,0.9)',textColor:'#fff8ec'}));
+const bodyTextures = RAIN_CHARS.map(ch=>makeCharTexture(ch,{glow:true,glowColor:'rgba(249,115,22,0.55)',textColor:'#facc15'}));
+const dimTextures  = RAIN_CHARS.map(ch=>makeCharTexture(ch,{glow:true,glowColor:'rgba(154,52,18,0.4)',textColor:'#c2410c'}));
 
 const canvas=document.getElementById('bg-canvas');
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.setSize(innerWidth,innerHeight);
-renderer.setClearColor(0x120c08,1);
+renderer.setClearColor(0x0b0705,1);
 const scene=new THREE.Scene();
-scene.fog=new THREE.FogExp2(0x120c08,0.003);
-const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,900);
-cam.position.set(0,0,32);
+scene.fog=new THREE.FogExp2(0x0b0705,0.014);
+const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,300);
+cam.position.set(0,0,26);
 
-scene.add(new THREE.AmbientLight(0xffffff,0.15));
-const pl1=new THREE.PointLight(0xd97706,3,90);pl1.position.set(20,10,10);scene.add(pl1);
-const pl2=new THREE.PointLight(0xb87333,2.2,80);pl2.position.set(-20,-6,12);scene.add(pl2);
-const pl3=new THREE.PointLight(0xf97316,2,70);pl3.position.set(0,-10,-10);scene.add(pl3);
+scene.add(new THREE.AmbientLight(0xffffff,0.12));
+const pl1=new THREE.PointLight(0xf97316,3,80);pl1.position.set(0,20,10);scene.add(pl1);
+const pl2=new THREE.PointLight(0xfacc15,1.8,70);pl2.position.set(-20,-10,15);scene.add(pl2);
 
-/* Deep-space starfield behind the aurora */
-const starGeo=new THREE.BufferGeometry();
-const STARS=1600,sp=new Float32Array(STARS*3);
-for(let i=0;i<STARS*3;i++)sp[i]=(Math.random()-.5)*260;
-starGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
-const starField=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.2,map:glowTexWhite,transparent:true,opacity:0.4,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true}));
-scene.add(starField);
-
-/* Twinkling flare stars */
-const FLARE_COUNT=35;
-const flareGroup=new THREE.Group();
-for(let i=0;i<FLARE_COUNT;i++){
-  const mat=new THREE.SpriteMaterial({map:glowTexWhite,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false});
-  const spr=new THREE.Sprite(mat);
-  const dist=50+Math.random()*170;
-  const theta=Math.random()*Math.PI*2,phi=Math.acos(2*Math.random()-1);
-  spr.position.set(dist*Math.sin(phi)*Math.cos(theta),dist*Math.sin(phi)*Math.sin(theta),dist*Math.cos(phi)-40);
-  const s=0.3+Math.random()*0.6;
-  spr.scale.set(s,s,1);
-  spr.userData={phase:Math.random()*Math.PI*2,speed:0.02+Math.random()*0.03,baseScale:s};
-  flareGroup.add(spr);
-}
-scene.add(flareGroup);
-
-/* ── AURORA RIBBONS — flowing shader-driven light waves ── */
-const auroraVert=`
-  uniform float uTime;
-  uniform float uAmp;
-  uniform float uFreq;
-  uniform float uSpeed;
-  varying vec2 vUv;
-  varying float vElevation;
-  void main(){
-    vUv = uv;
-    vec3 pos = position;
-    float wave1 = sin(pos.x * uFreq + uTime * uSpeed) * uAmp;
-    float wave2 = sin(pos.x * uFreq * 1.8 - uTime * uSpeed * 0.7 + 2.0) * uAmp * 0.5;
-    float wave3 = cos(pos.y * 0.15 + uTime * uSpeed * 0.4) * uAmp * 0.3;
-    pos.z += wave1 + wave2 + wave3;
-    vElevation = (wave1 + wave2 + wave3) / uAmp;
-    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
-  }
-`;
-const auroraFrag=`
-  uniform vec3 uColorA;
-  uniform vec3 uColorB;
-  uniform float uTime;
-  uniform float uOpacity;
-  varying vec2 vUv;
-  varying float vElevation;
-  void main(){
-    float mixVal = sin(vUv.x * 3.14159 + uTime * 0.25) * 0.5 + 0.5;
-    vec3 color = mix(uColorA, uColorB, mixVal);
-    float edgeFade = smoothstep(0.0, 0.25, vUv.y) * smoothstep(1.0, 0.75, vUv.y);
-    float glow = 0.4 + vElevation * 0.5;
-    float alpha = edgeFade * uOpacity * glow;
-    gl_FragColor = vec4(color, alpha);
-  }
-`;
-const auroraGroup = new THREE.Group();
-const auroraRibbons = [];
-const auroraConfigs = [
-  {w:90,h:34,segX:120,segY:24,y:10,z:-30,rotX:-0.15,amp:3.2,freq:0.09,speed:0.5,colorA:0x92400e,colorB:0xf59e0b,opacity:0.4},
-  {w:100,h:30,segX:110,segY:20,y:-4,z:-42,rotX:0.1,amp:2.6,freq:0.07,speed:0.35,colorA:0xb87333,colorB:0xea580c,opacity:0.32},
-  {w:80,h:28,segX:100,segY:18,y:2,z:-55,rotX:-0.05,amp:2.2,freq:0.11,speed:0.6,colorA:0x78350f,colorB:0xfbbf24,opacity:0.26}
+/* ── RAIN COLUMNS — each column is a vertical stack of glowing characters ── */
+const rainColumns = [];
+const DEPTH_LAYERS = [
+  {z:-4,  spread:34, count:30, trail:16, spacing:1.55, speed:0.16, scale:1.05, opacity:1.0},
+  {z:-16, spread:50, count:34, trail:14, spacing:1.7,  speed:0.10, scale:0.8,  opacity:0.65},
+  {z:-32, spread:70, count:38, trail:12, spacing:1.9,  speed:0.06, scale:0.55, opacity:0.35}
 ];
-auroraConfigs.forEach(cfg=>{
-  const geo = new THREE.PlaneGeometry(cfg.w, cfg.h, cfg.segX, cfg.segY);
-  const mat = new THREE.ShaderMaterial({
-    vertexShader: auroraVert,
-    fragmentShader: auroraFrag,
-    transparent: true,
-    depthWrite: false,
-    blending: THREE.AdditiveBlending,
-    side: THREE.DoubleSide,
-    uniforms: {
-      uTime: {value: Math.random()*100},
-      uAmp: {value: cfg.amp},
-      uFreq: {value: cfg.freq},
-      uSpeed: {value: cfg.speed},
-      uColorA: {value: new THREE.Color(cfg.colorA)},
-      uColorB: {value: new THREE.Color(cfg.colorB)},
-      uOpacity: {value: cfg.opacity}
+
+DEPTH_LAYERS.forEach(layer=>{
+  for(let i=0;i<layer.count;i++){
+    const group = new THREE.Group();
+    const x = (Math.random()-0.5)*layer.spread;
+    const topY = 20 + Math.random()*20;
+    group.position.set(x, topY, layer.z);
+
+    const sprites = [];
+    for(let j=0;j<layer.trail;j++){
+      const isHead = j===0;
+      const texSet = isHead ? headTextures : (j<layer.trail*0.4 ? bodyTextures : dimTextures);
+      const tex = texSet[Math.floor(Math.random()*texSet.length)];
+      const mat = new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:layer.opacity*(isHead?1:Math.max(0.08,1-j/layer.trail))});
+      const spr = new THREE.Sprite(mat);
+      spr.scale.set(layer.scale,layer.scale,1);
+      spr.position.y = -j*layer.spacing;
+      spr.userData={isHead,texSet,glitchTimer:Math.random()*2};
+      group.add(spr);
+      sprites.push(spr);
     }
-  });
-  const mesh = new THREE.Mesh(geo, mat);
-  mesh.position.set(0, cfg.y, cfg.z);
-  mesh.rotation.x = cfg.rotX;
-  auroraGroup.add(mesh);
-  auroraRibbons.push(mesh);
+
+    rainColumns.push({
+      group, sprites, layer,
+      fallSpeed: layer.speed*(0.7+Math.random()*0.6),
+      resetY: topY
+    });
+    scene.add(group);
+  }
 });
-scene.add(auroraGroup);
-
-/* ── NEBULA CLOUDS — soft drifting colored puffs for depth ── */
-const NEBULA_COUNT=60;
-const nebulaGroup = new THREE.Group();
-const nebulaData = [];
-for(let i=0;i<NEBULA_COUNT;i++){
-  const tex = nebulaTex[i % nebulaTex.length];
-  const mat = new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.2+Math.random()*0.16,blending:THREE.AdditiveBlending,depthWrite:false});
-  const spr = new THREE.Sprite(mat);
-  const x=(Math.random()-.5)*110, y=(Math.random()-.5)*60, z=-10-Math.random()*70;
-  spr.position.set(x,y,z);
-  const s=8+Math.random()*16;
-  spr.scale.set(s,s,1);
-  spr.userData={
-    baseX:x, baseY:y,
-    driftSpeed:0.03+Math.random()*0.05,
-    driftPhase:Math.random()*Math.PI*2,
-    driftRange:2+Math.random()*3
-  };
-  nebulaGroup.add(spr);
-  nebulaData.push(spr);
-}
-scene.add(nebulaGroup);
-
-/* ── FLOATING LIGHT PARTICLES — small bright motes drifting upward ── */
-const MOTE_COUNT=70;
-const moteGroup = new THREE.Group();
-const moteColors=[glowTexOrange,glowTexGold,glowTexCopper,glowTexBronze];
-for(let i=0;i<MOTE_COUNT;i++){
-  const mat = new THREE.SpriteMaterial({map:moteColors[i%moteColors.length],transparent:true,opacity:0.5+Math.random()*0.3,blending:THREE.AdditiveBlending,depthWrite:false});
-  const spr = new THREE.Sprite(mat);
-  spr.position.set((Math.random()-.5)*70,(Math.random()-.5)*45-10,(Math.random()-.5)*40-10);
-  const s=0.25+Math.random()*0.4;
-  spr.scale.set(s,s,1);
-  spr.userData={speed:0.01+Math.random()*0.02,sway:Math.random()*Math.PI*2,swaySpeed:0.4+Math.random()*0.6,startY:spr.position.y};
-  moteGroup.add(spr);
-}
-scene.add(moteGroup);
-
-/* Occasional shooting stars streaking across the scene */
-const SHOOT_COUNT=3;
-const shootGroup=new THREE.Group();
-const shootData=[];
-for(let i=0;i<SHOOT_COUNT;i++){
-  const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0)]);
-  const mat=new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0,blending:THREE.AdditiveBlending});
-  const line=new THREE.Line(geo,mat);
-  shootGroup.add(line);
-  shootData.push({line,active:false,t:0,start:new THREE.Vector3(),dir:new THREE.Vector3(),cooldown:Math.random()*4+i*1.5});
-}
-scene.add(shootGroup);
 
 let mx=0,my=0,sy=0;
 document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=-(e.clientY/innerHeight-.5)*2;});
@@ -647,74 +547,32 @@ let t=0;
 (function anim(){
   requestAnimationFrame(anim);t+=0.008;
 
-  /* interactive parallax — camera drifts with mouse, layers move at different depths */
-  cam.position.x+=(mx*3.2-cam.position.x)*0.03;
-  cam.position.y+=(1+my*2-cam.position.y)*0.03;
-  cam.position.z=32+sy*0.004;
-  cam.lookAt(mx*1.5, my*1, 0);
+  /* interactive parallax */
+  cam.position.x+=(mx*3-cam.position.x)*0.03;
+  cam.position.y+=(my*2-cam.position.y)*0.03;
+  cam.position.z=26+sy*0.004;
+  cam.lookAt(mx*1.2,my*0.8,-10);
 
-  pl1.position.x=Math.sin(t*0.4)*22;pl1.position.y=Math.cos(t*0.3)*12;
-  pl2.position.x=Math.cos(t*0.35)*20;pl2.position.y=Math.sin(t*0.5)*10;
-  pl3.position.z=-10+Math.sin(t*0.25)*8;
+  pl1.position.x=Math.sin(t*0.4)*18;
+  pl2.position.x=Math.cos(t*0.35)*16;
 
-  starField.rotation.y+=0.00012;
-  flareGroup.rotation.y+=0.00012;
-
-  /* aurora ribbons parallax — nearer ribbons shift more with mouse */
-  auroraRibbons.forEach((mesh,i)=>{
-    mesh.material.uniforms.uTime.value = t*10 + i*5;
-    const depthFactor = (i+1)*0.6;
-    mesh.position.x += ((mx*depthFactor) - mesh.position.x*0.02)*0.02;
-    mesh.rotation.z = Math.sin(t*0.1+i)*0.02;
-  });
-  auroraGroup.position.x += (mx*1.2 - auroraGroup.position.x)*0.02;
-  auroraGroup.position.y += (my*0.8 - auroraGroup.position.y)*0.02;
-
-  /* nebula clouds drift slowly + subtle parallax */
-  nebulaData.forEach((spr,i)=>{
-    spr.userData.driftPhase += spr.userData.driftSpeed*0.02;
-    spr.position.x = spr.userData.baseX + Math.sin(spr.userData.driftPhase)*spr.userData.driftRange + mx*(i%3+1)*0.6;
-    spr.position.y = spr.userData.baseY + Math.cos(spr.userData.driftPhase*0.8)*spr.userData.driftRange*0.6 + my*(i%3+1)*0.4;
-  });
-
-  /* floating motes drift upward and sway, looping back down */
-  moteGroup.children.forEach(spr=>{
-    spr.position.y += spr.userData.speed;
-    spr.userData.sway += spr.userData.swaySpeed*0.02;
-    spr.position.x += Math.sin(spr.userData.sway)*0.01;
-    if(spr.position.y > 26){ spr.position.y = -26; }
-  });
-
-  /* individually twinkling flare stars */
-  flareGroup.children.forEach(spr=>{
-    spr.userData.phase+=spr.userData.speed;
-    const flick=0.5+Math.sin(spr.userData.phase)*0.5;
-    spr.material.opacity=0.2+flick*0.55;
-    const s=spr.userData.baseScale*(0.8+flick*0.4);
-    spr.scale.set(s,s,1);
-  });
-
-  /* shooting stars — occasional streaks across deep space */
-  shootData.forEach(sd=>{
-    if(!sd.active){
-      sd.cooldown-=0.016;
-      if(sd.cooldown<=0){
-        sd.active=true;sd.t=0;
-        sd.start.set((Math.random()-.5)*160,60+Math.random()*40,(Math.random()-.5)*100-40);
-        sd.dir.set(-1-Math.random(),-0.6-Math.random()*0.6,Math.random()*0.4).normalize();
-      }
-    } else {
-      sd.t+=0.02;
-      const len=14;
-      const head=sd.start.clone().add(sd.dir.clone().multiplyScalar(sd.t*70));
-      const tail=head.clone().sub(sd.dir.clone().multiplyScalar(len));
-      const posAttr=sd.line.geometry.attributes.position;
-      posAttr.setXYZ(0,tail.x,tail.y,tail.z);
-      posAttr.setXYZ(1,head.x,head.y,head.z);
-      posAttr.needsUpdate=true;
-      sd.line.material.opacity=sd.t<0.15?sd.t/0.15:Math.max(0,1-((sd.t-0.15)/0.6));
-      if(sd.t>1){sd.active=false;sd.cooldown=3+Math.random()*5;sd.line.material.opacity=0;}
+  rainColumns.forEach(col=>{
+    col.group.position.y -= col.fallSpeed;
+    if(col.group.position.y < -26){
+      col.group.position.y = col.resetY + Math.random()*10;
+      col.group.position.x = (Math.random()-0.5)*col.layer.spread;
     }
+
+    /* occasional character glitch flicker for authenticity */
+    col.sprites.forEach(spr=>{
+      spr.userData.glitchTimer -= 0.016;
+      if(spr.userData.glitchTimer<=0){
+        spr.userData.glitchTimer = 1.5+Math.random()*3;
+        const set = spr.userData.texSet;
+        spr.material.map = set[Math.floor(Math.random()*set.length)];
+        spr.material.needsUpdate = true;
+      }
+    });
   });
 
   renderer.render(scene,cam);
