@@ -457,87 +457,80 @@ let lp=0;
 const fill=document.getElementById('loaderFill'),ltxt=document.getElementById('loaderText');
 const li=setInterval(()=>{lp+=2;fill.style.width=lp+'%';ltxt.textContent=loaderMsgs[Math.min(Math.floor(lp/26),loaderMsgs.length-1)];if(lp>=100){clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hide'),300);}},28);
 
-/* 3D BACKGROUND — Matrix-style falling code rain, in 3D depth, orange brand palette */
+/* 3D BACKGROUND — Flying through a tunnel of glowing rings, orange brand palette */
 
-const RAIN_CHARS = "01{}<>/;=+-*ABCDEFXYZ$#@01アイウエ01".split("");
-
-/* Build a small set of glowing character textures (bright head + dim trail variants) */
-function makeCharTexture(ch, opts){
-  const size=64;
-  const c=document.createElement('canvas');c.width=size;c.height=size;
+function makeGlowTexture(hex){
+  const c=document.createElement('canvas');c.width=64;c.height=64;
   const ctx=c.getContext('2d');
-  ctx.clearRect(0,0,size,size);
-  if(opts.glow){
-    const g=ctx.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
-    g.addColorStop(0,opts.glowColor);
-    g.addColorStop(1,'rgba(0,0,0,0)');
-    ctx.fillStyle=g;
-    ctx.fillRect(0,0,size,size);
-  }
-  ctx.font='bold 40px monospace';
-  ctx.textAlign='center';
-  ctx.textBaseline='middle';
-  ctx.fillStyle=opts.textColor;
-  ctx.fillText(ch,size/2,size/2+2);
+  const g=ctx.createRadialGradient(32,32,0,32,32,32);
+  g.addColorStop(0,`rgba(${hex},1)`);
+  g.addColorStop(0.4,`rgba(${hex},0.5)`);
+  g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.fillStyle=g;ctx.fillRect(0,0,64,64);
   const tex=new THREE.CanvasTexture(c);
   tex.needsUpdate=true;
   return tex;
 }
-const headTextures = RAIN_CHARS.map(ch=>makeCharTexture(ch,{glow:true,glowColor:'rgba(255,241,214,0.9)',textColor:'#fff8ec'}));
-const bodyTextures = RAIN_CHARS.map(ch=>makeCharTexture(ch,{glow:true,glowColor:'rgba(249,115,22,0.55)',textColor:'#facc15'}));
-const dimTextures  = RAIN_CHARS.map(ch=>makeCharTexture(ch,{glow:true,glowColor:'rgba(154,52,18,0.4)',textColor:'#c2410c'}));
+const glowTexOrange=makeGlowTexture('249,115,22');
+const glowTexGold=makeGlowTexture('250,204,21');
+const glowTexWhite=makeGlowTexture('255,247,237');
 
 const canvas=document.getElementById('bg-canvas');
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.setSize(innerWidth,innerHeight,false);
-renderer.setClearColor(0x0b0705,1);
+renderer.setClearColor(0x0d0d14,1);
 const scene=new THREE.Scene();
-scene.fog=new THREE.FogExp2(0x0b0705,0.014);
-const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,300);
-cam.position.set(0,0,26);
+scene.fog=new THREE.FogExp2(0x0d0d14,0.028);
+const cam=new THREE.PerspectiveCamera(75,innerWidth/innerHeight,0.1,220);
+cam.position.set(0,0,5);
 
-scene.add(new THREE.AmbientLight(0xffffff,0.12));
-const pl1=new THREE.PointLight(0xf97316,3,80);pl1.position.set(0,20,10);scene.add(pl1);
-const pl2=new THREE.PointLight(0xfacc15,1.8,70);pl2.position.set(-20,-10,15);scene.add(pl2);
+scene.add(new THREE.AmbientLight(0xffffff,0.18));
+const pl1=new THREE.PointLight(0xf97316,4,55);pl1.position.set(0,0,5);scene.add(pl1);
+const pl2=new THREE.PointLight(0xfacc15,2.5,45);pl2.position.set(4,3,-10);scene.add(pl2);
 
-/* ── RAIN COLUMNS — each column is a vertical stack of glowing characters ── */
-const rainColumns = [];
-const DEPTH_LAYERS = [
-  {z:-4,  spread:34, count:30, trail:16, spacing:1.55, speed:0.16, scale:1.05, opacity:1.0},
-  {z:-16, spread:50, count:34, trail:14, spacing:1.7,  speed:0.10, scale:0.8,  opacity:0.65},
-  {z:-32, spread:70, count:38, trail:12, spacing:1.9,  speed:0.06, scale:0.55, opacity:0.35}
-];
+/* Tunnel of glowing rings receding into the distance */
+const RING_COUNT=44;
+const RING_SPACING=4.2;
+const rings=[];
+for(let i=0;i<RING_COUNT;i++){
+  const radius=3.2+Math.sin(i*0.35)*0.7;
+  const geo=new THREE.TorusGeometry(radius,0.035,8,48);
+  const hueMix=(i%12)/12;
+  const col=new THREE.Color().setHSL(0.065+hueMix*0.05,0.85,0.52+hueMix*0.12);
+  const mat=new THREE.MeshBasicMaterial({color:col,transparent:true,opacity:0.7,blending:THREE.AdditiveBlending,depthWrite:false});
+  const ring=new THREE.Mesh(geo,mat);
+  ring.position.z=-i*RING_SPACING;
+  ring.rotation.z=i*0.12;
+  ring.userData={baseRadius:radius,spinSpeed:0.003+Math.random()*0.004};
+  scene.add(ring);
+  rings.push(ring);
+}
 
-DEPTH_LAYERS.forEach(layer=>{
-  for(let i=0;i<layer.count;i++){
-    const group = new THREE.Group();
-    const x = (Math.random()-0.5)*layer.spread;
-    const topY = 20 + Math.random()*20;
-    group.position.set(x, topY, layer.z);
-
-    const sprites = [];
-    for(let j=0;j<layer.trail;j++){
-      const isHead = j===0;
-      const texSet = isHead ? headTextures : (j<layer.trail*0.4 ? bodyTextures : dimTextures);
-      const tex = texSet[Math.floor(Math.random()*texSet.length)];
-      const mat = new THREE.SpriteMaterial({map:tex,transparent:true,depthWrite:false,blending:THREE.AdditiveBlending,opacity:layer.opacity*(isHead?1:Math.max(0.08,1-j/layer.trail))});
-      const spr = new THREE.Sprite(mat);
-      spr.scale.set(layer.scale,layer.scale,1);
-      spr.position.y = -j*layer.spacing;
-      spr.userData={isHead,texSet,glitchTimer:Math.random()*2};
-      group.add(spr);
-      sprites.push(spr);
-    }
-
-    rainColumns.push({
-      group, sprites, layer,
-      fallSpeed: layer.speed*(0.7+Math.random()*0.6),
-      resetY: topY
-    });
-    scene.add(group);
-  }
+/* Soft glow sprite riding at the center of a few rings, like beacons */
+const beacons=[];
+rings.forEach((r,i)=>{
+  if(i%4!==0) return;
+  const mat=new THREE.SpriteMaterial({map:glowTexOrange,transparent:true,opacity:0.5,blending:THREE.AdditiveBlending,depthWrite:false});
+  const spr=new THREE.Sprite(mat);
+  spr.scale.set(1.6,1.6,1);
+  spr.position.z=r.position.z;
+  scene.add(spr);
+  beacons.push(spr);
 });
+
+/* Streaking starfield giving forward-motion speed lines */
+const STAR_COUNT=900;
+const starGeo=new THREE.BufferGeometry();
+const sp=new Float32Array(STAR_COUNT*3);
+for(let i=0;i<STAR_COUNT;i++){
+  sp[i*3]=(Math.random()-0.5)*14;
+  sp[i*3+1]=(Math.random()-0.5)*14;
+  sp[i*3+2]=-Math.random()*RING_COUNT*RING_SPACING;
+}
+starGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
+const stars=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xfde68a,size:0.06,map:glowTexWhite,transparent:true,opacity:0.55,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true}));
+scene.add(stars);
 
 let mx=0,my=0,sy=0;
 document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=-(e.clientY/innerHeight-.5)*2;});
@@ -545,40 +538,35 @@ window.addEventListener('scroll',()=>sy=scrollY);
 window.addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight,false);});
 
 let t=0;
+const baseSpeed=0.1;
 (function anim(){
-  requestAnimationFrame(anim);t+=0.008;
+  requestAnimationFrame(anim);t+=0.01;
 
-  /* interactive parallax */
-  cam.position.x+=(mx*3-cam.position.x)*0.03;
-  cam.position.y+=(my*2-cam.position.y)*0.03;
-  cam.position.z=26+sy*0.004;
-  cam.lookAt(mx*1.2,my*0.8,-10);
+  /* interactive parallax — mouse steers slightly, scroll adds a gentle speed boost */
+  const speed=baseSpeed+Math.min(sy*0.00006,0.12);
+  cam.position.x+=(mx*1.4-cam.position.x)*0.04;
+  cam.position.y+=(my*1.1-cam.position.y)*0.04;
+  cam.rotation.z+=((mx*0.06)-cam.rotation.z)*0.05;
+  cam.position.z-=speed;
 
-  pl1.position.x=Math.sin(t*0.4)*18;
-  pl2.position.x=Math.cos(t*0.35)*16;
+  pl1.position.z=cam.position.z+5;
+  pl2.position.x=Math.sin(t*0.4)*6;
+  pl2.position.y=Math.cos(t*0.35)*4;
 
-  rainColumns.forEach(col=>{
-    col.group.position.y -= col.fallSpeed;
-    if(col.group.position.y < -26){
-      col.group.position.y = col.resetY + Math.random()*10;
-      col.group.position.x = (Math.random()-0.5)*col.layer.spread;
-    }
-
-    /* occasional character glitch flicker for authenticity */
-    col.sprites.forEach(spr=>{
-      spr.userData.glitchTimer -= 0.016;
-      if(spr.userData.glitchTimer<=0){
-        spr.userData.glitchTimer = 1.5+Math.random()*3;
-        const set = spr.userData.texSet;
-        spr.material.map = set[Math.floor(Math.random()*set.length)];
-        spr.material.needsUpdate = true;
-      }
-    });
+  const tunnelLength=RING_COUNT*RING_SPACING;
+  rings.forEach(r=>{
+    r.rotation.z+=r.userData.spinSpeed;
+    if(r.position.z-cam.position.z>10){ r.position.z-=tunnelLength; }
   });
+  beacons.forEach(b=>{
+    if(b.position.z-cam.position.z>10){ b.position.z-=tunnelLength; }
+    b.material.opacity=0.35+Math.sin(t*2+b.position.z)*0.15;
+  });
+
+  stars.position.z=cam.position.z*0.4;
 
   renderer.render(scene,cam);
 })();
-
 
 /* NAV */
 const navbar=document.getElementById('navbar');
