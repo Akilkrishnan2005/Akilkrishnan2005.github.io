@@ -457,6 +457,27 @@ const fill=document.getElementById('loaderFill'),ltxt=document.getElementById('l
 const li=setInterval(()=>{lp+=2;fill.style.width=lp+'%';ltxt.textContent=loaderMsgs[Math.min(Math.floor(lp/26),loaderMsgs.length-1)];if(lp>=100){clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hide'),300);}},28);
 
 /* 3D BACKGROUND — Rotating data globe with arcing connections */
+
+/* Soft radial-glow sprite texture, reused for stars, data points and travelers */
+function makeGlowTexture(hex){
+  const c=document.createElement('canvas');c.width=64;c.height=64;
+  const ctx=c.getContext('2d');
+  const g=ctx.createRadialGradient(32,32,0,32,32,32);
+  g.addColorStop(0,`rgba(${hex},1)`);
+  g.addColorStop(0.4,`rgba(${hex},0.55)`);
+  g.addColorStop(1,`rgba(${hex},0)`);
+  ctx.fillStyle=g;ctx.fillRect(0,0,64,64);
+  const tex=new THREE.CanvasTexture(c);
+  tex.needsUpdate=true;
+  return tex;
+}
+const glowTexWhite=makeGlowTexture('255,255,255');
+const glowTexOrange=makeGlowTexture('249,115,22');
+const glowTexGold=makeGlowTexture('250,204,21');
+const glowTexBlue=makeGlowTexture('99,102,241');
+const glowTexCyan=makeGlowTexture('6,182,212');
+const glowMap={0xf97316:glowTexOrange,0xfacc15:glowTexGold,0x6366f1:glowTexBlue,0x06b6d4:glowTexCyan};
+
 const canvas=document.getElementById('bg-canvas');
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
@@ -472,12 +493,42 @@ const pl1=new THREE.PointLight(0xf97316,4,70);pl1.position.set(14,10,10);scene.a
 const pl2=new THREE.PointLight(0xfacc15,2.5,60);pl2.position.set(-14,-8,8);scene.add(pl2);
 const pl3=new THREE.PointLight(0x6366f1,2,50);pl3.position.set(0,-6,-14);scene.add(pl3);
 
-/* Deep-space starfield */
+/* Deep-space starfield — soft glow points instead of flat squares */
 const starGeo=new THREE.BufferGeometry();
 const STARS=2200,sp=new Float32Array(STARS*3);
 for(let i=0;i<STARS*3;i++)sp[i]=(Math.random()-.5)*240;
 starGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
-scene.add(new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.05,transparent:true,opacity:0.55})));
+const starField=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.22,map:glowTexWhite,transparent:true,opacity:0.5,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true}));
+scene.add(starField);
+
+/* A handful of bigger stars that individually twinkle for extra life */
+const FLARE_COUNT=45;
+const flareGroup=new THREE.Group();
+for(let i=0;i<FLARE_COUNT;i++){
+  const mat=new THREE.SpriteMaterial({map:glowTexWhite,transparent:true,opacity:0.6,blending:THREE.AdditiveBlending,depthWrite:false});
+  const spr=new THREE.Sprite(mat);
+  const dist=40+Math.random()*160;
+  const theta=Math.random()*Math.PI*2,phi=Math.acos(2*Math.random()-1);
+  spr.position.set(dist*Math.sin(phi)*Math.cos(theta),dist*Math.sin(phi)*Math.sin(theta),dist*Math.cos(phi));
+  const s=0.35+Math.random()*0.65;
+  spr.scale.set(s,s,1);
+  spr.userData={phase:Math.random()*Math.PI*2,speed:0.02+Math.random()*0.03,baseScale:s};
+  flareGroup.add(spr);
+}
+scene.add(flareGroup);
+
+/* Occasional shooting stars streaking across the scene */
+const SHOOT_COUNT=3;
+const shootGroup=new THREE.Group();
+const shootData=[];
+for(let i=0;i<SHOOT_COUNT;i++){
+  const geo=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,0)]);
+  const mat=new THREE.LineBasicMaterial({color:0xffffff,transparent:true,opacity:0,blending:THREE.AdditiveBlending});
+  const line=new THREE.Line(geo,mat);
+  shootGroup.add(line);
+  shootData.push({line,active:false,t:0,start:new THREE.Vector3(),dir:new THREE.Vector3(),cooldown:Math.random()*4+i*1.5});
+}
+scene.add(shootGroup);
 
 /* Central globe group — tilts like Earth's axis */
 const globeGroup=new THREE.Group();
@@ -496,10 +547,16 @@ globeGroup.add(wireMesh);
 const coreMesh=new THREE.Mesh(new THREE.SphereGeometry(GLOBE_R*0.985,32,24),new THREE.MeshStandardMaterial({color:0x120e1e,metalness:0.7,roughness:0.4,transparent:true,opacity:0.55}));
 globeGroup.add(coreMesh);
 
-/* Data points scattered across the globe surface */
+/* Soft additive atmosphere glow hugging the globe surface */
+const atmoMesh=new THREE.Mesh(
+  new THREE.SphereGeometry(GLOBE_R*1.08,32,24),
+  new THREE.MeshBasicMaterial({color:0xf97316,transparent:true,opacity:0.07,side:THREE.BackSide,blending:THREE.AdditiveBlending})
+);
+globeGroup.add(atmoMesh);
+
+/* Data points scattered across the globe surface — soft glow sprites */
 const DOT_COUNT=90;
 const dotColors=[0xf97316,0xfacc15,0x6366f1,0x06b6d4];
-const dotGeo=new THREE.SphereGeometry(0.09,8,8);
 const dotPositions=[];
 const dotGroup=new THREE.Group();
 for(let i=0;i<DOT_COUNT;i++){
@@ -511,10 +568,12 @@ for(let i=0;i<DOT_COUNT;i++){
     GLOBE_R*Math.cos(phi)
   );
   dotPositions.push(pos);
-  const mat=new THREE.MeshBasicMaterial({color:dotColors[i%dotColors.length],transparent:true,opacity:0.95});
-  const dot=new THREE.Mesh(dotGeo,mat);
+  const col=dotColors[i%dotColors.length];
+  const mat=new THREE.SpriteMaterial({map:glowMap[col],transparent:true,opacity:0.95,blending:THREE.AdditiveBlending,depthWrite:false});
+  const dot=new THREE.Sprite(mat);
   dot.position.copy(pos);
-  dot.userData={baseScale:1,pulseT:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.02};
+  dot.scale.set(0.42,0.42,1);
+  dot.userData={baseScale:0.42,pulseT:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.02};
   dotGroup.add(dot);
 }
 globeGroup.add(dotGroup);
@@ -541,11 +600,12 @@ for(let i=0;i<ARC_COUNT;i++){
 globeGroup.add(arcGroup);
 
 /* Traveling pulse dots along the arcs */
-const travelerGeo=new THREE.SphereGeometry(0.1,6,6);
 const travelers=[];
 arcData.forEach((d,i)=>{
   if(i%2!==0)return;
-  const mesh=new THREE.Mesh(travelerGeo,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.9}));
+  const mat=new THREE.SpriteMaterial({map:glowTexWhite,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false});
+  const mesh=new THREE.Sprite(mat);
+  mesh.scale.set(0.32,0.32,1);
   mesh.userData={curve:d.curve,t:Math.random(),speed:0.003+Math.random()*0.003};
   travelers.push(mesh);
   globeGroup.add(mesh);
@@ -589,11 +649,16 @@ let t=0;
   pl2.position.x=Math.cos(t*0.4)*15;pl2.position.y=Math.sin(t*0.6)*10;
 
   globeGroup.rotation.y+=0.0016;
+  starField.rotation.y+=0.00015;
+  flareGroup.rotation.y+=0.00015;
+
+  /* atmosphere breathing glow */
+  atmoMesh.material.opacity=0.06+Math.sin(t*0.6)*0.03;
 
   dotGroup.children.forEach(dot=>{
     dot.userData.pulseT+=dot.userData.pulseSpeed;
-    const s=1+Math.sin(dot.userData.pulseT)*0.35;
-    dot.scale.setScalar(s);
+    const s=dot.userData.baseScale*(1+Math.sin(dot.userData.pulseT)*0.35);
+    dot.scale.set(s,s,1);
   });
 
   travelers.forEach(tr=>{
@@ -610,6 +675,38 @@ let t=0;
     const a=sat.userData.angle,rad=sat.userData.radius,tl=sat.userData.tilt;
     sat.position.set(Math.cos(a)*rad,Math.sin(a)*rad*Math.sin(tl),Math.sin(a)*rad*Math.cos(tl));
     sat.rotation.x+=0.01;sat.rotation.y+=0.014;
+  });
+
+  /* individually twinkling flare stars */
+  flareGroup.children.forEach(spr=>{
+    spr.userData.phase+=spr.userData.speed;
+    const flick=0.5+Math.sin(spr.userData.phase)*0.5;
+    spr.material.opacity=0.25+flick*0.6;
+    const s=spr.userData.baseScale*(0.8+flick*0.4);
+    spr.scale.set(s,s,1);
+  });
+
+  /* shooting stars — occasional streaks across deep space */
+  shootData.forEach(sd=>{
+    if(!sd.active){
+      sd.cooldown-=0.016;
+      if(sd.cooldown<=0){
+        sd.active=true;sd.t=0;
+        sd.start.set((Math.random()-.5)*160,60+Math.random()*40,(Math.random()-.5)*100-40);
+        sd.dir.set(-1-Math.random(),-0.6-Math.random()*0.6,Math.random()*0.4).normalize();
+      }
+    } else {
+      sd.t+=0.02;
+      const len=14;
+      const head=sd.start.clone().add(sd.dir.clone().multiplyScalar(sd.t*70));
+      const tail=head.clone().sub(sd.dir.clone().multiplyScalar(len));
+      const posAttr=sd.line.geometry.attributes.position;
+      posAttr.setXYZ(0,tail.x,tail.y,tail.z);
+      posAttr.setXYZ(1,head.x,head.y,head.z);
+      posAttr.needsUpdate=true;
+      sd.line.material.opacity=sd.t<0.15?sd.t/0.15:Math.max(0,1-((sd.t-0.15)/0.6));
+      if(sd.t>1){sd.active=false;sd.cooldown=3+Math.random()*5;sd.line.material.opacity=0;}
+    }
   });
 
   renderer.render(scene,cam);
