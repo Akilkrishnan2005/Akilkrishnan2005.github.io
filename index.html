@@ -463,9 +463,9 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.setSize(innerWidth,innerHeight);
 renderer.setClearColor(0x0d0d14,1);
 const scene=new THREE.Scene();
-scene.fog=new THREE.FogExp2(0x0d0d14,0.016);
-const cam=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,0.1,600);
-cam.position.set(0,1,24);
+scene.fog=new THREE.FogExp2(0x0d0d14,0.006);
+const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,900);
+cam.position.set(0,1,30);
 
 scene.add(new THREE.AmbientLight(0xffffff,0.1));
 const pl1=new THREE.PointLight(0xf97316,4,70);pl1.position.set(14,10,10);scene.add(pl1);
