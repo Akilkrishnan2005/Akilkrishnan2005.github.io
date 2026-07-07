@@ -456,9 +456,9 @@ let lp=0;
 const fill=document.getElementById('loaderFill'),ltxt=document.getElementById('loaderText');
 const li=setInterval(()=>{lp+=2;fill.style.width=lp+'%';ltxt.textContent=loaderMsgs[Math.min(Math.floor(lp/26),loaderMsgs.length-1)];if(lp>=100){clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hide'),300);}},28);
 
-/* 3D BACKGROUND — Rotating data globe with arcing connections */
+/* 3D BACKGROUND — Aurora & nebula light waves, interactive parallax */
 
-/* Soft radial-glow sprite texture, reused for stars, data points and travelers */
+/* Soft radial-glow sprite texture, reused for stars and nebula puffs */
 function makeGlowTexture(hex){
   const c=document.createElement('canvas');c.width=64;c.height=64;
   const ctx=c.getContext('2d');
@@ -474,9 +474,10 @@ function makeGlowTexture(hex){
 const glowTexWhite=makeGlowTexture('255,255,255');
 const glowTexOrange=makeGlowTexture('249,115,22');
 const glowTexGold=makeGlowTexture('250,204,21');
-const glowTexBlue=makeGlowTexture('99,102,241');
-const glowTexCyan=makeGlowTexture('6,182,212');
-const glowMap={0xf97316:glowTexOrange,0xfacc15:glowTexGold,0x6366f1:glowTexBlue,0x06b6d4:glowTexCyan};
+const glowTexPurple=makeGlowTexture('167,85,247');
+const glowTexTeal=makeGlowTexture('45,212,191');
+const glowTexPink=makeGlowTexture('236,72,153');
+const nebulaTex=[glowTexPurple,glowTexTeal,glowTexPink,glowTexOrange];
 
 const canvas=document.getElementById('bg-canvas');
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
@@ -484,38 +485,145 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.setSize(innerWidth,innerHeight);
 renderer.setClearColor(0x0d0d14,1);
 const scene=new THREE.Scene();
-scene.fog=new THREE.FogExp2(0x0d0d14,0.006);
+scene.fog=new THREE.FogExp2(0x0d0d14,0.0035);
 const cam=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,0.1,900);
-cam.position.set(0,1,30);
+cam.position.set(0,0,32);
 
-scene.add(new THREE.AmbientLight(0xffffff,0.1));
-const pl1=new THREE.PointLight(0xf97316,4,70);pl1.position.set(14,10,10);scene.add(pl1);
-const pl2=new THREE.PointLight(0xfacc15,2.5,60);pl2.position.set(-14,-8,8);scene.add(pl2);
-const pl3=new THREE.PointLight(0x6366f1,2,50);pl3.position.set(0,-6,-14);scene.add(pl3);
+scene.add(new THREE.AmbientLight(0xffffff,0.15));
+const pl1=new THREE.PointLight(0xa855f7,3,90);pl1.position.set(20,10,10);scene.add(pl1);
+const pl2=new THREE.PointLight(0x2dd4bf,2.2,80);pl2.position.set(-20,-6,12);scene.add(pl2);
+const pl3=new THREE.PointLight(0xf97316,2,70);pl3.position.set(0,-10,-10);scene.add(pl3);
 
-/* Deep-space starfield — soft glow points instead of flat squares */
+/* Deep-space starfield behind the aurora */
 const starGeo=new THREE.BufferGeometry();
-const STARS=2200,sp=new Float32Array(STARS*3);
-for(let i=0;i<STARS*3;i++)sp[i]=(Math.random()-.5)*240;
+const STARS=1600,sp=new Float32Array(STARS*3);
+for(let i=0;i<STARS*3;i++)sp[i]=(Math.random()-.5)*260;
 starGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
-const starField=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.22,map:glowTexWhite,transparent:true,opacity:0.5,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true}));
+const starField=new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.2,map:glowTexWhite,transparent:true,opacity:0.4,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true}));
 scene.add(starField);
 
-/* A handful of bigger stars that individually twinkle for extra life */
-const FLARE_COUNT=45;
+/* Twinkling flare stars */
+const FLARE_COUNT=35;
 const flareGroup=new THREE.Group();
 for(let i=0;i<FLARE_COUNT;i++){
-  const mat=new THREE.SpriteMaterial({map:glowTexWhite,transparent:true,opacity:0.6,blending:THREE.AdditiveBlending,depthWrite:false});
+  const mat=new THREE.SpriteMaterial({map:glowTexWhite,transparent:true,opacity:0.55,blending:THREE.AdditiveBlending,depthWrite:false});
   const spr=new THREE.Sprite(mat);
-  const dist=40+Math.random()*160;
+  const dist=50+Math.random()*170;
   const theta=Math.random()*Math.PI*2,phi=Math.acos(2*Math.random()-1);
-  spr.position.set(dist*Math.sin(phi)*Math.cos(theta),dist*Math.sin(phi)*Math.sin(theta),dist*Math.cos(phi));
-  const s=0.35+Math.random()*0.65;
+  spr.position.set(dist*Math.sin(phi)*Math.cos(theta),dist*Math.sin(phi)*Math.sin(theta),dist*Math.cos(phi)-40);
+  const s=0.3+Math.random()*0.6;
   spr.scale.set(s,s,1);
   spr.userData={phase:Math.random()*Math.PI*2,speed:0.02+Math.random()*0.03,baseScale:s};
   flareGroup.add(spr);
 }
 scene.add(flareGroup);
+
+/* ── AURORA RIBBONS — flowing shader-driven light waves ── */
+const auroraVert=`
+  uniform float uTime;
+  uniform float uAmp;
+  uniform float uFreq;
+  uniform float uSpeed;
+  varying vec2 vUv;
+  varying float vElevation;
+  void main(){
+    vUv = uv;
+    vec3 pos = position;
+    float wave1 = sin(pos.x * uFreq + uTime * uSpeed) * uAmp;
+    float wave2 = sin(pos.x * uFreq * 1.8 - uTime * uSpeed * 0.7 + 2.0) * uAmp * 0.5;
+    float wave3 = cos(pos.y * 0.15 + uTime * uSpeed * 0.4) * uAmp * 0.3;
+    pos.z += wave1 + wave2 + wave3;
+    vElevation = (wave1 + wave2 + wave3) / uAmp;
+    gl_Position = projectionMatrix * modelViewMatrix * vec4(pos, 1.0);
+  }
+`;
+const auroraFrag=`
+  uniform vec3 uColorA;
+  uniform vec3 uColorB;
+  uniform float uTime;
+  uniform float uOpacity;
+  varying vec2 vUv;
+  varying float vElevation;
+  void main(){
+    float mixVal = sin(vUv.x * 3.14159 + uTime * 0.25) * 0.5 + 0.5;
+    vec3 color = mix(uColorA, uColorB, mixVal);
+    float edgeFade = smoothstep(0.0, 0.25, vUv.y) * smoothstep(1.0, 0.75, vUv.y);
+    float glow = 0.4 + vElevation * 0.5;
+    float alpha = edgeFade * uOpacity * glow;
+    gl_FragColor = vec4(color, alpha);
+  }
+`;
+const auroraGroup = new THREE.Group();
+const auroraRibbons = [];
+const auroraConfigs = [
+  {w:90,h:34,segX:120,segY:24,y:10,z:-30,rotX:-0.15,amp:3.2,freq:0.09,speed:0.5,colorA:0xa855f7,colorB:0x2dd4bf,opacity:0.35},
+  {w:100,h:30,segX:110,segY:20,y:-4,z:-42,rotX:0.1,amp:2.6,freq:0.07,speed:0.35,colorA:0xf97316,colorB:0xec4899,opacity:0.28},
+  {w:80,h:28,segX:100,segY:18,y:2,z:-55,rotX:-0.05,amp:2.2,freq:0.11,speed:0.6,colorA:0x2dd4bf,colorB:0xa855f7,opacity:0.22}
+];
+auroraConfigs.forEach(cfg=>{
+  const geo = new THREE.PlaneGeometry(cfg.w, cfg.h, cfg.segX, cfg.segY);
+  const mat = new THREE.ShaderMaterial({
+    vertexShader: auroraVert,
+    fragmentShader: auroraFrag,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+    side: THREE.DoubleSide,
+    uniforms: {
+      uTime: {value: Math.random()*100},
+      uAmp: {value: cfg.amp},
+      uFreq: {value: cfg.freq},
+      uSpeed: {value: cfg.speed},
+      uColorA: {value: new THREE.Color(cfg.colorA)},
+      uColorB: {value: new THREE.Color(cfg.colorB)},
+      uOpacity: {value: cfg.opacity}
+    }
+  });
+  const mesh = new THREE.Mesh(geo, mat);
+  mesh.position.set(0, cfg.y, cfg.z);
+  mesh.rotation.x = cfg.rotX;
+  auroraGroup.add(mesh);
+  auroraRibbons.push(mesh);
+});
+scene.add(auroraGroup);
+
+/* ── NEBULA CLOUDS — soft drifting colored puffs for depth ── */
+const NEBULA_COUNT=60;
+const nebulaGroup = new THREE.Group();
+const nebulaData = [];
+for(let i=0;i<NEBULA_COUNT;i++){
+  const tex = nebulaTex[i % nebulaTex.length];
+  const mat = new THREE.SpriteMaterial({map:tex,transparent:true,opacity:0.12+Math.random()*0.1,blending:THREE.AdditiveBlending,depthWrite:false});
+  const spr = new THREE.Sprite(mat);
+  const x=(Math.random()-.5)*110, y=(Math.random()-.5)*60, z=-10-Math.random()*70;
+  spr.position.set(x,y,z);
+  const s=8+Math.random()*16;
+  spr.scale.set(s,s,1);
+  spr.userData={
+    baseX:x, baseY:y,
+    driftSpeed:0.03+Math.random()*0.05,
+    driftPhase:Math.random()*Math.PI*2,
+    driftRange:2+Math.random()*3
+  };
+  nebulaGroup.add(spr);
+  nebulaData.push(spr);
+}
+scene.add(nebulaGroup);
+
+/* ── FLOATING LIGHT PARTICLES — small bright motes drifting upward ── */
+const MOTE_COUNT=70;
+const moteGroup = new THREE.Group();
+const moteColors=[glowTexOrange,glowTexGold,glowTexTeal,glowTexPurple];
+for(let i=0;i<MOTE_COUNT;i++){
+  const mat = new THREE.SpriteMaterial({map:moteColors[i%moteColors.length],transparent:true,opacity:0.5+Math.random()*0.3,blending:THREE.AdditiveBlending,depthWrite:false});
+  const spr = new THREE.Sprite(mat);
+  spr.position.set((Math.random()-.5)*70,(Math.random()-.5)*45-10,(Math.random()-.5)*40-10);
+  const s=0.25+Math.random()*0.4;
+  spr.scale.set(s,s,1);
+  spr.userData={speed:0.01+Math.random()*0.02,sway:Math.random()*Math.PI*2,swaySpeed:0.4+Math.random()*0.6,startY:spr.position.y};
+  moteGroup.add(spr);
+}
+scene.add(moteGroup);
 
 /* Occasional shooting stars streaking across the scene */
 const SHOOT_COUNT=3;
@@ -530,107 +638,6 @@ for(let i=0;i<SHOOT_COUNT;i++){
 }
 scene.add(shootGroup);
 
-/* Central globe group — tilts like Earth's axis */
-const globeGroup=new THREE.Group();
-globeGroup.rotation.z=0.38;
-globeGroup.position.set(0,0,0);
-scene.add(globeGroup);
-
-const GLOBE_R=7.2;
-
-/* Wireframe lat/long sphere */
-const wireGeo=new THREE.SphereGeometry(GLOBE_R,28,20);
-const wireMesh=new THREE.Mesh(wireGeo,new THREE.MeshBasicMaterial({color:0xf97316,wireframe:true,transparent:true,opacity:0.16}));
-globeGroup.add(wireMesh);
-
-/* Faint solid core for depth */
-const coreMesh=new THREE.Mesh(new THREE.SphereGeometry(GLOBE_R*0.985,32,24),new THREE.MeshStandardMaterial({color:0x120e1e,metalness:0.7,roughness:0.4,transparent:true,opacity:0.55}));
-globeGroup.add(coreMesh);
-
-/* Soft additive atmosphere glow hugging the globe surface */
-const atmoMesh=new THREE.Mesh(
-  new THREE.SphereGeometry(GLOBE_R*1.08,32,24),
-  new THREE.MeshBasicMaterial({color:0xf97316,transparent:true,opacity:0.07,side:THREE.BackSide,blending:THREE.AdditiveBlending})
-);
-globeGroup.add(atmoMesh);
-
-/* Data points scattered across the globe surface — soft glow sprites */
-const DOT_COUNT=90;
-const dotColors=[0xf97316,0xfacc15,0x6366f1,0x06b6d4];
-const dotPositions=[];
-const dotGroup=new THREE.Group();
-for(let i=0;i<DOT_COUNT;i++){
-  const phi=Math.acos(2*Math.random()-1);
-  const theta=Math.random()*Math.PI*2;
-  const pos=new THREE.Vector3(
-    GLOBE_R*Math.sin(phi)*Math.cos(theta),
-    GLOBE_R*Math.sin(phi)*Math.sin(theta),
-    GLOBE_R*Math.cos(phi)
-  );
-  dotPositions.push(pos);
-  const col=dotColors[i%dotColors.length];
-  const mat=new THREE.SpriteMaterial({map:glowMap[col],transparent:true,opacity:0.95,blending:THREE.AdditiveBlending,depthWrite:false});
-  const dot=new THREE.Sprite(mat);
-  dot.position.copy(pos);
-  dot.scale.set(0.42,0.42,1);
-  dot.userData={baseScale:0.42,pulseT:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.02};
-  dotGroup.add(dot);
-}
-globeGroup.add(dotGroup);
-
-/* Arcing connection paths between random surface points, like flight routes */
-const ARC_COUNT=22;
-const arcGroup=new THREE.Group();
-const arcData=[];
-for(let i=0;i<ARC_COUNT;i++){
-  const a=dotPositions[Math.floor(Math.random()*DOT_COUNT)];
-  const b=dotPositions[Math.floor(Math.random()*DOT_COUNT)];
-  if(a===b)continue;
-  const mid=a.clone().add(b).multiplyScalar(0.5);
-  const liftAmount=a.distanceTo(b)*0.45+1.2;
-  mid.normalize().multiplyScalar(GLOBE_R+liftAmount);
-  const curve=new THREE.QuadraticBezierCurve3(a,mid,b);
-  const points=curve.getPoints(40);
-  const geo=new THREE.BufferGeometry().setFromPoints(points);
-  const mat=new THREE.LineBasicMaterial({color:0xfacc15,transparent:true,opacity:0.28});
-  const line=new THREE.Line(geo,mat);
-  arcGroup.add(line);
-  arcData.push({curve,mat});
-}
-globeGroup.add(arcGroup);
-
-/* Traveling pulse dots along the arcs */
-const travelers=[];
-arcData.forEach((d,i)=>{
-  if(i%2!==0)return;
-  const mat=new THREE.SpriteMaterial({map:glowTexWhite,transparent:true,opacity:0.9,blending:THREE.AdditiveBlending,depthWrite:false});
-  const mesh=new THREE.Sprite(mat);
-  mesh.scale.set(0.32,0.32,1);
-  mesh.userData={curve:d.curve,t:Math.random(),speed:0.003+Math.random()*0.003};
-  travelers.push(mesh);
-  globeGroup.add(mesh);
-});
-
-/* Outer orbiting rings, like satellite paths */
-const ringGroup=new THREE.Group();
-[{r:GLOBE_R+2.4,col:0xf97316,op:0.22,rx:0.5,ry:0.1},{r:GLOBE_R+3.6,col:0x6366f1,op:0.16,rx:1.1,ry:0.7},{r:GLOBE_R+1.4,col:0xfacc15,op:0.2,rx:0.9,ry:1.3}].forEach(d=>{
-  const mesh=new THREE.Mesh(new THREE.TorusGeometry(d.r,0.015,4,100),new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:d.op}));
-  mesh.rotation.x=d.rx;mesh.rotation.y=d.ry;
-  mesh.userData={speed:Math.random()*0.002+0.0006};
-  ringGroup.add(mesh);
-});
-globeGroup.add(ringGroup);
-
-/* Small satellite markers orbiting on their own path */
-const satGroup=new THREE.Group();
-const SAT_COUNT=5;
-for(let i=0;i<SAT_COUNT;i++){
-  const sat=new THREE.Mesh(new THREE.OctahedronGeometry(0.22,0),new THREE.MeshBasicMaterial({color:0x06b6d4,wireframe:true,transparent:true,opacity:0.85}));
-  sat.userData={radius:GLOBE_R+2.8+Math.random()*1.6,angle:Math.random()*Math.PI*2,speed:0.003+Math.random()*0.004,tilt:Math.random()*Math.PI};
-  satGroup.add(sat);
-}
-globeGroup.add(satGroup);
-
 let mx=0,my=0,sy=0;
 document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=-(e.clientY/innerHeight-.5)*2;});
 window.addEventListener('scroll',()=>sy=scrollY);
@@ -640,48 +647,49 @@ let t=0;
 (function anim(){
   requestAnimationFrame(anim);t+=0.008;
 
-  cam.position.x+=(mx*2.4-cam.position.x)*0.03;
-  cam.position.y+=(1+my*1.4-cam.position.y)*0.03;
-  cam.position.z=24+sy*0.003;
-  cam.lookAt(0,0,0);
+  /* interactive parallax — camera drifts with mouse, layers move at different depths */
+  cam.position.x+=(mx*3.2-cam.position.x)*0.03;
+  cam.position.y+=(1+my*2-cam.position.y)*0.03;
+  cam.position.z=32+sy*0.004;
+  cam.lookAt(mx*1.5, my*1, 0);
 
-  pl1.position.x=Math.sin(t*0.5)*16;pl1.position.y=Math.cos(t*0.35)*11;
-  pl2.position.x=Math.cos(t*0.4)*15;pl2.position.y=Math.sin(t*0.6)*10;
+  pl1.position.x=Math.sin(t*0.4)*22;pl1.position.y=Math.cos(t*0.3)*12;
+  pl2.position.x=Math.cos(t*0.35)*20;pl2.position.y=Math.sin(t*0.5)*10;
+  pl3.position.z=-10+Math.sin(t*0.25)*8;
 
-  globeGroup.rotation.y+=0.0016;
-  starField.rotation.y+=0.00015;
-  flareGroup.rotation.y+=0.00015;
+  starField.rotation.y+=0.00012;
+  flareGroup.rotation.y+=0.00012;
 
-  /* atmosphere breathing glow */
-  atmoMesh.material.opacity=0.06+Math.sin(t*0.6)*0.03;
+  /* aurora ribbons parallax — nearer ribbons shift more with mouse */
+  auroraRibbons.forEach((mesh,i)=>{
+    mesh.material.uniforms.uTime.value = t*10 + i*5;
+    const depthFactor = (i+1)*0.6;
+    mesh.position.x += ((mx*depthFactor) - mesh.position.x*0.02)*0.02;
+    mesh.rotation.z = Math.sin(t*0.1+i)*0.02;
+  });
+  auroraGroup.position.x += (mx*1.2 - auroraGroup.position.x)*0.02;
+  auroraGroup.position.y += (my*0.8 - auroraGroup.position.y)*0.02;
 
-  dotGroup.children.forEach(dot=>{
-    dot.userData.pulseT+=dot.userData.pulseSpeed;
-    const s=dot.userData.baseScale*(1+Math.sin(dot.userData.pulseT)*0.35);
-    dot.scale.set(s,s,1);
+  /* nebula clouds drift slowly + subtle parallax */
+  nebulaData.forEach((spr,i)=>{
+    spr.userData.driftPhase += spr.userData.driftSpeed*0.02;
+    spr.position.x = spr.userData.baseX + Math.sin(spr.userData.driftPhase)*spr.userData.driftRange + mx*(i%3+1)*0.6;
+    spr.position.y = spr.userData.baseY + Math.cos(spr.userData.driftPhase*0.8)*spr.userData.driftRange*0.6 + my*(i%3+1)*0.4;
   });
 
-  travelers.forEach(tr=>{
-    tr.userData.t+=tr.userData.speed;
-    if(tr.userData.t>1)tr.userData.t=0;
-    const p=tr.userData.curve.getPoint(tr.userData.t);
-    tr.position.copy(p);
-  });
-
-  ringGroup.children.forEach(r=>{r.rotation.z+=r.userData.speed;});
-
-  satGroup.children.forEach(sat=>{
-    sat.userData.angle+=sat.userData.speed;
-    const a=sat.userData.angle,rad=sat.userData.radius,tl=sat.userData.tilt;
-    sat.position.set(Math.cos(a)*rad,Math.sin(a)*rad*Math.sin(tl),Math.sin(a)*rad*Math.cos(tl));
-    sat.rotation.x+=0.01;sat.rotation.y+=0.014;
+  /* floating motes drift upward and sway, looping back down */
+  moteGroup.children.forEach(spr=>{
+    spr.position.y += spr.userData.speed;
+    spr.userData.sway += spr.userData.swaySpeed*0.02;
+    spr.position.x += Math.sin(spr.userData.sway)*0.01;
+    if(spr.position.y > 26){ spr.position.y = -26; }
   });
 
   /* individually twinkling flare stars */
   flareGroup.children.forEach(spr=>{
     spr.userData.phase+=spr.userData.speed;
     const flick=0.5+Math.sin(spr.userData.phase)*0.5;
-    spr.material.opacity=0.25+flick*0.6;
+    spr.material.opacity=0.2+flick*0.55;
     const s=spr.userData.baseScale*(0.8+flick*0.4);
     spr.scale.set(s,s,1);
   });
@@ -711,6 +719,7 @@ let t=0;
 
   renderer.render(scene,cam);
 })();
+
 
 /* NAV */
 const navbar=document.getElementById('navbar');
