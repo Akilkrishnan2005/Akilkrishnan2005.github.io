@@ -90,7 +90,10 @@ section{position:relative;z-index:1;}
     height:110%;
     top:-15%;
     left:-15%;
-}border:1px dashed rgba(249,115,22,0.14);animation-duration:13s;animation-direction:reverse;}
+    border:1px dashed rgba(249,115,22,0.14);
+    animation-duration:13s;
+    animation-direction:reverse;
+}
 @keyframes cardSpin{from{transform:rotateZ(0) rotateX(20deg);}to{transform:rotateZ(360deg) rotateX(20deg);}}
 .card-photo{
     width:230px;
@@ -448,127 +451,167 @@ footer span{color:#f97316;}
 
 <script>
 /* LOADER */
-const loaderMsgs=['Initialising...','Loading 3D Scene...','Building Network...','Almost Ready...'];
+const loaderMsgs=['Initialising...','Loading Data Globe...','Mapping Connections...','Almost Ready...'];
 let lp=0;
 const fill=document.getElementById('loaderFill'),ltxt=document.getElementById('loaderText');
 const li=setInterval(()=>{lp+=2;fill.style.width=lp+'%';ltxt.textContent=loaderMsgs[Math.min(Math.floor(lp/26),loaderMsgs.length-1)];if(lp>=100){clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hide'),300);}},28);
 
-/* 3D BACKGROUND */
+/* 3D BACKGROUND — Rotating data globe with arcing connections */
 const canvas=document.getElementById('bg-canvas');
 const renderer=new THREE.WebGLRenderer({canvas,alpha:true,antialias:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 renderer.setSize(innerWidth,innerHeight);
 renderer.setClearColor(0x0d0d14,1);
 const scene=new THREE.Scene();
-scene.fog=new THREE.FogExp2(0x0d0d14,0.018);
-const cam=new THREE.PerspectiveCamera(55,innerWidth/innerHeight,0.1,600);
-cam.position.set(0,0,22);
+scene.fog=new THREE.FogExp2(0x0d0d14,0.016);
+const cam=new THREE.PerspectiveCamera(52,innerWidth/innerHeight,0.1,600);
+cam.position.set(0,1,24);
 
-scene.add(new THREE.AmbientLight(0xffffff,0.08));
-const pl1=new THREE.PointLight(0xf97316,4,60);pl1.position.set(12,8,6);scene.add(pl1);
-const pl2=new THREE.PointLight(0xfacc15,2.5,50);pl2.position.set(-12,-7,4);scene.add(pl2);
-const pl3=new THREE.PointLight(0x6366f1,2,45);pl3.position.set(0,10,-8);scene.add(pl3);
-const pl4=new THREE.PointLight(0x06b6d4,1.5,40);pl4.position.set(-10,0,10);scene.add(pl4);
+scene.add(new THREE.AmbientLight(0xffffff,0.1));
+const pl1=new THREE.PointLight(0xf97316,4,70);pl1.position.set(14,10,10);scene.add(pl1);
+const pl2=new THREE.PointLight(0xfacc15,2.5,60);pl2.position.set(-14,-8,8);scene.add(pl2);
+const pl3=new THREE.PointLight(0x6366f1,2,50);pl3.position.set(0,-6,-14);scene.add(pl3);
 
+/* Deep-space starfield */
 const starGeo=new THREE.BufferGeometry();
-const STARS=3000,sp=new Float32Array(STARS*3);
-for(let i=0;i<STARS*3;i++)sp[i]=(Math.random()-.5)*220;
+const STARS=2200,sp=new Float32Array(STARS*3);
+for(let i=0;i<STARS*3;i++)sp[i]=(Math.random()-.5)*240;
 starGeo.setAttribute('position',new THREE.BufferAttribute(sp,3));
-scene.add(new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.055,transparent:true,opacity:0.6})));
+scene.add(new THREE.Points(starGeo,new THREE.PointsMaterial({color:0xffffff,size:0.05,transparent:true,opacity:0.55})));
 
-const NODE_COUNT=60;
-const nodePositions=[];
-const nodeGeo=new THREE.SphereGeometry(0.12,8,8);
-const nodeMats=[
-  new THREE.MeshBasicMaterial({color:0xf97316,transparent:true,opacity:0.9}),
-  new THREE.MeshBasicMaterial({color:0xfacc15,transparent:true,opacity:0.8}),
-  new THREE.MeshBasicMaterial({color:0x6366f1,transparent:true,opacity:0.85}),
-  new THREE.MeshBasicMaterial({color:0x06b6d4,transparent:true,opacity:0.8}),
-];
-const nodeGroup=new THREE.Group();
-for(let i=0;i<NODE_COUNT;i++){
-  const pos=new THREE.Vector3((Math.random()-.5)*40,(Math.random()-.5)*28,(Math.random()-.5)*22-4);
-  nodePositions.push(pos);
-  const m=new THREE.Mesh(nodeGeo,nodeMats[i%nodeMats.length]);
-  m.position.copy(pos);
-  m.userData={basePos:pos.clone(),t:Math.random()*Math.PI*2,speed:Math.random()*0.004+0.002,amp:Math.random()*0.6+0.2};
-  nodeGroup.add(m);
+/* Central globe group — tilts like Earth's axis */
+const globeGroup=new THREE.Group();
+globeGroup.rotation.z=0.38;
+globeGroup.position.set(0,0,0);
+scene.add(globeGroup);
+
+const GLOBE_R=7.2;
+
+/* Wireframe lat/long sphere */
+const wireGeo=new THREE.SphereGeometry(GLOBE_R,28,20);
+const wireMesh=new THREE.Mesh(wireGeo,new THREE.MeshBasicMaterial({color:0xf97316,wireframe:true,transparent:true,opacity:0.16}));
+globeGroup.add(wireMesh);
+
+/* Faint solid core for depth */
+const coreMesh=new THREE.Mesh(new THREE.SphereGeometry(GLOBE_R*0.985,32,24),new THREE.MeshStandardMaterial({color:0x120e1e,metalness:0.7,roughness:0.4,transparent:true,opacity:0.55}));
+globeGroup.add(coreMesh);
+
+/* Data points scattered across the globe surface */
+const DOT_COUNT=90;
+const dotColors=[0xf97316,0xfacc15,0x6366f1,0x06b6d4];
+const dotGeo=new THREE.SphereGeometry(0.09,8,8);
+const dotPositions=[];
+const dotGroup=new THREE.Group();
+for(let i=0;i<DOT_COUNT;i++){
+  const phi=Math.acos(2*Math.random()-1);
+  const theta=Math.random()*Math.PI*2;
+  const pos=new THREE.Vector3(
+    GLOBE_R*Math.sin(phi)*Math.cos(theta),
+    GLOBE_R*Math.sin(phi)*Math.sin(theta),
+    GLOBE_R*Math.cos(phi)
+  );
+  dotPositions.push(pos);
+  const mat=new THREE.MeshBasicMaterial({color:dotColors[i%dotColors.length],transparent:true,opacity:0.95});
+  const dot=new THREE.Mesh(dotGeo,mat);
+  dot.position.copy(pos);
+  dot.userData={baseScale:1,pulseT:Math.random()*Math.PI*2,pulseSpeed:0.02+Math.random()*0.02};
+  dotGroup.add(dot);
 }
-scene.add(nodeGroup);
+globeGroup.add(dotGroup);
 
-const edgeGroup=new THREE.Group();
-const MAX_DIST=9;
-for(let i=0;i<NODE_COUNT;i++){
-  for(let j=i+1;j<NODE_COUNT;j++){
-    const d=nodePositions[i].distanceTo(nodePositions[j]);
-    if(d<MAX_DIST){
-      const g=new THREE.BufferGeometry().setFromPoints([nodePositions[i].clone(),nodePositions[j].clone()]);
-      const opacity=Math.max(0,(1-d/MAX_DIST)*0.35);
-      edgeGroup.add(new THREE.Line(g,new THREE.LineBasicMaterial({color:0xf97316,transparent:true,opacity})));
-    }
-  }
+/* Arcing connection paths between random surface points, like flight routes */
+const ARC_COUNT=22;
+const arcGroup=new THREE.Group();
+const arcData=[];
+for(let i=0;i<ARC_COUNT;i++){
+  const a=dotPositions[Math.floor(Math.random()*DOT_COUNT)];
+  const b=dotPositions[Math.floor(Math.random()*DOT_COUNT)];
+  if(a===b)continue;
+  const mid=a.clone().add(b).multiplyScalar(0.5);
+  const liftAmount=a.distanceTo(b)*0.45+1.2;
+  mid.normalize().multiplyScalar(GLOBE_R+liftAmount);
+  const curve=new THREE.QuadraticBezierCurve3(a,mid,b);
+  const points=curve.getPoints(40);
+  const geo=new THREE.BufferGeometry().setFromPoints(points);
+  const mat=new THREE.LineBasicMaterial({color:0xfacc15,transparent:true,opacity:0.28});
+  const line=new THREE.Line(geo,mat);
+  arcGroup.add(line);
+  arcData.push({curve,mat});
 }
-scene.add(edgeGroup);
+globeGroup.add(arcGroup);
 
-const tkGeo=new THREE.TorusKnotGeometry(2.8,0.35,180,20,2,3);
-const tk=new THREE.Group();
-tk.add(new THREE.Mesh(tkGeo,new THREE.MeshStandardMaterial({color:0x1a1030,metalness:0.95,roughness:0.05,transparent:true,opacity:0.55})));
-tk.add(new THREE.Mesh(tkGeo,new THREE.MeshBasicMaterial({color:0xf97316,wireframe:true,transparent:true,opacity:0.08})));
-tk.position.set(7,0,-2);
-scene.add(tk);
+/* Traveling pulse dots along the arcs */
+const travelerGeo=new THREE.SphereGeometry(0.1,6,6);
+const travelers=[];
+arcData.forEach((d,i)=>{
+  if(i%2!==0)return;
+  const mesh=new THREE.Mesh(travelerGeo,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.9}));
+  mesh.userData={curve:d.curve,t:Math.random(),speed:0.003+Math.random()*0.003};
+  travelers.push(mesh);
+  globeGroup.add(mesh);
+});
 
+/* Outer orbiting rings, like satellite paths */
 const ringGroup=new THREE.Group();
-[{r:4,tube:0.02,col:0xf97316,op:0.25,pos:[-5,3,-6],rx:0.6,ry:0.3},{r:5.5,tube:0.015,col:0x6366f1,op:0.18,pos:[8,-4,-8],rx:1.2,ry:0.8},{r:3,tube:0.025,col:0xfacc15,op:0.22,pos:[-8,-2,-3],rx:0.4,ry:1.1}].forEach(d=>{
-  const mesh=new THREE.Mesh(new THREE.TorusGeometry(d.r,d.tube,4,80),new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:d.op}));
-  mesh.position.set(...d.pos);mesh.rotation.x=d.rx;mesh.rotation.y=d.ry;
-  mesh.userData={speed:Math.random()*0.003+0.001};
+[{r:GLOBE_R+2.4,col:0xf97316,op:0.22,rx:0.5,ry:0.1},{r:GLOBE_R+3.6,col:0x6366f1,op:0.16,rx:1.1,ry:0.7},{r:GLOBE_R+1.4,col:0xfacc15,op:0.2,rx:0.9,ry:1.3}].forEach(d=>{
+  const mesh=new THREE.Mesh(new THREE.TorusGeometry(d.r,0.015,4,100),new THREE.MeshBasicMaterial({color:d.col,transparent:true,opacity:d.op}));
+  mesh.rotation.x=d.rx;mesh.rotation.y=d.ry;
+  mesh.userData={speed:Math.random()*0.002+0.0006};
   ringGroup.add(mesh);
 });
-scene.add(ringGroup);
+globeGroup.add(ringGroup);
 
-const pulseGeo=new THREE.SphereGeometry(0.08,6,6);
-const pulses=[];
-for(let i=0;i<12;i++){
-  const mesh=new THREE.Mesh(pulseGeo,new THREE.MeshBasicMaterial({color:0xffffff,transparent:true,opacity:0.9}));
-  mesh.userData={edgeIdx:Math.floor(Math.random()*edgeGroup.children.length),t:Math.random(),speed:Math.random()*0.008+0.004};
-  pulses.push(mesh);scene.add(mesh);
+/* Small satellite markers orbiting on their own path */
+const satGroup=new THREE.Group();
+const SAT_COUNT=5;
+for(let i=0;i<SAT_COUNT;i++){
+  const sat=new THREE.Mesh(new THREE.OctahedronGeometry(0.22,0),new THREE.MeshBasicMaterial({color:0x06b6d4,wireframe:true,transparent:true,opacity:0.85}));
+  sat.userData={radius:GLOBE_R+2.8+Math.random()*1.6,angle:Math.random()*Math.PI*2,speed:0.003+Math.random()*0.004,tilt:Math.random()*Math.PI};
+  satGroup.add(sat);
 }
+globeGroup.add(satGroup);
 
 let mx=0,my=0,sy=0;
 document.addEventListener('mousemove',e=>{mx=(e.clientX/innerWidth-.5)*2;my=-(e.clientY/innerHeight-.5)*2;});
 window.addEventListener('scroll',()=>sy=scrollY);
 window.addEventListener('resize',()=>{cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 
-const ribbonMat=new THREE.LineBasicMaterial({color:0xf97316,transparent:true,opacity:0.12});
-const rpts=[];for(let i=0;i<=120;i++){const a=(i/120)*Math.PI*2;rpts.push(new THREE.Vector3(Math.cos(a)*14,Math.sin(a*2)*3,Math.sin(a)*8-6));}
-scene.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(rpts),ribbonMat));
-
-const _va=new THREE.Vector3(),_vb=new THREE.Vector3();
 let t=0;
 (function anim(){
-  requestAnimationFrame(anim);t+=0.007;
-  cam.position.x+=(mx*2-cam.position.x)*0.03;
-  cam.position.y+=(my*1.4-cam.position.y)*0.03;
-  cam.position.z=22+sy*0.004;
+  requestAnimationFrame(anim);t+=0.008;
+
+  cam.position.x+=(mx*2.4-cam.position.x)*0.03;
+  cam.position.y+=(1+my*1.4-cam.position.y)*0.03;
+  cam.position.z=24+sy*0.003;
   cam.lookAt(0,0,0);
-  pl1.position.x=Math.sin(t*0.6)*14;pl1.position.y=Math.cos(t*0.4)*10;
-  pl2.position.x=Math.cos(t*0.5)*13;pl2.position.y=Math.sin(t*0.7)*9;
-  pl4.position.x=Math.sin(t*0.3+1)*12;pl4.position.z=Math.cos(t*0.35)*10;
-  nodeGroup.children.forEach(node=>{
-    node.userData.t+=node.userData.speed;
-    const{basePos,t:nt,amp}=node.userData;
-    node.position.set(basePos.x+Math.sin(nt)*amp,basePos.y+Math.cos(nt*0.7)*amp,basePos.z+Math.sin(nt*0.5)*amp*0.5);
+
+  pl1.position.x=Math.sin(t*0.5)*16;pl1.position.y=Math.cos(t*0.35)*11;
+  pl2.position.x=Math.cos(t*0.4)*15;pl2.position.y=Math.sin(t*0.6)*10;
+
+  globeGroup.rotation.y+=0.0016;
+
+  dotGroup.children.forEach(dot=>{
+    dot.userData.pulseT+=dot.userData.pulseSpeed;
+    const s=1+Math.sin(dot.userData.pulseT)*0.35;
+    dot.scale.setScalar(s);
   });
-  pulses.forEach(p=>{
-    p.userData.t+=p.userData.speed;
-    if(p.userData.t>1){p.userData.t=0;p.userData.edgeIdx=Math.floor(Math.random()*edgeGroup.children.length);}
-    const edge=edgeGroup.children[p.userData.edgeIdx];
-    if(edge){const pts=edge.geometry.getAttribute('position');_va.set(pts.getX(0),pts.getY(0),pts.getZ(0));_vb.set(pts.getX(1),pts.getY(1),pts.getZ(1));p.position.lerpVectors(_va,_vb,p.userData.t);}
+
+  travelers.forEach(tr=>{
+    tr.userData.t+=tr.userData.speed;
+    if(tr.userData.t>1)tr.userData.t=0;
+    const p=tr.userData.curve.getPoint(tr.userData.t);
+    tr.position.copy(p);
   });
-  tk.rotation.x=t*0.13;tk.rotation.y=t*0.19;
-  tk.position.x=7+Math.sin(t*0.35)*1.2;tk.position.y=Math.cos(t*0.28)*0.9;
-  ringGroup.children.forEach(r=>{r.rotation.x+=r.userData.speed;r.rotation.z+=r.userData.speed*0.6;});
-  ribbonMat.opacity=0.08+Math.sin(t*1.2)*0.06;
+
+  ringGroup.children.forEach(r=>{r.rotation.z+=r.userData.speed;});
+
+  satGroup.children.forEach(sat=>{
+    sat.userData.angle+=sat.userData.speed;
+    const a=sat.userData.angle,rad=sat.userData.radius,tl=sat.userData.tilt;
+    sat.position.set(Math.cos(a)*rad,Math.sin(a)*rad*Math.sin(tl),Math.sin(a)*rad*Math.cos(tl));
+    sat.rotation.x+=0.01;sat.rotation.y+=0.014;
+  });
+
   renderer.render(scene,cam);
 })();
 
