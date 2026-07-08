@@ -52,7 +52,6 @@ section{position:relative;z-index:1;}
 .scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,rgba(255,255,255,0.4),transparent);animation:scrollAnim 2s ease-in-out infinite;}
 @keyframes scrollAnim{0%,100%{transform:scaleY(1);opacity:1;}50%{transform:scaleY(0.5);opacity:0.3;}}
 
-/* ── STATS STRIP — Vinoth dark bar style ── */
 .stats-strip{border-top:1px solid rgba(255,255,255,0.08);border-bottom:1px solid rgba(255,255,255,0.08);display:grid;grid-template-columns:repeat(4,1fr);background:linear-gradient(135deg,#080810,#10101c,#181020);position:relative;z-index:1;}
 .stat{padding:44px 20px;text-align:center;border-right:1px solid rgba(255,255,255,0.07);cursor:default;position:relative;overflow:hidden;transition:background 0.3s;}
 .stat::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(249,115,22,0.13),transparent);opacity:0;transition:opacity 0.3s;}
@@ -74,7 +73,6 @@ section{position:relative;z-index:1;}
 .tag{padding:8px 18px;border:1px solid rgba(255,255,255,0.12);border-radius:999px;font-size:0.75rem;font-weight:500;color:rgba(255,255,255,0.58);letter-spacing:0.5px;transition:all 0.25s;}
 .tag:hover{border-color:rgba(249,115,22,0.45);color:#f97316;background:rgba(249,115,22,0.07);}
 
-/* ── ABOUT VISUAL — Vinoth 3D card style ── */
 .about-visual{position:relative;height:440px;display:flex;align-items:center;justify-content:center;border:none;background:transparent;overflow:visible;}
 .scene-wrap{width:340px;height:430px;perspective:800px;}
 .card-3d{width:100%;height:100%;position:relative;transform-style:preserve-3d;border-radius:16px;animation:autoFloat 6s ease-in-out infinite;}
@@ -124,7 +122,6 @@ section{position:relative;z-index:1;}
 .course-item:hover{background:rgba(249,115,22,0.07);border-color:rgba(249,115,22,0.2);color:rgba(255,255,255,0.82);}
 .course-item::before{content:'';width:5px;height:5px;border-radius:50%;background:#f97316;flex-shrink:0;}
 
-/* ── SKILLS — Vinoth gold fill-from-bottom style ── */
 .skills-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:60px;}
 .skill-card{padding:34px 20px;text-align:center;border:1px solid rgba(255,255,255,0.09);border-radius:4px;background:rgba(255,255,255,0.03);cursor:default;position:relative;overflow:hidden;transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);transform-style:preserve-3d;}
 .skill-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#f97316,#facc15);transform:scaleY(0);transform-origin:bottom;transition:transform 0.35s ease;z-index:0;}
@@ -165,10 +162,10 @@ section{position:relative;z-index:1;}
 .contact-value a{color:inherit;transition:color .2s;}
 .contact-value a:hover{color:#f97316;}
 .contact-form{display:flex;flex-direction:column;gap:14px;}
-.form-group label{display:block;font-size:0.72rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:6px;}
-.form-group input,.form-group textarea{width:100%;padding:13px 16px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.12);border-radius:8px;font-size:0.9rem;color:#fff;font-family:'Inter',sans-serif;transition:all .2s;outline:none;}
-.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.22);}
-.form-group input:focus,.form-group textarea:focus{border-color:rgba(249,115,22,0.55);background:rgba(249,115,22,0.06);box-shadow:0 0 0 3px rgba(249,115,22,0.12);transform:scale(1.01);}
+.form-group label{display:block;font-size:0.75rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.85);margin-bottom:8px;}
+.form-group input,.form-group textarea{width:100%;padding:14px 16px;background:rgba(255,255,255,0.09);border:1.5px solid rgba(255,255,255,0.22);border-radius:8px;font-size:0.95rem;color:#fff;font-family:'Inter',sans-serif;transition:all .2s;outline:none;}
+.form-group input::placeholder,.form-group textarea::placeholder{color:rgba(255,255,255,0.42);}
+.form-group input:focus,.form-group textarea:focus{border-color:#f97316;background:rgba(249,115,22,0.09);box-shadow:0 0 0 3px rgba(249,115,22,0.18);transform:scale(1.01);}
 .form-group textarea{min-height:120px;resize:none;}
 .form-submit{padding:14px;background:linear-gradient(135deg,#f97316,#facc15);color:#000;font-size:0.82rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;border:none;border-radius:8px;cursor:pointer;transition:all .25s;position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(249,115,22,0.35);}
 .form-submit::after{content:'';position:absolute;inset:0;background:rgba(255,255,255,.2);transform:translateX(-100%);transition:transform .3s;}
@@ -246,7 +243,6 @@ footer span{color:#f97316;}
   <div class="scroll-hint"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
-<!-- STATS STRIP — Vinoth dark bar + count-up -->
 <div class="stats-strip reveal" id="statsBar">
   <div class="stat"><div class="stat-n" id="sn1">5+</div><div class="stat-l">Month Experience</div></div>
   <div class="stat"><div class="stat-n" id="sn2">10+</div><div class="stat-l">Projects Built</div></div>
@@ -270,7 +266,6 @@ footer span{color:#f97316;}
         </div>
       </div>
 
-      <!-- ABOUT VISUAL — Vinoth 3D card -->
       <div class="about-visual reveal-r">
         <div class="scene-wrap" id="sceneWrap">
           <div class="card-3d" id="card3d">
@@ -318,7 +313,6 @@ footer span{color:#f97316;}
   </div>
 </section>
 
-<!-- SKILLS — Vinoth gold fill style -->
 <section class="sec" id="skills">
   <div class="sec-inner">
     <div class="sec-label">Competencies</div>
@@ -451,13 +445,10 @@ footer span{color:#f97316;}
 <footer>© 2026 <span>Akil Krishnan</span> · Data Science Portfolio · Tamil Nadu, India</footer>
 
 <script>
-/* LOADER */
 const loaderMsgs=['Initialising...','Loading Data Globe...','Mapping Connections...','Almost Ready...'];
 let lp=0;
 const fill=document.getElementById('loaderFill'),ltxt=document.getElementById('loaderText');
 const li=setInterval(()=>{lp+=2;fill.style.width=lp+'%';ltxt.textContent=loaderMsgs[Math.min(Math.floor(lp/26),loaderMsgs.length-1)];if(lp>=100){clearInterval(li);setTimeout(()=>document.getElementById('loader').classList.add('hide'),300);}},28);
-
-/* 3D BACKGROUND — Flying through a tunnel of glowing rings, orange brand palette */
 
 function makeGlowTexture(hex){
   const c=document.createElement('canvas');c.width=64;c.height=64;
@@ -489,7 +480,6 @@ scene.add(new THREE.AmbientLight(0xffffff,0.18));
 const pl1=new THREE.PointLight(0xf97316,4,55);pl1.position.set(0,0,5);scene.add(pl1);
 const pl2=new THREE.PointLight(0xfacc15,2.5,45);pl2.position.set(4,3,-10);scene.add(pl2);
 
-/* Wave grid — simple up-and-down bobbing grid, classic ocean-of-light effect */
 cam.position.set(0,6,11);
 cam.rotation.set(-0.5,0,0);
 cam.fov=64;
@@ -511,7 +501,6 @@ for(let r=0;r<ROWS;r++){
     gi++;
   }
 }
-/* horizontal + vertical line segments connecting neighboring points, so the grid reads as a woven mesh */
 const idxPairs=[];
 for(let r=0;r<ROWS;r++){
   for(let c=0;c<COLS;c++){
@@ -530,19 +519,16 @@ grid.position.y=-1.5;
 grid.position.z=-6;
 scene.add(grid);
 
-/* glowing points sitting on every grid node, brighter where the wave peaks */
 const dotMat=new THREE.PointsMaterial({map:glowTexGold,size:0.34,transparent:true,opacity:0.85,depthWrite:false,blending:THREE.AdditiveBlending,sizeAttenuation:true});
 const dots=new THREE.Points(gridGeo,dotMat);
 grid.add(dots);
 
-/* horizon glow */
 const sunMat=new THREE.SpriteMaterial({map:glowTexOrange,transparent:true,opacity:0.7,blending:THREE.AdditiveBlending,depthWrite:false});
 const sun=new THREE.Sprite(sunMat);
 sun.scale.set(22,22,1);
 sun.position.set(0,5,-46);
 scene.add(sun);
 
-/* faint stars above */
 const STAR_COUNT=380;
 const starGeo=new THREE.BufferGeometry();
 const sp=new Float32Array(STAR_COUNT*3);
@@ -564,12 +550,10 @@ let t=0;
 (function anim(){
   requestAnimationFrame(anim);t+=0.02;
 
-  /* interactive parallax */
   cam.position.x+=(mx*1.8-cam.position.x)*0.03;
   cam.position.y+=(6+my*1-cam.position.y)*0.03;
   cam.rotation.z+=((mx*0.04)-cam.rotation.z)*0.05;
 
-  /* every node simply bobs up and down — height depends only on its own x/z position + time */
   const speedBoost=1+Math.min(sy*0.0006,1.4);
   for(let i=0;i<gridCount;i++){
     const x=basePos[i*3],z=basePos[i*3+2];
@@ -588,23 +572,19 @@ let t=0;
   renderer.render(scene,cam);
 })();
 
-/* NAV */
 const navbar=document.getElementById('navbar');
 window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',scrollY>60));
 
-/* REVEAL */
 const ro=new IntersectionObserver(entries=>{
   entries.forEach((e,i)=>{if(e.isIntersecting){setTimeout(()=>e.target.classList.add('in'),i*80);ro.unobserve(e.target);}});
 },{threshold:0.1});
 document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>ro.observe(el));
 
-/* TILT on cards */
 document.querySelectorAll('.edu-card,.proj-card').forEach(card=>{
   card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();const dx=(e.clientX-r.left)/r.width-.5;const dy=(e.clientY-r.top)/r.height-.5;card.style.transform=`perspective(600px) rotateY(${dx*10}deg) rotateX(${-dy*8}deg) translateY(-6px)`;});
   card.addEventListener('mouseleave',()=>card.style.transform='');
 });
 
-/* STATS COUNT-UP — Vinoth style */
 let counted=false;
 const sObs=new IntersectionObserver(es=>{
   if(es[0].isIntersecting&&!counted){
@@ -624,7 +604,6 @@ const sObs=new IntersectionObserver(es=>{
 },{threshold:0.5});
 sObs.observe(document.getElementById('statsBar'));
 
-/* ABOUT CARD 3D TILT — Vinoth style */
 const sceneWrap=document.getElementById('sceneWrap');
 const card3d=document.getElementById('card3d');
 let cmx=0,cmy=0;
@@ -643,7 +622,6 @@ sceneWrap.addEventListener('mouseleave',()=>{
   cmx=0;cmy=0;
 });
 
-/* CURSOR TRAIL */
 const trail=[];
 for(let i=0;i<8;i++){
   const d=document.createElement('div');
@@ -653,10 +631,8 @@ for(let i=0;i<8;i++){
 }
 let tmx=window.innerWidth/2,tmy=window.innerHeight/2;
 
-/* mouse */
 document.addEventListener('mousemove',e=>{tmx=e.clientX;tmy=e.clientY;});
 
-/* touch — single finger follow */
 document.addEventListener('touchstart',e=>{
   const t=e.touches[0];
   tmx=t.clientX;tmy=t.clientY;
@@ -666,7 +642,6 @@ document.addEventListener('touchmove',e=>{
   tmx=t.clientX;tmy=t.clientY;
 },{passive:true});
 document.addEventListener('touchend',()=>{
-  /* fade out trail when finger lifts */
   trail.forEach(t=>t.el.style.opacity='0');
 });
 
